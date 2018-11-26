@@ -1,0 +1,74 @@
+.myCenter-top {
+  width: 100%;
+  height: 15rem;
+  background-color: #007aff;
+  text-align: center;
+  color: #fff;
+  position: relative;
+}
+.myCenter-top > p:first-child {
+  font-size: 1rem;
+  padding: 1.5rem 0;
+}
+.myCenter-top > p:nth-child(2) {
+  font-size: 1.7rem;
+  color: rgb(250,228,133);
+  font-weight: bold;
+}
+.myCenter-top-button {
+  position: absolute;
+  bottom: 0;
+  background-color: #0156B1;
+  height: 4rem;
+  width: 100%;
+  display: flex;
+  padding-top: 0.7rem;
+}
+.myCenter-top-button > div {
+  width: 50%;
+}
+.myCenter-top-button > div > p {
+  display: flex;
+  justify-content:center;
+}
+/* 提现账单 */
+.myCenter-tixian {
+  width: 100%;
+  display: flex;
+  padding: 1rem 0;
+}
+.myCenter-tixian > div {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+.myCenter-tixian > div > a {
+  color: #333;
+}
+/* 个人中心列表 */
+.myCenter-A {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0.7rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+.myCenter-A > div {
+  display: flex;
+  align-items: center;
+}
+.myCenter-A > div > i {
+  padding-right: 0.7rem;
+  font-size: 1.2rem;
+}
+
+/* 个人信息 */
+  /* 修改登录手机号 */
+  .accountBtn {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 1rem;
+  }

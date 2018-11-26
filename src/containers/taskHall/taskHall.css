@@ -1,0 +1,41 @@
+/* 本金佣金 */
+.task-hall-top {
+  padding: 0.6rem;
+}
+.task-hall-top-child {
+  display: flex;
+  border: 1px solid #007aff;
+  border-radius: 3px;
+  /* margin-top: 3rem; */
+}
+.task-hall-top-child > a {
+  width: 50%;
+  padding: 1.1rem 0;
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+}
+.task-hall-top-child > a:first-child {
+  background-color: #007aff;
+  color: #fff;
+}
+
+/* 提现用户数据冒泡 transparency */
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  background: 'transparency';
+  overflow: hidden;
+}
+.user-cash-list > h3 {
+  color: #e7ae01;
+}
+
+/* 小钱包点击进入推荐页面 */
+.getJinagli {
+  width: 50px;
+  position: fixed;
+  bottom: 65px;
+  left: 5px;
+}

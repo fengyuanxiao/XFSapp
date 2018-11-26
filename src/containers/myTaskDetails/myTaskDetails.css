@@ -1,0 +1,147 @@
+/* 返回图标 */
+.return {
+  position: absolute;
+  z-index: 99;
+  font-size: 17px;
+  height: 46px;
+  line-height: 46px;
+  top: 0;
+}
+.return > a {
+  padding: 0.7rem 0;
+  color: #fff;
+}
+
+/* 目标商品 */
+.taskDetail-header {
+  padding: 0.7rem 0.7rem;
+  background-color: #e9ebea;
+}
+.taskDetail-header-top {
+  display: flex;
+  align-items: center;
+}
+.taskDetail-header-top .iphone {
+  width: 30px;
+  margin: 0 0.5rem;
+}
+.taskDetail-header-top > span:last-child {
+  color: #0156B1;
+}
+
+.taskDetail-header-button {
+  display: flex;
+  margin-top: 10px;
+}
+.taskDetail-header-button > img {
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+}
+.make-num {
+  color: #0156B1;
+}
+
+/* 任务状态 */
+.taskDetail-state {
+  border-top: 1px solid #b8b9bb;
+  border-bottom: 1px solid #b8b9bb;
+  background-color: #f6f6f8;
+  padding: 0.7rem 0.7rem;
+}
+.taskDetail-state > img {
+  width: 24px;
+  margin-right: 0.5rem;
+}
+.taskDetail-state > p {
+  color: #0156B1;
+  margin-top: 0.7rem;
+}
+
+/* 操作任务按钮 */
+.start-task-btn {
+  margin: 1.1rem 0 1rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.start-task-btn > button {
+  border: none;
+  padding: 0.3rem 1rem;
+  display: block;
+  border-radius: 7px;
+  background-color: #0156B1;
+  color: #fff;
+  font-size: 1rem;
+}
+.start-task-btn > button:nth-child(2) {
+  background-color: #ff6235;
+  padding: 0;
+}
+.start-task-btn > button:nth-child(3) {
+  padding: 0;
+}
+.start-task-btn > button > a {
+  padding: 0.3rem 1rem;
+  color: #fff;
+}
+
+/* 任务进度 */
+.task-plan {
+  padding: 1rem 1rem 1rem 1rem;
+  margin-bottom: 2.5rem;
+}
+.plan {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+}
+.plan-child {
+  margin-right: 1rem;
+}
+.plan > p {
+  font-size: 0.9rem;
+  color: red;
+  font-weight: bold;
+}
+
+.plan-box {
+  margin-bottom: 0.6rem;
+}
+.title {
+  background-color: #bfc3e3;
+  color: #fff;
+  border-radius: 4px;
+  padding-left: 0.3rem;
+}
+.plan-title {
+  font-size: 1rem;
+  padding-right: 0.6rem;
+}
+.task-plan-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: #e4e4e6 solid 1px;
+}
+.task-plan-list > span {
+  font-size: 1rem;
+}
+.task-plan-list-img > img {
+  width: 74px;
+  margin-left: 1rem;
+}
+.task-plan-list .ask-start {
+  color: #ee9091;
+  font-size: 0.9rem;
+}
+.task-plan-list > button {
+  padding: 0.2rem 0.6rem;
+  background-color: #66caa8;
+  border: none;
+  border-radius: 7px;
+}
+.task-plan-list > button > a {
+  color: #fff;
+}

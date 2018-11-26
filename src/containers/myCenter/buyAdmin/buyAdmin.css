@@ -1,0 +1,30 @@
+.buyAdmin-box {
+  width: 100%;
+  padding: 3.4rem 0.6rem 0 0.6rem;
+  background-color: #fff;
+}
+.buyAdmin-title {
+  padding-bottom: 1rem;
+  color: red;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.buy-input {
+  width: 100%;
+}
+.look-shilitu {
+  display: flex;
+  justify-content: space-between;
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0 1.5rem;
+  margin-bottom: 3.9rem;
+}
+.btn-buy {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3rem;
+}

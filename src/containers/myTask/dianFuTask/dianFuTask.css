@@ -1,0 +1,43 @@
+.all-task {
+  display: flex;
+  border-bottom: 1px solid #d7d7d7;
+  padding-bottom: 0.3rem;
+  padding-top: 0.3rem;
+}
+.left-img {
+  width: 25%;
+}
+.left-img > img {
+  width: 100%;
+  height: 100%;
+}
+.right {
+  width: 75%;
+}
+.right-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.4rem;
+  border-bottom: 1px solid #d7d7d7;
+  color: #000;
+}
+.right-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.4rem;
+}
+.right-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.4rem;
+  font-size: 0.2rem;
+  color: #000;
+}
+.right-bottom > p > span:nth-child(2) {
+  color: #007aff;
+  margin-right: 0.4rem;
+}
+.right-bottom > span {
+  color: red;
+}

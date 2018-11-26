@@ -1,0 +1,86 @@
+.taskStateChild-box {
+  background-color: #e9ebea;
+}
+
+/* 任务要求标题 */
+.taskRenw {
+  background-color: #d1d1d1;
+  padding: 0.5rem 0.7rem;
+  font-size: 1.1rem;
+}
+.task-plan-list-Child {
+  font-size:0.3rem;
+  display:flex;
+  justify-content:space-between;
+  border-bottom:#e4e4e6 solid 1px;
+  padding-bottom:0.4rem;
+}
+.task-plan-list {
+  width: 100%;
+}
+
+.task-plan-list > span:last-child {
+  width: 60%;
+  text-align: right;
+  color: #0156B1;
+}
+.detailss > p {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: red;
+}
+.buzou-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-top: 0.6rem;
+}
+.buzou-title > span:first-child {
+  color: #63bb95;
+}
+.buzou-title > span:last-child {
+  color: #007aff;
+}
+.buzhou {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+.buzhou > p {
+  padding: 0.3rem 0;
+}
+.shilitu {
+  width: 100%;
+}
+.shop-title > span:first-child {
+  padding: 1px 8px;
+  display: inline-block;
+  background-color: #a6c7d8;
+  border-radius: 50%;
+  color: #fff;
+  margin-right: 0.7rem;
+  margin-bottom: 0.4rem;
+  margin-top: 0.3rem;
+}
+.ant-input {
+  width: 60%;
+  margin: 0 8px 8px 0;
+}
+
+.avatar-uploader > .ant-upload {
+  width: 128px;
+  height: 128px;
+}
+
+.ant-form-inline .ant-form-item {
+  width: 100%;
+}
+.jineInput {
+  width: 100%;
+}
+.login-form-button {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+}

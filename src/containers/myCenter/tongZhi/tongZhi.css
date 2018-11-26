@@ -1,0 +1,39 @@
+.tongZhi-box {
+  padding-top: 3.5rem;
+}
+.tongZhi-box > li {
+  border-top: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  background-color: #fff;
+  margin-bottom: 0.5rem;
+}
+.tongZhi-box > li > a {
+  padding: 0.6rem 0.8rem;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tongZhi-box > li > a > span:last-child {
+  display: block;
+  padding: 0.2rem 0.4rem;
+  background-color: rgba(0,0,0,.15);
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
+
+/* 公告详情 */
+.tongZhiChild {
+  padding: 4rem 0.7rem 0 0.7rem;
+}
+.tongZhiChild > h3 {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+.tongZhiChild > p {
+  padding-bottom: 0.7rem;
+}
+.tongZhiChild > img {
+  width: 100%;
+  padding-bottom: 0.7rem;
+}

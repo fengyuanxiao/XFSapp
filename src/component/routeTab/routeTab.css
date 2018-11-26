@@ -1,0 +1,25 @@
+p { margin: 0; padding: 0;}
+.route-tab {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  box-shadow: 0 0 1px rgba(140, 140, 140, 0.85);
+  background-color: #fff;
+  z-index: 1000;
+}
+.route-tab > li {
+  width: 100%;
+  text-align: center;
+
+}
+.route-tab > li > a {
+  width: 100%;
+  display: block;
+  padding: 0.5rem 0;
+  color: #000;
+}

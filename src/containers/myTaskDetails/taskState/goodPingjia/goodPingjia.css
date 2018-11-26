@@ -1,0 +1,22 @@
+.goodPingJia-box {
+  padding-top: 2.8rem;
+}
+h2 {
+  padding: 0.5rem 0.3rem;
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.goodPingJia-box > p {
+  padding: 0.5rem 0.6rem;
+  background-color: #d1d1d1;
+  font-size: 0.8rem;
+}
+.goodPingJia-box-child > p {
+  padding: 0.5rem 0.6rem;
+  background-color: #d1d1d1;
+  font-size: 0.8rem;
+}
+.goodPingJia-box-child {
+  margin: 0.6rem 0.6rem;
+}

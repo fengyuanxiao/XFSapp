@@ -1,0 +1,21 @@
+.cash {
+  padding: 0.7rem 0.6rem;
+  background-color: #fff;
+  font-size: 0.9rem;
+}
+.cash > p  {
+  padding: 0.6rem 0.1rem;
+  font-size: 1.1rem;
+}
+.cash > .cash-money {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.1rem;
+}
+.cash-footer {
+  color: #FF5722;
+}
+.cash-footer > p:last-child {
+  color: #000;
+}

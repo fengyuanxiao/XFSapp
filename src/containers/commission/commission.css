@@ -1,0 +1,21 @@
+.commission-list {
+  list-style-type: none;
+}
+.commission-list > li {
+  padding: 0.6rem 0.6rem;
+  border-bottom: 1px solid #ddd;
+}
+.commission-list > li > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+}
+.moneys {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: rgb(50,200,175);
+}
+.money-data {
+  color: rgb(160,160,160);
+  font-size: 1rem;
+}
