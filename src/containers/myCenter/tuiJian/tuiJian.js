@@ -55,7 +55,7 @@ class TuiJian extends Component {
             </li>
             <li>
               <span>已激活的用户</span>
-              <span>0个</span>
+              <span>10个</span>
             </li>
           </ul>
         </div>
