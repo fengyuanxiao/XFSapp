@@ -6,8 +6,8 @@ import { Tabs, WhiteSpace } from 'antd-mobile';
 import '../dianFuTask/dianFuTask.css';
 
 const tabs = [
-  { title: '待商家审核' },
-  { title: '待提交问答..' },
+  { title: '商家审核' },
+  { title: '提交问答..' },
   { title: '待返佣金' },
   { title: '所有' },
 ];

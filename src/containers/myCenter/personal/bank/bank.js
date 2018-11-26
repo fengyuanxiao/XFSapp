@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { Icon, Form, Input, Button, Cascader, message  } from 'antd';
 import { Link } from 'react-router-dom';
 import { ImagePicker } from 'antd-mobile';
+import axios from 'axios';    //ajax
 
 import '../../buyAdmin/buyAdmin.css';
 
@@ -10576,6 +10577,22 @@ class Banks extends Component {
     }
   }
 
+  // 生命周期函数   最先执行函数
+  componentWillMount() {
+    axios.get('/api/user/getPrvoinveAreaList?parent_id=')
+    .then(response => {
+      console.log(response.data.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    // console.log("我最先执行");
+  }
+  // 生命周期函数   componentWillMount执行完成后执行此处
+  componentDidMount() {
+    console.log(321);
+  }
+
   // 显示/隐藏浮层的回调
   onPopupVisibleChange = (e) => {
     console.log(e);
@@ -10585,7 +10602,7 @@ class Banks extends Component {
   }
   // 省市区联动回调
   cityButton = (e) => {
-    console.log(e.length);
+    console.log(e);
     if ( e.length === 2 ) {
       console.log("执行市接口");
     } else if ( e.length === 3 ) {

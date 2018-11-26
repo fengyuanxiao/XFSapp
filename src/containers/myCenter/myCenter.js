@@ -92,7 +92,7 @@ class MyCenterPage extends Component {
               <div>
                 <Icon type="dashboard" />
                 <span>申诉记录</span>
-                <Badge count={5} style={{ marginRight: '0.5rem', backgroundColor:'red' }} />
+                <Badge count={2} style={{ marginLeft: '0.3rem', backgroundColor:'red' }} />
               </div>
               <div>
                 <Icon type="right" />
