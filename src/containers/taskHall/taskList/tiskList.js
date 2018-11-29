@@ -23,6 +23,18 @@ const objs={
 "subtotal_commission": 0
 },
 {
+"task_id": 31,
+"task_type": 0,
+"task_type_text": "问答任务",
+"is_gift": 0,
+"common_orderitem_num": 10,
+"residue_order": 10,
+"itemprice": 1,
+"commission": 5.2,
+"commission_desc": "",
+"subtotal_commission": 1
+},
+{
 "task_id": 29,
 "task_type": 0,
 "task_type_text": "垫付任务",
@@ -265,11 +277,16 @@ class TaskList extends Component {
                       </div>
                       <div className="listCenter">
                         <p>{item.itemprice}￥</p>
-                        <p>垫付任务</p>
+                        <p>{item.task_type_text}</p>
                       </div>
                       <div className="listRight">
                         {/* ../particularsPage/particularsPage?id={{item.goods_id}} */}
-                        <button><Link to="/myTaskDetails">抢此任务</Link></button>
+                        {
+                          item.subtotal_commission?
+                            <button><Link to="/questionsTask">查看任务</Link></button>
+                          :
+                          <button><Link to="/myTaskDetails">抢此任务</Link></button>
+                        }
                         {/* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */}
                         {/* <button onClick={ ()=>this.routerTo(item) }>抢此任务</button> */}
                       </div>

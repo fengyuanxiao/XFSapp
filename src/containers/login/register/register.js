@@ -27,20 +27,19 @@ class RegisterPages extends Component {
       tuCodeLink: null,   //图片验证码链接
       tuCode: null,       //图片验证码内容
       sid: null,          //sid
-      time: null          //time
+      time: null,          //time
     }
   }
 
   // 生命周期函数 此函数最先执行
   componentDidMount() {
-    axios.get('/api/user/getVerifyCode')
+    axios.get('/api/user/getcaptcha')
     .then(response => {
       this.setState({
-        tuCodeLink: response.data.data,
-        sid: response.data.sid,
-        time: response.data.time
+        tuCodeLink: response.data.data.captcha_src,
+        sid: response.data.data.sid,
       })
-      console.log(response.data);
+      // console.log(response.data.data);
     })
     .catch(error => {
       console.log(error);
@@ -49,14 +48,12 @@ class RegisterPages extends Component {
 
   // 点击图片验证码重新获取 图片
   getVerifyCode = () => {
-    axios.get('/api/user/getVerifyCode')
+    axios.get('/api/user/getcaptcha')
     .then(response => {
       this.setState({
-        tuCodeLink: response.data.data,
-        sid: response.data.sid,
-        time: response.data.time
+        tuCodeLink: response.data.data.captcha_src,
+        sid: response.data.data.sid,
       })
-      // console.log(response.data.data);
     })
     .catch(error => {
       console.log(error);
@@ -75,14 +72,8 @@ class RegisterPages extends Component {
 
   // 获取短信验证码按钮
   getCodes = () => {
-    let dataCode_ = this.state
-    // let verifys = {
-    //   sid: dataCode_.sid,
-    //   time: dataCode_.time,
-    //   tuCode: dataCode_.tuCode,
-    //   phoneNum: dataCode_.placeholder
-    // }
-    // console.log(verifys);
+    let dataCode_ = this.state;
+    let this_ = this;   //存入  this
     if (dataCode_.placeholder === "请输入手机号") {
       message.error("请输入手机号码！");
     } else if (!phoneNumber.test(dataCode_.placeholder)) {
@@ -93,7 +84,6 @@ class RegisterPages extends Component {
       // 获取短信验证码接口ajax
       axios.post('/api/user/sendcode', {
         sid: dataCode_.sid,
-        time: dataCode_.time,
         tuCode: dataCode_.tuCode,
         phoneNum: dataCode_.placeholder
       })
@@ -102,15 +92,15 @@ class RegisterPages extends Component {
         // 判断后台返回数据 status 状态 true 图片验证码正确 执行下面
         if ( response.data.status ) {
           // 倒计时 获取短信验证码
-          let codeNum = dataCode_.codeNum
+          let codeNum = dataCode_.codeNum;
           const timer = setInterval(() => {
-          this.setState({
+          this_.setState({
             getCodesState:false,
             codeNum: (codeNum--)
             }, () => {
                 if (codeNum === 0) {
                 clearInterval(timer);
-                this.setState({
+                this_.setState({
                   getCodesState: true,
                   codeNum: 60,
                   TestGetCode: "重新获取"
@@ -143,20 +133,20 @@ class RegisterPages extends Component {
             message.error("两次密码不一致！")
           } else {
             // 在此提交ajax数据
-            // axios.post('/api/user/register', {
-            //   phoneNum: values,
-            // })
-            // .then(function (response) {   //调用接口成功执行
-            //   console.log(response.data);
-            // })
-            // .catch(function (error) {   //调用接口失败执行
-            //   console.log(error);
-            // });
+            axios.post('/api/user/register', {
+              values,
+            })
+            .then(function (response) {   //调用接口成功执行
+              console.log(response.data);
+              // message.success("注册成功！", successSkip => { // 注册成功后执行回调跳转到任务大厅
+              //   this.props.history.push('/taskHallPage')
+              // })
+              message.success("注册成功！")
+            })
+            .catch(function (error) {   //调用接口失败执行
+              console.log(error);
+            });
             console.log(values);
-            // message.success("注册成功！", successSkip => { // 注册成功后执行回调跳转到任务大厅
-            //   this.props.history.push('/taskHallPage')
-            // })
-            message.success("注册成功！")
           }
         }
       });

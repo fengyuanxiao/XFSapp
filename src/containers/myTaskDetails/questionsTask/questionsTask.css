@@ -1,0 +1,18 @@
+.questionsTask-box {
+  padding: 3.4rem 0.6rem 0 0.6rem;
+  background-color: #efeff4;
+}
+.product-details {
+  display: flex;
+  margin-top: 0.8rem;
+}
+.product-details > img {
+  width: 70px;
+  margin-right: 0.8rem;
+}
+.lookShili {
+  text-align: center;
+  font-size: 1rem;
+  color: red;
+  font-weight: bold;
+}
