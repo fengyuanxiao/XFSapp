@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import { PullToRefresh } from 'antd-mobile';
+// import { PullToRefresh } from 'antd-mobile';
+import PullToRefresh from 'antd-mobile/lib/pull-to-refresh';
 // import axios from 'axios';    //ajax
 
 import UserCashList from '../userCashList/userCashList'; //用户提现冒泡数据

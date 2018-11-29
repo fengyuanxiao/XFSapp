@@ -9,6 +9,9 @@ class ForgetPasswords extends Component {
   constructor() {
     super();
     this.state = {
+      getCodesState: true,
+      codeNum: 60,
+      TestGetCode: "获取验证码",
       placeholder: "请输入手机号"
     }
     this.setCode = this.setCode.bind(this);
@@ -30,6 +33,23 @@ class ForgetPasswords extends Component {
     } else {
       // 再次调用获取验证码接口
       message.success("获取验证码中");
+      let codeNum = this.state.codeNum
+      const timer = setInterval(() => {
+      this.setState({
+        getCodesState:false,
+        codeNum: (codeNum--)
+        }, () => {
+            if (codeNum === 0) {
+            clearInterval(timer);
+            this.setState({
+              getCodesState: true,
+              codeNum: 60,
+              TestGetCode: "重新获取"
+            })
+          }
+        })
+      }, 1000)
+
     }
     // console.log("在此调用获取短信验证码接口");
   }
@@ -115,8 +135,8 @@ class ForgetPasswords extends Component {
             )}
           </FormItem>
           <FormItem
-          {...formItemLayout}
-          label="短信验证码"
+            {...formItemLayout}
+            label="短信验证码"
           >
             <Row gutter={8}>
               <Col span={16}>
@@ -127,7 +147,11 @@ class ForgetPasswords extends Component {
                 )}
               </Col>
               <Col span={8}>
-                <Button onClick={ this.setCode }>获取验证码</Button>
+                {
+                  this.state.getCodesState
+                    ? <Button onClick={this.setCode}>{ this.state.TestGetCode }</Button>
+                    : <Button disabled="disabled">{this.state.codeNum}秒</Button>
+                }
               </Col>
             </Row>
           </FormItem>

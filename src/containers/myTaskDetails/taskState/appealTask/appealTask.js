@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Cascader, Input, Button, message } from 'antd';
-import { ImagePicker } from 'antd-mobile';
+// import { ImagePicker } from 'antd-mobile';
+import ImagePicker from 'antd-mobile/lib/image-picker';
 
 import './appealTask.css';
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Button, message } from 'antd';
-import { ImagePicker } from 'antd-mobile';
+// import { ImagePicker } from 'antd-mobile';
+import ImagePicker from 'antd-mobile/lib/image-picker';
 import { Link } from 'react-router-dom';
 
 import './goodPingjia.css';

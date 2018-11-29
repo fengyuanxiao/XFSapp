@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Input, Button, Form, message  } from 'antd';
-import { ImagePicker } from 'antd-mobile';
+// import { ImagePicker } from 'antd-mobile';
+import ImagePicker from 'antd-mobile/lib/image-picker';
 
 // import TaskStateUpload from '../taskStateUpload/taskStateUpload';
 

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Icon, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { Tabs, WhiteSpace } from 'antd-mobile';
+// import { Tabs, WhiteSpace } from 'antd-mobile';
+import Tabs from 'antd-mobile/lib/tabs';
+import WhiteSpace from 'antd-mobile/lib/white-space';
 
 import '../dianFuTask/dianFuTask.css';
 

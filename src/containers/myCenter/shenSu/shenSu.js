@@ -1,6 +1,8 @@
 import React,{ Component } from 'react';
 import { Icon,   } from 'antd';
-import { Tabs, WhiteSpace } from 'antd-mobile';
+// import { Tabs, WhiteSpace } from 'antd-mobile';
+import Tabs from 'antd-mobile/lib/tabs';
+import WhiteSpace from 'antd-mobile/lib/white-space';
 import { Link  } from 'react-router-dom';
 
 const tabs = [

@@ -9,6 +9,7 @@ import {
   Col,
   message
 } from 'antd';
+import axios from 'axios';
 
 import './register.css';
 
@@ -20,51 +21,114 @@ class RegisterPages extends Component {
     super();
     this.state = {
       getCodesState: true,
-      codeNum: 10,
+      codeNum: 60,        //倒计时 60 秒
       TestGetCode: "获取验证码",
-      placeholder: "请输入手机号"
+      placeholder: "请输入手机号",
+      tuCodeLink: null,   //图片验证码链接
+      tuCode: null,       //图片验证码内容
+      sid: null,          //sid
+      time: null          //time
     }
-    this.getCodes = this.getCodes.bind(this);
   }
 
   // 生命周期函数 此函数最先执行
-  componentDidMount() {}
+  componentDidMount() {
+    axios.get('/api/user/getVerifyCode')
+    .then(response => {
+      this.setState({
+        tuCodeLink: response.data.data,
+        sid: response.data.sid,
+        time: response.data.time
+      })
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  // 点击图片验证码重新获取 图片
+  getVerifyCode = () => {
+    axios.get('/api/user/getVerifyCode')
+    .then(response => {
+      this.setState({
+        tuCodeLink: response.data.data,
+        sid: response.data.sid,
+        time: response.data.time
+      })
+      // console.log(response.data.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    // console.log(this.state.tuCode);
+  }
 
   // 电话号码 onChange事件修改 placeholder值 让短信验证码按钮判断调用获取验证码接口
   onChange = (e) => {
     this.setState({placeholder: e.target.value})
   }
+  // 图形验证码
+  tuCodes = (e) => {
+    this.setState({tuCode: e.target.value})
+  }
 
   // 获取短信验证码按钮
   getCodes = () => {
-    if (this.state.placeholder === "请输入手机号") {
+    let dataCode_ = this.state
+    // let verifys = {
+    //   sid: dataCode_.sid,
+    //   time: dataCode_.time,
+    //   tuCode: dataCode_.tuCode,
+    //   phoneNum: dataCode_.placeholder
+    // }
+    // console.log(verifys);
+    if (dataCode_.placeholder === "请输入手机号") {
       message.error("请输入手机号码！");
-    } else if (!phoneNumber.test(this.state.placeholder)) {
+    } else if (!phoneNumber.test(dataCode_.placeholder)) {
       message.error("请输入正确的手机号码！");
+    } else if (dataCode_.tuCode === null) {
+      message.error("请输图形验证码！");
     } else {
-      // 倒计时 获取短信验证码
-      let codeNum = this.state.codeNum
-      const timer = setInterval(() => {
-      this.setState({
-        getCodesState:false,
-        codeNum: (codeNum--)
-        }, () => {
-            if (codeNum === 0) {
-            clearInterval(timer);
-            this.setState({
-              getCodesState: true,
-              codeNum: 10,
-              TestGetCode: "重新获取"
+      // 获取短信验证码接口ajax
+      axios.post('/api/user/sendcode', {
+        sid: dataCode_.sid,
+        time: dataCode_.time,
+        tuCode: dataCode_.tuCode,
+        phoneNum: dataCode_.placeholder
+      })
+      .then(function (response) {   //调用接口成功执行
+        console.log(response.data);
+        // 判断后台返回数据 status 状态 true 图片验证码正确 执行下面
+        if ( response.data.status ) {
+          // 倒计时 获取短信验证码
+          let codeNum = dataCode_.codeNum
+          const timer = setInterval(() => {
+          this.setState({
+            getCodesState:false,
+            codeNum: (codeNum--)
+            }, () => {
+                if (codeNum === 0) {
+                clearInterval(timer);
+                this.setState({
+                  getCodesState: true,
+                  codeNum: 60,
+                  TestGetCode: "重新获取"
+                })
+              }
             })
-          }
-        })
-      }, 1000)
-
-
-        // 再次调用获取验证码接口
-        message.success("获取验证码中");
+          }, 1000)
+          // 图片验证码正确显示提示
+          message.success(response.data.msg);
+        } else {  // 判断后台返回数据 status 状态 false执行else
+          // 图片验证码错误显示提示
+          message.error(response.data.msg);
+        }
+      })
+      .catch(function (error) {   //调用接口失败执行
+        console.log(error);
+      });
       }
-      // console.log("在此调用获取验证码接口！！");
     }
 
     // 提交注册按钮 提交数据
@@ -79,10 +143,20 @@ class RegisterPages extends Component {
             message.error("两次密码不一致！")
           } else {
             // 在此提交ajax数据
+            // axios.post('/api/user/register', {
+            //   phoneNum: values,
+            // })
+            // .then(function (response) {   //调用接口成功执行
+            //   console.log(response.data);
+            // })
+            // .catch(function (error) {   //调用接口失败执行
+            //   console.log(error);
+            // });
             console.log(values);
-            message.success("注册成功！", successSkip => { // 注册成功后执行回调跳转到任务大厅
-              this.props.history.push('/taskHallPage')
-            })
+            // message.success("注册成功！", successSkip => { // 注册成功后执行回调跳转到任务大厅
+            //   this.props.history.push('/taskHallPage')
+            // })
+            message.success("注册成功！")
           }
         }
       });
@@ -145,9 +219,10 @@ class RegisterPages extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label="图形验证码：">
             <div>
-              <img style={{
+              <img onClick={ this.getVerifyCode } style={{
                   width: "100%"
-              }} src={require("../../../img/captchaImg.png")} alt="短信验证码"/>
+              }} src={this.state.tuCodeLink} alt="图形验证码"/>
+              {/* <a onClick={ this.getVerifyCode } style={{width: "100%"}} href={this.state.tuCode}></a> */}
             </div>
             {
               getFieldDecorator('tuCode', {
@@ -157,7 +232,7 @@ class RegisterPages extends Component {
                     message: '请输入图形验证码!'
                 }
                 ]
-              })(<Input className="register-input" maxLength="11" placeholder="请输入图形验证码"/>)
+              })(<Input className="register-input" onChange={ this.tuCodes } placeholder="请输入图形验证码"/>)
             }
           </FormItem>
           <FormItem {...formItemLayout} label="短信验证码">
@@ -187,10 +262,10 @@ class RegisterPages extends Component {
             {
               getFieldDecorator('loginPassword', {
                 rules: [
-                  {
+                {
                     required: true,
                     message: '请输入登录密码!'
-                  }
+                }
                 ]
               })(<Input className="register-input" placeholder="请输入6-16为数字，字母组合"/>)
             }
@@ -199,10 +274,10 @@ class RegisterPages extends Component {
             {
               getFieldDecorator('aloginPassword', {
                 rules: [
-                  {
+                {
                     required: true,
                     message: '请确认登录密码!'
-                  }
+                }
                 ]
               })(<Input className="register-input" placeholder="请输入6-16为数字，字母组合"/>)
             }
@@ -211,10 +286,10 @@ class RegisterPages extends Component {
             {
               getFieldDecorator('yqcode', {
                 rules: [
-                  {
+                {
                     required: true,
                     message: '请输入邀请码!'
-                  }
+                }
                 ]
               })(<Input className="register-input" placeholder="必填邀请码"/>)
             }

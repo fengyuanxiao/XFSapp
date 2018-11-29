@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { ImagePicker } from 'antd-mobile';
+// import { ImagePicker } from 'antd-mobile';
+import ImagePicker from 'antd-mobile/lib/image-picker';
 import { Icon, Form, Input, Button, message } from 'antd';
 
 const FormItem = Form.Item;

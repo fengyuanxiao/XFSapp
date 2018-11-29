@@ -1,7 +1,8 @@
 import React,{ Component } from 'react';
 import { Icon, Form, Input, Button, Cascader, message  } from 'antd';
 import { Link } from 'react-router-dom';
-import { ImagePicker } from 'antd-mobile';
+// import { ImagePicker } from 'antd-mobile';
+import ImagePicker from 'antd-mobile/lib/image-picker';
 import axios from 'axios';    //ajax
 
 // import http from '../../../../component/server';
