@@ -5,6 +5,7 @@
 .product-details {
   display: flex;
   margin-top: 0.8rem;
+  margin-bottom: 0.4rem;
 }
 .product-details > img {
   width: 70px;
@@ -15,4 +16,16 @@
   font-size: 1rem;
   color: red;
   font-weight: bold;
+}
+.taskList {
+  border: 1px solid #0156B1;
+  border-radius: 5px;
+  margin: 0.7rem 0;
+  padding: 0.8rem 0.6rem;
+}
+.taskList > p {
+  font-size: 0.9rem;
+  color: #0156B1;
+  font-weight: bold;
+  padding-bottom: 0.4rem;
 }

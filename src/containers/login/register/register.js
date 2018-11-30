@@ -7,10 +7,12 @@ import {
   Button,
   Row,
   Col,
-  message
+  message,
+  Modal
 } from 'antd';
 import axios from 'axios';
 
+import Hongbao from '../../../img/hongbao.png';
 import './register.css';
 
 const FormItem = Form.Item;
@@ -27,12 +29,16 @@ class RegisterPages extends Component {
       tuCodeLink: null,   //图片验证码链接
       tuCode: null,       //图片验证码内容
       sid: null,          //sid
-      time: null,          //time
+      time: null,         //time
+      hongbao: false,     //注册成功注册的红包显示
+      openhonbao: false,  //打开红包状态
+      visible: false,      //点击打开红包显示得到的金额弹窗
+      register_money: null  //获得的红包金额
     }
   }
 
   // 生命周期函数 此函数最先执行
-  componentDidMount() {
+  componentWillMount() {
     axios.get('/api/user/getcaptcha')
     .then(response => {
       this.setState({
@@ -45,6 +51,11 @@ class RegisterPages extends Component {
       console.log(error);
     })
   }
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+}
 
   // 点击图片验证码重新获取 图片
   getVerifyCode = () => {
@@ -124,6 +135,7 @@ class RegisterPages extends Component {
     // 提交注册按钮 提交数据
     handleSubmit = (e) => {
       e.preventDefault();
+      let this_ = this;
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           // console.log('Received values of form: ', values);
@@ -132,27 +144,67 @@ class RegisterPages extends Component {
           } else if (values.loginPassword !== values.aloginPassword) {
             message.error("两次密码不一致！")
           } else {
+            // console.log(values);
             // 在此提交ajax数据
             axios.post('/api/user/register', {
-              values,
+              // 用户注册提交的所有数据
+              QQnum: values.QQnum,
+              phoneNum: values.phoneNum,
+              loginpassword: values.loginPassword,
+              aloginpassword: values.aloginPassword,
+              tuCode: values.tuCode,
+              captcha: values.captcha,
+              yqcode: values.yqcode
             })
             .then(function (response) {   //调用接口成功执行
-              console.log(response.data);
-              // message.success("注册成功！", successSkip => { // 注册成功后执行回调跳转到任务大厅
-              //   this.props.history.push('/taskHallPage')
-              // })
-              message.success("注册成功！")
+              // console.log(response.data);
+              // response.data状态为 true的时候跳转
+              if ( response.data.status ) {
+                message.success(response.data.msg);
+                // 显示红包
+                this_.setState({hongbao: true, register_money: response.data.data.register_money })
+                // 注册成功后执行回调跳转到任务大厅
+                // message.success("注册成功！", successSkip => {
+                //   this.props.history.push('/taskHallPage')
+                // })
+              } else {  // response.data状态为 false的时候跳转
+                message.error(response.data.msg)
+              }
             })
             .catch(function (error) {   //调用接口失败执行
               console.log(error);
             });
-            console.log(values);
+            // console.log(values);
           }
         }
       });
     }
 
+    // 关闭红包遮罩层
+    handleCancel = () => {
+      this.setState({hongbao: false})
+    }
+
+    // 打开红包
+    openBtn = () => {
+      this.setState({openhonbao: true});
+      setTimeout( () => {
+  			this.setState({openhonbao: false, visible: true, hongbao:false});
+  		},2000);
+    }
+
+    // 前往任务大厅
+    gotoTaskHall = () => {
+      this.props.history.push('/taskHallPage')
+    }
+
+    // 前往提现页面
+    gotoCash = () => {
+      this.props.history.push('/cash')
+    }
+
     render() {
+      const { hongbao, openhonbao, visible, register_money } = this.state;
       const {getFieldDecorator} = this.props.form;
       const formItemLayout = {
         labelCol: {
@@ -288,10 +340,10 @@ class RegisterPages extends Component {
             {
               getFieldDecorator('QQnum', {
                 rules: [
-                  {
+                {
                     required: true,
                     message: '请输入QQ号!'
-                  }
+                }
                 ]
               })(<Input className="register-input" type="Number" placeholder="请输入QQ号"/>)
             }
@@ -300,6 +352,24 @@ class RegisterPages extends Component {
             <Button className="zhuceBtn" type="primary" htmlType="submit">免费注册</Button>
           </FormItem>
         </Form>
+
+        {/* 注册成功红包弹窗 */}
+        <Modal className={ openhonbao ? "shake" : "" } visible={hongbao} footer={null} onCancel={this.handleCancel}>
+          <img onClick={ this.openBtn } alt="红包" style={{ width: '100%' }} src={Hongbao} />
+        </Modal>
+
+        {/* 打开红包获取奖励的金额弹窗 */}
+        <Modal
+          title="平台注册成功奖励！"
+          visible={visible}
+          onOk={this.gotoTaskHall}
+          onCancel={this.gotoCash}
+          okText={"前往任务大厅"}
+          cancelText={"去提现"}
+        >
+          <p>{ register_money }</p>
+        </Modal>
+
       </div>)
     }
   }

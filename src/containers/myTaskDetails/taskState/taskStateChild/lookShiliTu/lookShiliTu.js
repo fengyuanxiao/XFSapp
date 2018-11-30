@@ -21,10 +21,6 @@ class LookShiliTus extends Component {
       threevisible: false,
       files: data,
     }
-    // this.showOneShiliTu = this.showOneShiliTu.bind(this);
-    // this.showTwoShiliTu = this.showTwoShiliTu.bind(this);
-    // this.showThreeShiliTu = this.showThreeShiliTu.bind(this);
-    // this.heDuiName = this.heDuiName.bind(this);
   }
 
   // 货比三家示例图
@@ -119,25 +115,25 @@ class LookShiliTus extends Component {
             <Input placeholder="请在此输入店铺名核对" />
             <Button type="primary" onClick={ this.heDuiName }>核对</Button>
           </div>
-        {/* 第二步 浏览店铺 */}
+          {/* 第二步 浏览店铺 */}
           <div className="buzou-title"><span>第二步 浏览店铺</span><span onClick={this.showTwoShiliTu}>点击查看示例</span></div>
           <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
           <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
           <p>.返回任务商品，直接点击购买（警示：勿从购物车提交订单)</p>
-        {/* 第三步 聊天下单支付 */}
+          {/* 第三步 聊天下单支付 */}
           <div className="buzou-title"><span>第三步 聊天下单支付</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
           <p>.需按商家要求选择是否聊天下单支付，或直接提交订单不聊天</p>
           <p>.付款完成后，进人支付宝账单详情页面，截图上传</p>
           <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p>
-        {/* 支付宝 账单截图 */}
-        <ImagePicker
-          length={2}
-          files={files}
-          onChange={this.onChange}
-          onImageClick={(index, fs) => console.log(index, fs)}
-          selectable={files.length < 2}
-          accept="image/gif,image/jpeg,image/jpg,image/png"
-        />
+          {/* 支付宝 账单截图 */}
+          <ImagePicker
+            length={2}
+            files={files}
+            onChange={this.onChange}
+            onImageClick={(index, fs) => console.log(index, fs)}
+            selectable={files.length < 2}
+            accept="image/gif,image/jpeg,image/jpg,image/png"
+          />
 
           <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>聊天截图</span>和<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>支付宝账单截图</span></p>
           <div className="buzou-title"><span style={{ color:'#63bb95' }}>第四步 订单信息核对</span></div>
