@@ -7,7 +7,10 @@ import TaskList from './taskList/tiskList';
 class TaskHallPage extends Component {
   constructor(props) {
     super();
-    // console.log(props);
+    // 保存token到本地
+    // localStorage.setItem("token", props.location.state.data);
+    // 打印获取token
+    // console.log(localStorage.getItem("token"));
   }
 
   // 点击小钱包进入推荐有礼页面
@@ -21,7 +24,7 @@ class TaskHallPage extends Component {
       <div>
         <header className="tabTitle">任务大厅</header>
         {/* 任务列表 */}
-        <TaskList token={ this.props.location.state.data } />
+        <TaskList />   {/* 把token传到 任务列表页面 */}
         {/* tabs */}
         <RouteTabComponent />
         <img className="getJinagli" onClick={ this.clickTuiJian } src={ require("../../img/download.gif") } alt="小钱包"/>

@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Modal, Radio } from 'antd';
+import { Icon, Modal, Radio, Button } from 'antd';
+import ImagePicker from 'antd-mobile/lib/image-picker';
 
 import './questionsTask.css';
 
 const RadioGroup = Radio.Group;
+// const FormItem = Form.Item;
+const data = [];
 
 class QuestionsTask extends Component {
   constructor() {
     super();
     this.state= {
       visible: false,
-      value: 1
+      value: 1,
+      files: data,
+      objData: {}
     }
   }
 
@@ -44,6 +49,24 @@ class QuestionsTask extends Component {
     });
   }
 
+  // 上传我的淘宝 支付宝示例图回调
+  onUploadOne = (files, type, index) => {
+    console.log(files, type, index);
+    this.setState({
+      files,
+    });
+  }
+
+  // 提交商家审核按钮
+  submitBtn = () => {
+    console.log(123);
+    // this.setState({
+    //   objData: {
+    //
+    //   }
+    // })
+  }
+
   render() {
 
     const radioStyle = {
@@ -51,6 +74,7 @@ class QuestionsTask extends Component {
       height: '30px',
       lineHeight: '30px',
     };
+    const { files } = this.state;
 
     return(
       <div>
@@ -67,13 +91,23 @@ class QuestionsTask extends Component {
           <p className="lookShili" onClick={ this.showModal }>查看示例图>></p>
           <div className="taskList">
             <p>商家需要回答的问题列表：(请选择互动消息中收到的问答)</p>
-            <RadioGroup onChange={this.onChange} value={this.state.value}>
-              <Radio style={radioStyle} value={1}>接口了奇偶ID建瓯市的攻击我</Radio>
-              <Radio style={radioStyle} value={2}>各供热仍无人违反问坏人3我</Radio>
+            <p style={{ textAlign: 'center', color: 'red' }}>注：如有问题文字过长请左右拖动查看</p>
+            <RadioGroup onChange={this.onChange} value={this.state.value} style={{ width: '100%', wordBreak: 'keep-all', overflow: 'auto' }}>
+              <Radio style={radioStyle} value={1}>接口了奇偶ID建瓯市的攻击我接口了奇偶ID击我接口了奇击我接口了奇</Radio>
+              <Radio style={radioStyle} value={2}>各供热仍无人违反问坏人3我仍无人违反问坏人3我</Radio>
               <Radio style={radioStyle} value={3}>还人工模拟哦及水电费是的</Radio>
             </RadioGroup>
           </div>
+          <ImagePicker
+            length={1}
+            files={files}
+            onChange={this.onUploadOne}
+            onImageClick={(index, fs) => console.log(index, fs)}
+            selectable={files.length < 1}
+            accept="image/gif,image/jpeg,image/jpg,image/png"
+          />
         </div>
+        <Button onClick={ this.submitBtn } className="btn-buy" type="primary">点击提交商家审核</Button>
 
 
         <Modal
@@ -90,5 +124,4 @@ class QuestionsTask extends Component {
     )
   }
 }
-
 export default QuestionsTask

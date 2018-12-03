@@ -19,14 +19,14 @@ class TaskList extends Component {
         task_lists: null,            //调用ajax 任务列表数据导入接口
         datasState: false,      //进入任务大厅调用ajax 请求延时状态
       }
-      // console.log(props);   //token
   }
 
   componentWillMount() {
+    // Toast.loading('任务加载中...');
     // 在此调用ajax 获取任务列表
-    axios.get('/api/task/tasklist',{headers: {AppAuthorization: this.props.token}})   //传入唯一标识
+    axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
-      console.log(response.data.data.task_list);
+      // console.log(response.data);
       this.setState({
         task_lists: response.data.data.task_list,
         datasState: true
@@ -47,7 +47,7 @@ class TaskList extends Component {
   // }
 
   render() {
-    const { task_lists } = this.state;
+    const { task_lists, datasState } = this.state;
     // http://m.xhx2018.com/user/Task/taskListData
     return (
       <div style={{ paddingTop: '3.3rem' }}>
@@ -62,7 +62,7 @@ class TaskList extends Component {
             // 下拉状态为 true
             this.setState({ refreshing: true });
             // 刷新成功在调用ajax获取任务列表
-            axios.get('/api/task/tasklist',{headers: {AppAuthorization: this.props.token}})   //传入唯一标识
+            axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
             .then(response => {
               console.log(response.data.data.task_list);
               this.setState({
@@ -86,7 +86,7 @@ class TaskList extends Component {
           <UserCashList />
           {/* 任务列表 */}
           {
-            this.state.datasState ?
+            datasState ?
               <ul style={{ marginBottom: '4rem' }}>
                 {
                   task_lists.length ?
@@ -123,7 +123,11 @@ class TaskList extends Component {
                 }
               </ul>
             :
-            <div>正在加载数据.....</div>
+            <div className="loading">
+              <img src={require("../../../img/loading.gif")} alt="loading"/>
+              <p>任务加载中...</p>
+            </div>
+            // Toast.loading('任务加载中...')
           }
       </PullToRefresh>
     </div>

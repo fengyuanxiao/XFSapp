@@ -27,12 +27,14 @@ class Logins extends Component {
             password: values.password,
           })
           .then(function (response) {   //调用接口成功执行
+            // console.log(response);
+            // 登陆成功前 将token保存到本地
+            localStorage.setItem("token", response.data.token);
             if ( response.data.status ) {
-              console.log(response.data);
               // message.success(response.data.msg)
               message.success(response.data.msg, successSkip => {
-                // this.props.history.push('/taskHallPage')
-                  this_.props.history.push({pathname: '/taskHallPage', state: {data: response.data.token}})
+                this_.props.history.push('/taskHallPage')
+                  // this_.props.history.push({pathname: '/taskHallPage', state: {data: response.data.token}})
               })
             } else {  // response.data状态为 false的时候跳转
               message.error(response.data.msg)
@@ -61,17 +63,17 @@ class Logins extends Component {
           </FormItem>
           <FormItem label="登录密码">
             {getFieldDecorator('password', {
-               rules: [{ required: true, message: '请输入登录密码!' }],
-             })(
-               <Input style={{ width: '100%', height: '41px', margin: '0' }} type="password" placeholder="登录密码" />
-             )}
-           </FormItem>
-           <FormItem style={{ width: "90%", margin: "0 auto" }}>
-             {getFieldDecorator('remember', {
+              rules: [{ required: true, message: '请输入登录密码!' }],
+            })(
+              <Input style={{ width: '100%', height: '41px', margin: '0' }} type="password" placeholder="登录密码" />
+            )}
+          </FormItem>
+          <FormItem style={{ width: "90%", margin: "0 auto" }}>
+            {getFieldDecorator('remember', {
                valuePropName: 'checked',
                initialValue: true,
-             })(
-               <Checkbox>记住密码</Checkbox>
+            })(
+              <Checkbox>记住密码</Checkbox>
              )}
              {/* <a href=""></a> */}
              <Link className="login-form-forgot" to="/forgetPassword">忘记密码？</Link>
