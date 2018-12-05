@@ -13,10 +13,9 @@ class QuestionsTask extends Component {
   constructor() {
     super();
     this.state= {
-      visible: false,
-      value: 1,
-      files: data,
-      objData: {}
+      visible: false,           //示例图显示状态
+      value: 1,                 //单选框 刷手选择的问题
+      files: data,              //上传图片数据
     }
   }
 
@@ -43,7 +42,7 @@ class QuestionsTask extends Component {
 
   // 问答任务单选框
   onChange = (e) => {
-    console.log('radio checked', e.target.value);
+    // console.log(e.target.value);
     this.setState({
       value: e.target.value,
     });
@@ -51,7 +50,7 @@ class QuestionsTask extends Component {
 
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne = (files, type, index) => {
-    console.log(files, type, index);
+    // console.log(files, type, index);
     this.setState({
       files,
     });
@@ -59,12 +58,12 @@ class QuestionsTask extends Component {
 
   // 提交商家审核按钮
   submitBtn = () => {
-    console.log(123);
-    // this.setState({
-    //   objData: {
-    //
-    //   }
-    // })
+    let _this = this.state;
+    let objs = {
+      value: _this.value,
+      files: _this.files
+    }
+    console.log(objs);
   }
 
   render() {

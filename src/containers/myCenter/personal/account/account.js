@@ -54,7 +54,7 @@ class Accounts extends Component {
         <Form onSubmit={this.handleSubmit} className="login-form" style={{ padding: '3.5rem 0.7rem 0 0.7rem' }}>
           <FormItem
             label="手机号"
-            >
+          >
             {getFieldDecorator('numb', {
               rules: [{ required: true, message: '请输入手机号码!' }],
             })(
@@ -63,8 +63,8 @@ class Accounts extends Component {
           </FormItem>
           <FormItem
             label="图片验证码"
-            >
-              <img style={{ width: "100%" }} src={ require("../../../../img/captchaImg.png") } alt="图片验证码"/>
+          >
+            <img style={{ width: "100%" }} src={ require("../../../../img/captchaImg.png") } alt="图片验证码"/>
             {getFieldDecorator('code', {
               rules: [{ required: true, message: '请输入图片验证码!' }],
             })(
@@ -73,7 +73,7 @@ class Accounts extends Component {
           </FormItem>
           <FormItem
             label="手机验证码"
-            >
+          >
             {getFieldDecorator('dtCode', {
               rules: [{ required: true, message: '请输入手机验证码!' }],
             })(
