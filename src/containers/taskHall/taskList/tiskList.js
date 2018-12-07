@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-// import { PullToRefresh } from 'antd-mobile';
+import { message } from 'antd';
 import PullToRefresh from 'antd-mobile/lib/pull-to-refresh';
 import axios from 'axios';    //ajax
 
 import UserCashList from '../userCashList/userCashList'; //用户提现冒泡数据
 
 import './taskList.css';
+
+const token = localStorage.getItem("token");
 
 class TaskList extends Component {
   constructor(props) {
@@ -16,19 +18,19 @@ class TaskList extends Component {
         refreshing: false,
         down: true,
         height: document.documentElement.clientHeight,
-        task_lists: null,            //调用ajax 任务列表数据导入接口
         datasState: false,      //进入任务大厅调用ajax 请求延时状态
       }
   }
 
+  // 进入任务大厅 调用任务接口
   componentWillMount() {
     // Toast.loading('任务加载中...');
     // 在此调用ajax 获取任务列表
-    axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
+    axios.get('/api/task/tasklist',{headers: {AppAuthorization: token}})   //传入唯一标识
     .then(response => {
       // console.log(response.data);
       this.setState({
-        task_lists: response.data.data.task_list,
+        task_lists: response.data.data.task_list,     //调用ajax 任务列表数据导入接口
         datasState: true
       })
     })
@@ -41,14 +43,36 @@ class TaskList extends Component {
 
   }
 
-  // routerTo (item) {
+  routerTo (item) {
+    let this_ = this;
+    axios.post('/api/task/grabTask',
+    {
+      task_id: item.task_id,
+    },
+    {
+      headers: {AppAuthorization: token}    //post 方法传 token
+    }
+  )
+  .then(function (response) {
+    let data_ = response.data;
+    console.log(data_);
+    if ( data_.status ) {
+      this_.props.history.push({pathname: `/myTaskDetails/${data_.order_id}`, state: {data: data_.order_id}})
+    } else {
+      message.warning(data_.message);       //没有绑定买号提醒
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
   //   console.log(item);
-  //   this.props.history.push({pathname: `/myTaskDetails/${item.id}`, state: {data: item}})
-  // }
+  //   console.log(localStorage.getItem("token"));
+    // this.props.history.push({pathname: `/myTaskDetails/${item.id}`, state: {data: item}})
+  }
 
   render() {
     const { task_lists, datasState } = this.state;
-    // http://m.xhx2018.com/user/Task/taskListData
+
     return (
       <div style={{ paddingTop: '3.3rem' }}>
         <PullToRefresh
@@ -108,9 +132,11 @@ class TaskList extends Component {
                             {/* ../particularsPage/particularsPage?id={{item.goods_id}} */}
                             {
                               item.subtotal_commission?
-                                <button><Link to="/questionsTask">查看任务</Link></button>
+                                <button className="button"><Link to="/questionsTask">查看任务</Link></button>
+                                /* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */
                               :
-                              <button><Link to="/myTaskDetails">抢此任务</Link></button>
+                              // <button><Link to="/myTaskDetails">抢此任务</Link></button>
+                              <button className="button" onClick={ ()=>this.routerTo(item) }>抢此任务</button>
                             }
                             {/* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */}
                             {/* <button onClick={ ()=>this.routerTo(item) }>抢此任务</button> */}

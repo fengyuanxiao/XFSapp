@@ -39,14 +39,14 @@
   width: 30%;
   text-align: center;
 }
-.listRight > button {
+.listRight > .button {
   border: none;
   background-color: #ff6235;
   border-radius: 5px;
-  /* padding: 0.5rem 0.7rem; */
+  padding: 0.5rem 0.7rem;
   color: #fff;
 }
-.listRight > button > a {
+.listRight > .button > a {
   display: block;
   color: #fff;
   padding: 0.5rem 0.7rem;

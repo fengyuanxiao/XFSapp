@@ -29,6 +29,9 @@ import WenDaTaskOk from '../../containers/myTask/wenDaTask/wenDaTaskOk';        
 import WenDaTaskChe from '../../containers/myTask/wenDaTask/wenDaTaskChe';                            //已接问答任务  已撤销
 // 个人中心
 import BuyAdmin from '../../containers/myCenter/buyAdmin/buyAdmin';                                   //买号管理
+  import BindTaobao from '../../containers/myCenter/buyAdmin/taobao/taobao';                            //绑定淘宝账号
+  import BindJingdong from '../../containers/myCenter/buyAdmin/jingdong/jingdong';                      //绑定京东账号
+  import BindPinduoduo from '../../containers/myCenter/buyAdmin/pinduoduo/pinduoduo';                   //绑定拼多多账号
 import AllCenter from '../../containers/myCenter/callCenter/allCenter';                               //客服中心
 import Personal from '../../containers/myCenter/personal/personal';                                   //个人信息
 import ShenSu from '../../containers/myCenter/shenSu/shenSu';                                         //申诉记录
@@ -80,6 +83,9 @@ class RouteTabComponent extends Component {
           <Route path="/wenDaTaskChe" component={WenDaTaskChe}/>
           {/* 个人中心 */}
           <Route path="/buyAdmin" component={BuyAdmin} />
+          <Route path="/taobao" component={BindTaobao}/>
+          <Route path="/jingdong" component={BindJingdong}/>
+          <Route path="/pinduoduo" component={BindPinduoduo}/>
           <Route path="/allCenter" component={AllCenter} />
           <Route path="/personal" component={Personal} />
           <Route path="/shenSu" component={ShenSu} />

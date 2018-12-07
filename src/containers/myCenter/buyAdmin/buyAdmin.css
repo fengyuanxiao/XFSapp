@@ -28,3 +28,23 @@
   width: 100%;
   height: 3rem;
 }
+.buyAdmin-box > ul > li {
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid #e7e7e7;
+}
+a {
+  color: rgba(0, 0, 0, 0.65);
+}
+.bind-list {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+.bind-list > div > img {
+  padding-right: 0.5rem;
+}
+.bind-content {
+  color: #ff5500;
+  font-size: 1rem;
+  font-weight: bold;
+}

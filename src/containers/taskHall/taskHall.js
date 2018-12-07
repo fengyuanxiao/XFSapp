@@ -24,7 +24,7 @@ class TaskHallPage extends Component {
       <div>
         <header className="tabTitle">任务大厅</header>
         {/* 任务列表 */}
-        <TaskList />   {/* 把token传到 任务列表页面 */}
+        <TaskList />
         {/* tabs */}
         <RouteTabComponent />
         <img className="getJinagli" onClick={ this.clickTuiJian } src={ require("../../img/download.gif") } alt="小钱包"/>

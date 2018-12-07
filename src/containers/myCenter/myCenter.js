@@ -1,25 +1,55 @@
 import React, { Component } from 'react';
 import { Icon, Badge } from 'antd';
 import { Link } from 'react-router-dom';
+import axios from 'axios';    //ajax
 
 import './myCenter.css';
 import RouteTabComponent from '../../component/routeTab/routeTab';  //tabs
 
+const token = localStorage.getItem("token");
+
 class MyCenterPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+
+    }
+  }
+
+  // 进入个人中心页面 调用ajax 获取数据
+  componentWillMount() {
+    axios.get('/api/index/index',{headers: {AppAuthorization: token}})   //传入唯一标识
+    .then(response => {
+      console.log(response.data);
+      let data_s = response.data.data;
+      this.setState({
+        complain_count: data_s.complain_count,            //	申诉记录数
+        total_commission: data_s.total_commission,        //  累计佣金收益值
+        money_account: data_s.money_account,              //  本金总计值
+        commission_account: data_s.commission_account,    //  佣金总计值
+        tbbind_count: data_s.tbbind_count,                //  是否有绑定买号
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   render() {
+    const { complain_count, total_commission, money_account, commission_account, tbbind_count } = this.state;
     return(
       <div>
         {/* top */}
         <div className="myCenter-top">
           <p>累计佣金收益</p>
-          <p>3.00</p>
+          <p>{ total_commission }元</p>
           <div className="myCenter-top-button">
             <div>
-              <p>0.00</p>
+              <p>{ money_account }元</p>
               <p>本金总计</p>
             </div>
             <div>
-              <p>-9.00</p>
+              <p>{ commission_account }元</p>
               <p>佣金收益</p>
             </div>
           </div>
@@ -92,7 +122,7 @@ class MyCenterPage extends Component {
               <div>
                 <Icon type="dashboard" />
                 <span>申诉记录</span>
-                <Badge count={2} style={{ marginLeft: '0.3rem', backgroundColor:'red' }} />
+                <Badge count={complain_count} style={{ marginLeft: '0.3rem', backgroundColor:'red' }} />
               </div>
               <div>
                 <Icon type="right" />
