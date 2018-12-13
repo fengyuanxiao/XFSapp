@@ -24,10 +24,13 @@ class BuyAdmins extends Component {
       this.setState({
         jd_bind: response.data.data.jd_bind.nickname,                 //京东用户名
         jd_status: response.data.data.jd_bind.bind_status,            //京东绑定状态
+        jd_remark: response.data.data.jd_bind.remark,                 //京东未通过留言
         pdd_bind: response.data.data.pdd_bind.nickname,               //拼多多用户名
         pdd_status: response.data.data.pdd_bind.bind_status,          //拼多多绑定状态
+        pdd_remark: response.data.data.pdd_bind.remark,               //淘宝未通过留言
         taobao_bind: response.data.data.taobao_bind.nickname,         //淘宝用户名
         taobao_status: response.data.data.taobao_bind.bind_status,    //淘宝绑定状态
+        taobao_remark: response.data.data.taobao_bind.remark,         //拼多多未通过留言
       })
     })
     .catch(error => {
@@ -36,7 +39,7 @@ class BuyAdmins extends Component {
   }
 
   render() {
-    const { jd_bind, jd_status, pdd_bind, pdd_status, taobao_bind, taobao_status } = this.state;
+    const { jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -52,7 +55,7 @@ class BuyAdmins extends Component {
                   <div><img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ taobao_bind }</span></div>
                   <div><span>{ taobao_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                 </div>
-                <p className="bind-content"></p>
+                <p className="bind-content">{ taobao_remark }</p>
               </Link>
             </li>
             {/* 绑定拼多多账号 */}
@@ -62,7 +65,7 @@ class BuyAdmins extends Component {
                   <div><img src={require("../../../img/pinduoduo.png")} alt="拼多多图标"/><span>{ pdd_bind }</span></div>
                   <div><span>{ pdd_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                 </div>
-                <p className="bind-content"></p>
+                <p className="bind-content">{ pdd_remark }</p>
               </Link>
             </li>
             {/* 绑定京东账号 */}
@@ -72,7 +75,7 @@ class BuyAdmins extends Component {
                   <div><img src={require("../../../img/jingdong1.png")} alt="京东图标"/><span>{ jd_bind }</span></div>
                   <div><span>{ jd_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                 </div>
-                <p className="bind-content"></p>
+                <p className="bind-content">{ jd_remark }</p>
               </Link>
             </li>
           </ul>
