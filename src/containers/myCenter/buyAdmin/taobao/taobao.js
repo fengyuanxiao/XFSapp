@@ -3,10 +3,11 @@ import { Icon, Form, Input, Button, Cascader, Modal, message  } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ImagePicker from 'antd-mobile/lib/image-picker';
+import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
+import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import '../buyAdmin.css';
 
-const token = localStorage.getItem("token");
 const city_new = require('../../../../component/city.js');    //三级联动资源库
 const data = [];
 const FormItem = Form.Item;
@@ -20,6 +21,7 @@ class BindTaobaos extends Component {
   constructor() {
     super();
     this.state = {
+      animating: false,
       files: data,
       onevisible: false,
       twovisible: false
@@ -76,6 +78,7 @@ class BindTaobaos extends Component {
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
         } else {
+          this_.setState({ animating: true })            //数据提交中显示的login.....
           // console.log(values);
           // 图片集合存入imgs 传给后端
           let imgs = [values.images[0].url, values.images[1].url]
@@ -93,16 +96,16 @@ class BindTaobaos extends Component {
             images: imgs,                             //图片集合
           },
           {
-            headers: {AppAuthorization: token}    //post 方法传 token
+            headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
           })
           .then(function (response) {   //调用接口成功执行
             let data_ = response.data;
             if ( data_.status ) {
+              this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.success(data_.msg);
               this_.props.history.push("/buyAdmin")
             } else {
               message.warning(data_.msg);
-              this_.props.history.push("/buyAdmin")
             }
             console.log(data_);
           })
@@ -118,7 +121,7 @@ class BindTaobaos extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { files } = this.state;
+    const { files, animating } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -126,96 +129,105 @@ class BindTaobaos extends Component {
           绑定淘宝买号
         </header>
         <div className="buyAdmin-box">
-          <p className="buyAdmin-title">请务必完成以下信息</p>
-          <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
-            <FormItem
-              label="淘宝旺旺账号："
-            >
-              {getFieldDecorator('Account', {
-                rules: [{ required: true, message: '请输入正确的淘宝旺旺账号：!' }],
-              })(
-                <Input className="buy-input" placeholder="旺旺账号" />
-              )}
-            </FormItem>
-            <FormItem
-              label="最近的淘宝订单号："
-            >
-              {getFieldDecorator('tb_order_sign', {
-                rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
-              })(
-                <Input className="buy-input" maxLength="18" placeholder="淘宝订单号" />
-              )}
-            </FormItem>
-            <FormItem
-              label="收货人姓名："
-            >
-              {getFieldDecorator('GoodsName', {
-                rules: [{ required: true, message: '请输入收货人姓名!' }],
-              })(
-                <Input className="buy-input" placeholder="姓名" />
-              )}
-            </FormItem>
-            <FormItem label="所在地区：">
-              {/* <Cascader options={options} onChange={this.onChange} placeholder="Please select" /> */}
-              {getFieldDecorator('provinces', {
-                rules: [{ required: true, message: '请完全所在地区!' }],
-              })(
-                <Cascader options={options} onChange={this.onChange} placeholder="所在地区" />
-              )}
-            </FormItem>
-            <FormItem
-              label="详细地址"
-            >
-              {getFieldDecorator('address', {
-                rules: [{ required: true, message: '请输入详细地址!' }],
-              })(
-                <Input className="buy-input" placeholder="详细地址" />
-              )}
-            </FormItem>
-            <FormItem
-              label="收货人手机"
-            >
-              {getFieldDecorator('GoodsPhone', {
-                rules: [{ required: true, message: '请输入收货人手机号码!' }],
-              })(
-                <Input className="buy-input" type="text" maxLength="11" placeholder="收货人手机号" />
-              )}
-            </FormItem>
-            <FormItem
-              label="支付宝姓名"
-            >
-              {getFieldDecorator('AlipayName', {
-                rules: [{ required: true, message: '请输入支付宝姓名!' }],
-              })(
-                <Input className="buy-input" placeholder="支付宝姓名" />
-              )}
-            </FormItem>
-            <FormItem
-              label="上传 我的淘宝 和 支付宝实名截图"
-            >
-              {getFieldDecorator('images', {
-                rules: [{ required: true, message: '请上传淘宝和支付宝截图!' }],
-              })(
-                <ImagePicker
-                  length={2}
-                  files={files}
-                  onChange={this.onUploadOne}
-                  onImageClick={(index, fs) => console.log(index, fs)}
-                  selectable={files.length < 2}
-                  accept="image/gif,image/jpeg,image/jpg,image/png"
-                />
-              )}
-            </FormItem>
-            {/* 查看截图上传示例图 */}
-            <div className="look-shilitu">
-              <p onClick={this.showOneShiliTu}>查看淘例图>></p>
-              <p onClick={this.showTwoShiliTu}>查看示例图>></p>
-            </div>
+          <WingBlank>
+            <p className="buyAdmin-title">请务必完成以下信息</p>
+            <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
+              <FormItem
+                label="淘宝旺旺账号："
+              >
+                {getFieldDecorator('Account', {
+                  rules: [{ required: true, message: '请输入正确的淘宝旺旺账号：!' }],
+                })(
+                  <Input className="buy-input" placeholder="旺旺账号" />
+                )}
+              </FormItem>
+              <FormItem
+                label="最近的淘宝订单号："
+              >
+                {getFieldDecorator('tb_order_sign', {
+                  rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
+                })(
+                  <Input className="buy-input" maxLength="18" placeholder="淘宝订单号" />
+                )}
+              </FormItem>
+              <FormItem
+                label="收货人姓名："
+              >
+                {getFieldDecorator('GoodsName', {
+                  rules: [{ required: true, message: '请输入收货人姓名!' }],
+                })(
+                  <Input className="buy-input" placeholder="姓名" />
+                )}
+              </FormItem>
+              <FormItem label="所在地区：">
+                {/* <Cascader options={options} onChange={this.onChange} placeholder="Please select" /> */}
+                {getFieldDecorator('provinces', {
+                  rules: [{ required: true, message: '请完全所在地区!' }],
+                })(
+                  <Cascader options={options} onChange={this.onChange} placeholder="所在地区" />
+                )}
+              </FormItem>
+              <FormItem
+                label="详细地址"
+              >
+                {getFieldDecorator('address', {
+                  rules: [{ required: true, message: '请输入详细地址!' }],
+                })(
+                  <Input className="buy-input" placeholder="详细地址" />
+                )}
+              </FormItem>
+              <FormItem
+                label="收货人手机"
+              >
+                {getFieldDecorator('GoodsPhone', {
+                  rules: [{ required: true, message: '请输入收货人手机号码!' }],
+                })(
+                  <Input className="buy-input" type="text" maxLength="11" placeholder="收货人手机号" />
+                )}
+              </FormItem>
+              <FormItem
+                label="支付宝姓名"
+              >
+                {getFieldDecorator('AlipayName', {
+                  rules: [{ required: true, message: '请输入支付宝姓名!' }],
+                })(
+                  <Input className="buy-input" placeholder="支付宝姓名" />
+                )}
+              </FormItem>
+              <FormItem
+                label="上传 我的淘宝 和 支付宝实名截图"
+              >
+                {getFieldDecorator('images', {
+                  rules: [{ required: true, message: '请上传淘宝和支付宝截图!' }],
+                })(
+                  <ImagePicker
+                    length={2}
+                    files={files}
+                    onChange={this.onUploadOne}
+                    onImageClick={(index, fs) => console.log(index, fs)}
+                    selectable={files.length < 2}
+                    accept="image/gif,image/jpeg,image/jpg,image/png"
+                  />
+                )}
+              </FormItem>
+              {/* 查看截图上传示例图 */}
+              <div className="look-shilitu">
+                <p onClick={this.showOneShiliTu}>查看淘例图>></p>
+                <p onClick={this.showTwoShiliTu}>查看示例图>></p>
+              </div>
 
-            <Button className="btn-buy" type="primary" htmlType="submit">
-              确认绑定
-            </Button>
-          </Form>
+              <Button className="btn-buy" type="primary" htmlType="submit">
+                确认绑定
+              </Button>
+              <div className="toast-example">
+                <ActivityIndicator
+                  toast
+                  text="数据提交中..."
+                  animating={animating}
+                />
+              </div>
+            </Form>
+          </WingBlank>
         </div>
 
         {/* 我的淘宝示例图 */}

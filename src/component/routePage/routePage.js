@@ -30,8 +30,13 @@ import WenDaTaskChe from '../../containers/myTask/wenDaTask/wenDaTaskChe';      
 // 个人中心
 import BuyAdmin from '../../containers/myCenter/buyAdmin/buyAdmin';                                   //买号管理
   import BindTaobao from '../../containers/myCenter/buyAdmin/taobao/taobao';                            //绑定淘宝账号
+    import Correct_taobao from '../../containers/myCenter/buyAdmin/taobao/correct_taobao';                //修改绑定淘宝账号
   import BindJingdong from '../../containers/myCenter/buyAdmin/jingdong/jingdong';                      //绑定京东账号
+    import Correct_jingdong from '../../containers/myCenter/buyAdmin/jingdong/correct_jingdong';          //修改绑定京东账号
   import BindPinduoduo from '../../containers/myCenter/buyAdmin/pinduoduo/pinduoduo';                   //绑定拼多多账号
+    import Correct_pinduoduo from '../../containers/myCenter/buyAdmin/pinduoduo/correct_pinduoduo';       //修改绑定拼多多的账号
+  import BindWinpinhui from '../../containers/myCenter/buyAdmin/weipinhui/weipinhui';                   //绑定唯品会账号
+    import Correct_weipinhui from '../../containers/myCenter/buyAdmin/weipinhui/correct_weipinhui';       //修改绑定唯品会账号
 import AllCenter from '../../containers/myCenter/callCenter/allCenter';                               //客服中心
 import Personal from '../../containers/myCenter/personal/personal';                                   //个人信息
 import ShenSu from '../../containers/myCenter/shenSu/shenSu';                                         //申诉记录
@@ -84,8 +89,13 @@ class RouteTabComponent extends Component {
           {/* 个人中心 */}
           <Route path="/buyAdmin" component={BuyAdmin} />
           <Route path="/taobao" component={BindTaobao}/>
+          <Route path="/correct_taobao" component={Correct_taobao}/>
           <Route path="/jingdong" component={BindJingdong}/>
+          <Route path="/correct_jingdong" component={Correct_jingdong}/>
           <Route path="/pinduoduo" component={BindPinduoduo}/>
+          <Route path="/correct_pinduoduo" component={Correct_pinduoduo}/>
+          <Route path="/weipinhui" component={BindWinpinhui}/>
+          <Route path="/correct_weipinhui" component={Correct_weipinhui}/>
           <Route path="/allCenter" component={AllCenter} />
           <Route path="/personal" component={Personal} />
           <Route path="/shenSu" component={ShenSu} />

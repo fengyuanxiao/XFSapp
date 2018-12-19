@@ -6,8 +6,6 @@ import axios from 'axios';    //ajax
 import './myCenter.css';
 import RouteTabComponent from '../../component/routeTab/routeTab';  //tabs
 
-const token = localStorage.getItem("token");
-
 class MyCenterPage extends Component {
   constructor() {
     super();
@@ -18,7 +16,7 @@ class MyCenterPage extends Component {
 
   // 进入个人中心页面 调用ajax 获取数据
   componentWillMount() {
-    axios.get('/api/index/index',{headers: {AppAuthorization: token}})   //传入唯一标识
+    axios.get('/api/index/index',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       console.log(response.data);
       let data_s = response.data.data;

@@ -8,7 +8,6 @@ import UserCashList from '../userCashList/userCashList'; //用户提现冒泡数
 
 import './taskList.css';
 
-const token = localStorage.getItem("token");
 
 class TaskList extends Component {
   constructor(props) {
@@ -20,15 +19,17 @@ class TaskList extends Component {
         height: document.documentElement.clientHeight,
         datasState: false,      //进入任务大厅调用ajax 请求延时状态
       }
+      // console.log(props);
+      // console.log(localStorage.getItem("token"));
   }
 
   // 进入任务大厅 调用任务接口
   componentWillMount() {
     // Toast.loading('任务加载中...');
     // 在此调用ajax 获取任务列表
-    axios.get('/api/task/tasklist',{headers: {AppAuthorization: token}})   //传入唯一标识
+    axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
-      // console.log(response.data);
+      console.log(response.data);
       this.setState({
         task_lists: response.data.data.task_list,     //调用ajax 任务列表数据导入接口
         datasState: true
@@ -43,6 +44,7 @@ class TaskList extends Component {
 
   }
 
+  //点击抢任务 进入对应的任务详情页面
   routerTo (item) {
     let this_ = this;
     axios.post('/api/task/grabTask',
@@ -50,7 +52,7 @@ class TaskList extends Component {
       task_id: item.task_id,
     },
     {
-      headers: {AppAuthorization: token}    //post 方法传 token
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     }
   )
   .then(function (response) {

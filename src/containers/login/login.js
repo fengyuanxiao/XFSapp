@@ -6,14 +6,18 @@ import axios from 'axios';
 import './login.css';
 
 const FormItem = Form.Item;
+const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
 
 class Logins extends Component {
+
+  componentWillMount() {
+    localStorage.removeItem("token");
+  }
 
   // 点击登录按钮
   handleSubmit = (e) => {
     let this_ = this;
     e.preventDefault();
-    let phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log(Number(values.userName));
@@ -29,11 +33,12 @@ class Logins extends Component {
           .then(function (response) {   //调用接口成功执行
             // console.log(response);
             // 登陆成功前 将token保存到本地
-            localStorage.setItem("token", response.data.token);
             if ( response.data.status ) {
               // message.success(response.data.msg)
               message.success(response.data.msg, successSkip => {
-                this_.props.history.push('/taskHallPage')
+                // 保存token到本地
+                localStorage.setItem("token", response.data.token);
+                this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
                   // this_.props.history.push({pathname: '/taskHallPage', state: {data: response.data.token}})
               })
             } else {  // response.data状态为 false的时候跳转

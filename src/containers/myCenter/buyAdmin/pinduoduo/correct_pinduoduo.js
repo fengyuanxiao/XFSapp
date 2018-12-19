@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React,{ Component } from 'react';
 import { Icon, Form, Input, Button, Cascader, Modal, message  } from 'antd';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
-import axios from 'axios';
 
 import '../buyAdmin.css';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
-const data = [];
+const data = [];      //上传图片集合
 const FormItem = Form.Item;
 const options = city_new.data.RECORDS;    //展示用户选择的省市区
 const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
@@ -17,16 +17,49 @@ message.config({
   top: 300,
 });
 
-class BindPinduoduos extends Component {
-  constructor() {
+class Correct_pinduoduos extends Component {
+  constructor(props) {
     super();
     this.state = {
       animating: false,
       files: data,
+      shows: false,
       onevisible: false,
-      twovisible: false
+      twovisible: false,
     }
   }
+
+  componentWillMount () {
+
+  }
+
+  componentDidMount () {
+    // 修改绑定买号返回已填写过的值
+    let this_ = this;
+    axios.post('/api/index/updateall_bind',
+    {
+      id: this.props.location.state.data,   //由父页面传过来的绑定平台id
+    },
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then(function (response) {   //调用接口成功执行
+      let responses = response.data.data;
+      console.log(responses);
+      this_.props.form.setFieldsValue({
+        Account: responses.nickname,                //账号名称
+        GoodsName: responses.receiver,              //收货人
+        address: responses.receiver_address,        //收货人详细地址
+        GoodsPhone: responses.receiver_mobile,      //收货人手机号
+        // provinces: responses.provinces,          //省市区组合
+        // images: responses.images,
+      })
+    })
+    .catch(function (error) {   //调用接口失败执行
+      console.log(error);
+    });
+  }
+
   // 省市区联动回调
   onChange = (value) => {
     console.log(value);
@@ -72,18 +105,21 @@ class BindPinduoduos extends Component {
     let this_ = this;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      // console.log(values);
+      console.log(values);
+      let imgss = data;
+      console.log(imgss);
       if ( !err === true && _this.length >= 2 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
         } else {
           this_.setState({ animating: true })            //数据提交中显示的login.....
+          // console.log(values);
           // 图片集合存入imgs 传给后端
-          let imgs = [values.images[0].url, values.images[1].url]
+          let imgs = [values.images[0].url, values.images[1].url];
           // console.log(imgs);
           //以上数据都正确 在此 ajax交互
-          axios.post('/api/index/pdd_bind',
+          axios.post('/api/index/updatetb_bind',
           {
             Account: values.Account,                  //绑定帐号昵称
             GoodsName: values.GoodsName,              //收货人
@@ -93,6 +129,7 @@ class BindPinduoduos extends Component {
             provinces: values.provinces,              //省市区组合
             AlipayName: values.AlipayName,            //支付宝姓名
             images: imgs,                             //图片集合
+            id: this_.props.location.state.data       //id
           },
           {
             headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -100,7 +137,7 @@ class BindPinduoduos extends Component {
           .then(function (response) {   //调用接口成功执行
             let data_ = response.data;
             if ( data_.status ) {
-              this_.setState({ animating: false })      //数据提交成功关闭login.....
+              this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.success(data_.msg);
               this_.props.history.push("/buyAdmin")
             } else {
@@ -135,36 +172,18 @@ class BindPinduoduos extends Component {
                 label="会员名称："
               >
                 {getFieldDecorator('Account', {
-                  rules: [{ required: true, message: '请输入会员名称!' }],
+                  rules: [{ required: true, message: '请输入正确的淘宝旺旺账号：!' }],
                 })(
-                  <Input className="buy-input" placeholder="拼多多会员名" />
+                  <Input className="buy-input" onChange={ this.nicknameVal } placeholder="旺旺账号" />
                 )}
               </FormItem>
-              {/* <FormItem
-                label="最近的淘宝订单号："
-                >
-                {getFieldDecorator('note2', {
-                rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
-                })(
-                <Input className="buy-input" placeholder="淘宝订单号" />
-                )}
-              </FormItem> */}
               <FormItem
                 label="收货人姓名："
               >
                 {getFieldDecorator('GoodsName', {
                   rules: [{ required: true, message: '请输入收货人姓名!' }],
                 })(
-                  <Input className="buy-input" placeholder="收货人姓名" />
-                )}
-              </FormItem>
-              <FormItem
-                label="收货人手机"
-              >
-                {getFieldDecorator('GoodsPhone', {
-                  rules: [{ required: true, message: '请输入收货人手机号码!' }],
-                })(
-                  <Input className="buy-input" type="text" maxLength="11" placeholder="收货人手机号" />
+                  <Input className="buy-input" placeholder="姓名" />
                 )}
               </FormItem>
               <FormItem label="所在地区：">
@@ -182,6 +201,15 @@ class BindPinduoduos extends Component {
                   rules: [{ required: true, message: '请输入详细地址!' }],
                 })(
                   <Input className="buy-input" placeholder="详细地址" />
+                )}
+              </FormItem>
+              <FormItem
+                label="收货人手机"
+              >
+                {getFieldDecorator('GoodsPhone', {
+                  rules: [{ required: true, message: '请输入收货人手机号码!' }],
+                })(
+                  <Input className="buy-input" type="text" maxLength="11" placeholder="收货人手机号" />
                 )}
               </FormItem>
               <FormItem
@@ -228,24 +256,24 @@ class BindPinduoduos extends Component {
           maskClosable={true}
           okText={"知道了"}
           cancelText={"关闭"}
-        >
-          <img className="shilitu" src={require('../../../../img/pinduoduo1.png')} alt="我的淘宝" />
-        </Modal>
-        {/* 我的支付宝示例图 */}
-        <Modal
-          visible={this.state.twovisible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          maskClosable={true}
-          okText={"知道了"}
-          cancelText={"关闭"}
-        >
-          <img className="shilitu" src={require('../../../../img/pinduoduo2.png')} alt="我的支付宝" />
-        </Modal>
+          >
+            <img className="shilitu" src={require('../../../../img/mytaobao.png')} alt="我的淘宝" />
+          </Modal>
+          {/* 我的支付宝示例图 */}
+          <Modal
+            visible={this.state.twovisible}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+            maskClosable={true}
+            okText={"知道了"}
+            cancelText={"关闭"}
+          >
+            <img className="shilitu" src={require('../../../../img/myzhifubao.png')} alt="我的支付宝" />
+          </Modal>
       </div>
     )
   }
 }
 
-const BindPinduoduo = Form.create()(BindPinduoduos)
-export default BindPinduoduo
+const Correct_pinduoduo = Form.create()(Correct_pinduoduos)
+export default Correct_pinduoduo
