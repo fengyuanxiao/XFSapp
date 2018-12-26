@@ -28,7 +28,7 @@ class RegisterPages extends Component {
       placeholder: "请输入手机号",
       tuCodeLink: null,   //图片验证码链接
       tuCode: null,       //图片验证码内容
-      sid: null,          //sid
+      sid: null,          //图片验证码 码sid
       time: null,         //time
       hongbao: false,     //注册成功注册的红包显示
       openhonbao: false,  //打开红包状态
@@ -160,9 +160,14 @@ class RegisterPages extends Component {
               // console.log(response.data);
               // response.data状态为 true的时候跳转
               if ( response.data.status ) {
+                // 保存token到本地
+                localStorage.setItem("token", response.data.token);
                 message.success(response.data.msg);
                 // 显示红包
-                this_.setState({hongbao: true, register_money: response.data.data.register_money })
+                this_.setState({
+                  hongbao: true,
+                  register_money: response.data.data.register_money,
+                })
                 // 注册成功后执行回调跳转到任务大厅
                 // message.success("注册成功！", successSkip => {
                 //   this.props.history.push('/taskHallPage')
@@ -245,7 +250,7 @@ class RegisterPages extends Component {
           用户注册
         </header>
         <Form onSubmit={this.handleSubmit} style={{
-            padding: "3.7rem 0.6rem 0 0.6rem"
+            padding: "3.7rem 1.5rem 0 1.5rem"
         }}>
           <FormItem {...formItemLayout} label="手机号：">
             {
@@ -336,7 +341,7 @@ class RegisterPages extends Component {
               })(<Input className="register-input" placeholder="必填邀请码"/>)
             }
           </FormItem>
-          <FormItem {...formItemLayout} label="QQ号">
+          <FormItem {...formItemLayout} label="QQ号" style={{ marginBottom: '4rem' }}>
             {
               getFieldDecorator('QQnum', {
                 rules: [
@@ -349,7 +354,7 @@ class RegisterPages extends Component {
             }
           </FormItem>
           <FormItem {...tailFormItemLayout}>
-            <Button className="zhuceBtn" type="primary" htmlType="submit">免费注册</Button>
+            <Button className="btn-buy" type="primary" htmlType="submit">免费注册</Button>
           </FormItem>
         </Form>
 

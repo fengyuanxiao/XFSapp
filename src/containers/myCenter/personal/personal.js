@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 
 class Personal extends Component {
+
+  // 处理内存泄露
+  componentWillUnmount = () => {
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
   render() {
     return(
       <div>

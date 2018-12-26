@@ -11,9 +11,41 @@ class TaskState extends Component {
       collapsed: false,
       itme_key: null    //用户取消任务选取的 key值
     }
-    this.showDrawer = this.showDrawer.bind(this);
-    this.onClose = this.onClose.bind(this);
   }
+
+  componentDidMount() {
+    //待操作任务倒计时
+    let time = this.props.time;   //获取父组件父组件传递拖来的时间戳
+    let this_ = this;
+    const timer=setInterval(function(){
+        var hour=0, minute=0, second=0;//时间默认值
+        if(time > 0){
+            hour = Math.floor(time / (60 * 60));
+            minute = Math.floor(time / 60) - (hour * 60);
+            second = Math.floor(time) - (hour * 60 * 60) - (minute * 60);
+        }
+
+        if (hour <= 9) hour = '0' + hour;
+        if (minute <= 9) minute = '0' + minute;
+        if (second <= 9) second = '0' + second;
+        //
+        const cuttime = hour+":"+minute+":"+second;
+        // console.log(cuttime);
+        // 时时更换的时间
+        this_.setState({
+          cuttime: cuttime
+        })
+        time--;
+    },1000);
+    if( time <= 0 ){
+        clearInterval(timer);
+    }
+  }
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+}
 
   showDrawer = () => {
     this.setState({
@@ -41,14 +73,16 @@ class TaskState extends Component {
   }
 
   render() {
-
+    //存父组件传来的数据
+    const { tasktype_pic, ordertatusText, order_message } = this.props;
+    const { cuttime } = this.state;
     return(
       <section className="taskDetail-state">
-        <img src={require('../../../img/icon2.png')} alt="taobaoImg" />
-        <span style={{ fontSize: '1rem' }}>任务状态：带操作 </span>
-        <span style={{ color: 'red' }}>提交倒计时：<b>00:00:00</b> (未在截止时间之前提交将扣1元手续费)</span>
+        <img src={tasktype_pic} alt="taobaoImg" />
+        <span style={{ fontSize: '1rem' }}>任务状态：{ordertatusText} </span>
+        <span style={{ color: 'red' }}>提交倒计时：<b>{cuttime}</b> (未在截止时间之前提交将扣1元手续费)</span>
         <p>商家要求: 此商家没有额外要求</p>
-        <p>订单要求：此订单无需留言</p>
+        <p>订单要求：{order_message}</p>
         <div className="start-task-btn">
           <button onClick={this.showDrawer}>取消任务</button>
           <button><Link to="/taskStateChild">操作任务</Link></button>

@@ -105,6 +105,7 @@ class BindTaobaos extends Component {
               message.success(data_.msg);
               this_.props.history.push("/buyAdmin")
             } else {
+              this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.warning(data_.msg);
             }
             console.log(data_);

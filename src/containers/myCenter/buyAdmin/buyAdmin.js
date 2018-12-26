@@ -98,6 +98,7 @@ class BuyAdmins extends Component {
     } else {
       // console.log(123);
     }
+    // console.log(this);
   }
 
   render() {

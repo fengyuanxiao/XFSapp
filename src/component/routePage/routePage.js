@@ -46,6 +46,7 @@ import TongZhi from '../../containers/myCenter/tongZhi/tongZhi';                
 import TuiJian from '../../containers/myCenter/tuiJian/tuiJian';                                      //推荐有奖
 // 个人信息
 import Account from '../../containers/myCenter/personal/account/account';                              //修改账号
+  import Correct_Account from '../../containers/myCenter/personal/account/correct_account';               //修改账号子集页面
 import LoginPassword from '../../containers/myCenter/personal/loginPassword/loginPassword';            //修改登录密码
 import TxPassword from '../../containers/myCenter/personal/txPassword/txPassword';                     //修改提现密码
 import XgQQ from '../../containers/myCenter/personal/xgQQ/xgQQ';                                       //修改QQ号
@@ -69,7 +70,7 @@ class RouteTabComponent extends Component {
           <Route path="/commission" component={CommissionPage} />
           <Route path="/myTaskDetails" component={MyTaskDetails} />
           <Route path="/questionsTask" component={QuestionsTask} />
-          {/* <Route path="/myTaskDetails/:id" component={MyTaskDetails} /> 点击抢任务按钮 进入相对应的任务详情页面 */}
+          {/* <Route path="/myTaskDetails/:id" component={MyTaskDetails} />     {/*点击抢任务按钮 进入相对应的任务详情页面*/}
           <Route path="/taskStateChild" component={TaskStateChild}/>
           <Route path="/goodPingJia" component={GoodPingJia} />
           <Route path="/appealTask" component={AppealTask} />
@@ -103,6 +104,7 @@ class RouteTabComponent extends Component {
           <Route path="/tuiJian" component={TuiJian} />
           {/* 个人信息 */}
           <Route path="/account" component={Account} />
+          <Route path="/correct_account" component={Correct_Account}/>
           <Route path="/loginPassword" component={LoginPassword} />
           <Route path="/txPassword" component={TxPassword} />
           <Route path="/xgQQ" component={XgQQ} />

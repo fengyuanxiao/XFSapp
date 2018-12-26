@@ -8,6 +8,9 @@ import UserCashList from '../userCashList/userCashList'; //用户提现冒泡数
 
 import './taskList.css';
 
+message.config({
+  duration: 1,
+});
 
 class TaskList extends Component {
   constructor(props) {
@@ -19,8 +22,6 @@ class TaskList extends Component {
         height: document.documentElement.clientHeight,
         datasState: false,      //进入任务大厅调用ajax 请求延时状态
       }
-      // console.log(props);
-      // console.log(localStorage.getItem("token"));
   }
 
   // 进入任务大厅 调用任务接口
@@ -29,10 +30,13 @@ class TaskList extends Component {
     // 在此调用ajax 获取任务列表
     axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
-      console.log(response.data);
+      // console.log(response.data);
+      let datas = response.data.data;
       this.setState({
-        task_lists: response.data.data.task_list,     //调用ajax 任务列表数据导入接口
-        datasState: true
+        task_lists: datas.task_list,                      //调用ajax 任务列表数据导入接口
+        datasState: true,
+        money_account: datas.money_account,               //本金
+        commission_account: datas.commission_account,     //佣金
       })
     })
     .catch(error => {
@@ -45,11 +49,14 @@ class TaskList extends Component {
   }
 
   //点击抢任务 进入对应的任务详情页面
+  // routerTo = (item) => {
+  //   console.log(item);
+  // }
   routerTo (item) {
     let this_ = this;
     axios.post('/api/task/grabTask',
     {
-      task_id: item.task_id,
+      task_id: item,
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -57,9 +64,15 @@ class TaskList extends Component {
   )
   .then(function (response) {
     let data_ = response.data;
-    console.log(data_);
+    // console.log(data_);
     if ( data_.status ) {
-      this_.props.history.push({pathname: `/myTaskDetails/${data_.order_id}`, state: {data: data_.order_id}})
+      // localStorage.setItem("order_id", data_.data.order_id);
+      // this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}})
+      message.success("恭喜您，抢到啦！", successSkip => {
+        // 保存order_id到本地
+        localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
+        this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
+      })
     } else {
       message.warning(data_.message);       //没有绑定买号提醒
     }
@@ -67,14 +80,11 @@ class TaskList extends Component {
   .catch(function (error) {
     console.log(error);
   });
-  //   console.log(item);
-  //   console.log(localStorage.getItem("token"));
-    // this.props.history.push({pathname: `/myTaskDetails/${item.id}`, state: {data: item}})
+    // this.props.history.push("/myTaskDetails")
   }
 
   render() {
-    const { task_lists, datasState } = this.state;
-
+    const { task_lists, datasState, money_account, commission_account } = this.state;
     return (
       <div style={{ paddingTop: '3.3rem' }}>
         <PullToRefresh
@@ -104,8 +114,8 @@ class TaskList extends Component {
           {/* 本金佣金 */}
           <section className="task-hall-top">
             <div className="task-hall-top-child">
-              <Link to="/cash">本金：100</Link>
-              <Link to="/commission">佣金：3.00</Link>
+              <Link to="/cash">本金：{money_account}</Link>
+              <Link to="/commission">佣金：{commission_account}</Link>
             </div>
           </section>
           {/* 提现用户数据冒泡 */}
@@ -137,8 +147,8 @@ class TaskList extends Component {
                                 <button className="button"><Link to="/questionsTask">查看任务</Link></button>
                                 /* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */
                               :
-                              // <button><Link to="/myTaskDetails">抢此任务</Link></button>
-                              <button className="button" onClick={ ()=>this.routerTo(item) }>抢此任务</button>
+                              <button className="button" onClick={ ()=>this.routerTo(item.task_id) }>抢此任务</button>
+                              // <button className="button" onClick={ this.routerTo }>抢此任务</button>
                             }
                             {/* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */}
                             {/* <button onClick={ ()=>this.routerTo(item) }>抢此任务</button> */}

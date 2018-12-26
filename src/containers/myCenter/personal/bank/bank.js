@@ -1,16 +1,15 @@
 import React,{ Component } from 'react';
 import { Icon, Form, Input, Button, Cascader, message  } from 'antd';
 import { Link } from 'react-router-dom';
-// import { ImagePicker } from 'antd-mobile';
+import axios from 'axios';
 import ImagePicker from 'antd-mobile/lib/image-picker';
-import axios from 'axios';    //ajax
-
-// import http from '../../../../component/server';
+import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
+import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import '../../buyAdmin/buyAdmin.css';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
-// console.log(city_new.data.RECORDS);
+const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
 const data = [];
 const FormItem = Form.Item;
 const cityData = city_new.data.RECORDS;   //展示用户选择的省市区
@@ -36,6 +35,7 @@ class Banks extends Component {
   constructor() {
     super();
     this.state = {
+      animating: false,
       files: data,
     }
   }
@@ -84,26 +84,44 @@ class Banks extends Component {
   // 数据提交、ajax交互
   handleSubmit = (e) => {
     e.preventDefault();
+    let this_ = this;
     let _this = this.state.files
     this.props.form.validateFields((err, values) => {
       if ( !err === true && _this.length >= 1 ) {
         console.log(values);    //用户将要提交的所有数据
         // 信息完成后 点击提交按钮调用ajax
-
-        axios.post('/api/user/checkedauth', {
-          citys: values.note4,
-        })
-        .then(function (response) {
-          console.log(response);
-          if ( response.data.msg ) {
-            message.success('提交成功，待审核！');
-          } else {
-            message.error(response.data.status);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        if ( !phoneNum.test(values.bankTel) ) {
+          message.error("请输入正确的手机号码！")
+        } else {
+          this_.setState({ animating: true })            //数据提交中显示的login.....
+          let imgs = [values.images[0].url];            //保存图片集合
+          axios.post('/api/index/bankcardcommit', {
+            Bank: values.Bank,
+            realName: values.realName,
+            provinces: values.provinces,
+            ZhiHangName: values.ZhiHangName,
+            BankCode: values.BankCode,
+            bankTel: values.bankTel,
+            images: imgs,
+          },
+          {
+            headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
+          })
+          .then(function (response) {
+            console.log(response);
+            let data_ = response.data;
+            if ( data_.status ) {
+              this_.setState({ animating: false })          //数据提交成功关闭login.....
+              message.success(data_.msg);
+            } else {
+              this_.setState({ animating: false })          //数据提交成功关闭login.....
+              message.error(data_.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
       }else {
         message.error('请完善信息');
       }
@@ -112,7 +130,7 @@ class Banks extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { files } = this.state;
+    const { files, animating } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -120,86 +138,95 @@ class Banks extends Component {
           提现账号设置
         </header>
         <div className="buyAdmin-box">
-          <p className="buyAdmin-title">请务必完成以下信息</p>
-          <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
-            <FormItem
-              label="姓名："
-            >
-              {getFieldDecorator('note1', {
-                rules: [{ required: true, message: '请输入姓名!' }],
-              })(
-                <Input className="buy-input" placeholder="请输入姓名" />
-              )}
-            </FormItem>
-            <FormItem
-              label="选择银行："
-            >
-              {getFieldDecorator('note3', {
-                rules: [{ required: true, message: '请选择银行!' }],
-              })(
-                <Cascader options={bankData} onChange={this.bankButton} placeholder="请选择银行" />
-              )}
-            </FormItem>
-            <FormItem label="开户行：">
-              {/* <Cascader options={options} onChange={this.onChange} placeholder="Please select" /> */}
-              {getFieldDecorator('note4', {
-                rules: [{ required: true, message: '请选择开户行!' }],
-              })(
-                <Cascader options={cityData} onChange={this.cityButton} placeholder="请选择开户行" />
-              )}
-            </FormItem>
-            <FormItem
-              label="开户行支行名称："
-            >
-              {getFieldDecorator('note5', {
-                rules: [{ required: true, message: '请输入开户行支行名称!' }],
-              })(
-                <Input className="buy-input" placeholder="请输入开户行支行名称" />
-              )}
-            </FormItem>
-            <FormItem
-              label="银行卡号："
-            >
-              {getFieldDecorator('note6', {
-                rules: [{ required: true, message: '请输入银行卡号!' }],
-              })(
-                <Input className="buy-input" type="Number" placeholder="请输入银行卡号" />
-              )}
-            </FormItem>
-            <FormItem
-              label="上传 银行卡正面截图"
-            >
-              {getFieldDecorator('note8', {
-                rules: [{ required: true, message: '请上传银行卡正面截图!' }],
-              })(
-                <ImagePicker
-                  length={1}
-                  files={files}
-                  onChange={this.onUploadOne}
-                  onImageClick={(index, fs) => console.log(index, fs)}
-                  selectable={files.length < 1}
-                  accept="image/gif,image/jpeg,image/jpg,image/png"
-                />
-              )}
-            </FormItem>
-            <FormItem
-              label="银行开户预留手机："
-            >
-              {getFieldDecorator('note7', {
-                rules: [{ required: true, message: '请输入银行开户预留手机!' }],
-              })(
-                <Input className="buy-input" type="text" maxLength="11" placeholder="请输入银行开户预留手机" />
-              )}
-            </FormItem>
-            {/* 查看截图上传示例图 */}
-            <div className="look-shilitu" style={{ padding:0, fontSize: '0.8rem' }}>
-              温馨提示：柜台登记的手机号码、姓名、卡号、必须一样；姓名必须与绑定的身份证名字和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，小浣熊将保证信息安全不泄漏，不用于其他用途。
-            </div>
+          <WingBlank>
+            <p className="buyAdmin-title">请务必完成以下信息</p>
+            <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
+              <FormItem
+                label="姓名："
+              >
+                {getFieldDecorator('realName', {
+                  rules: [{ required: true, message: '请输入姓名!' }],
+                })(
+                  <Input className="buy-input" placeholder="请输入姓名" />
+                )}
+              </FormItem>
+              <FormItem
+                label="选择银行："
+              >
+                {getFieldDecorator('Bank', {
+                  rules: [{ required: true, message: '请选择银行!' }],
+                })(
+                  <Cascader options={bankData} onChange={this.bankButton} placeholder="请选择银行" />
+                )}
+              </FormItem>
+              <FormItem label="开户行：">
+                {/* <Cascader options={options} onChange={this.onChange} placeholder="Please select" /> */}
+                {getFieldDecorator('provinces', {
+                  rules: [{ required: true, message: '请选择开户行!' }],
+                })(
+                  <Cascader options={cityData} onChange={this.cityButton} placeholder="请选择开户行" />
+                )}
+              </FormItem>
+              <FormItem
+                label="开户行支行名称："
+              >
+                {getFieldDecorator('ZhiHangName', {
+                  rules: [{ required: true, message: '请输入开户行支行名称!' }],
+                })(
+                  <Input className="buy-input" placeholder="请输入开户行支行名称" />
+                )}
+              </FormItem>
+              <FormItem
+                label="银行卡号："
+              >
+                {getFieldDecorator('BankCode', {
+                  rules: [{ required: true, message: '请输入银行卡号!' }],
+                })(
+                  <Input className="buy-input" type="Number" placeholder="请输入银行卡号" />
+                )}
+              </FormItem>
+              <FormItem
+                label="上传 银行卡正面截图"
+              >
+                {getFieldDecorator('images', {
+                  rules: [{ required: true, message: '请上传银行卡正面截图!' }],
+                })(
+                  <ImagePicker
+                    length={1}
+                    files={files}
+                    onChange={this.onUploadOne}
+                    onImageClick={(index, fs) => console.log(index, fs)}
+                    selectable={files.length < 1}
+                    accept="image/gif,image/jpeg,image/jpg,image/png"
+                  />
+                )}
+              </FormItem>
+              <FormItem
+                label="银行开户预留手机："
+              >
+                {getFieldDecorator('bankTel', {
+                  rules: [{ required: true, message: '请输入银行开户预留手机!' }],
+                })(
+                  <Input className="buy-input" type="text" maxLength="11" placeholder="请输入银行开户预留手机" />
+                )}
+              </FormItem>
+              {/* 查看截图上传示例图 */}
+              <div className="look-shilitu" style={{ padding:0, fontSize: '0.8rem' }}>
+                温馨提示：柜台登记的手机号码、姓名、卡号、必须一样；姓名必须与绑定的身份证名字和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，小浣熊将保证信息安全不泄漏，不用于其他用途。
+              </div>
 
-            <Button className="btn-buy" type="primary" htmlType="submit">
-              确认绑定
-            </Button>
-          </Form>
+              <Button className="btn-buy" type="primary" htmlType="submit">
+                确认绑定
+              </Button>
+              <div className="toast-example">
+                <ActivityIndicator
+                  toast
+                  text="数据提交中..."
+                  animating={animating}
+                />
+              </div>
+            </Form>
+          </WingBlank>
         </div>
       </div>
     )

@@ -11,6 +11,13 @@ class TaskHallPage extends Component {
     // console.log(localStorage.getItem("token"));
   }
 
+  // 处理内存泄露
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
+
   // 点击小钱包进入推荐有礼页面
   clickTuiJian = () => {
     this.props.history.push("/tuiJian")
@@ -22,7 +29,7 @@ class TaskHallPage extends Component {
       <div>
         <header className="tabTitle">任务大厅</header>
         {/* 任务列表 toke={ this.props.location.state.token }  */}
-        <TaskList />
+        <TaskList history ={this.props.history} />
         {/* tabs */}
         <RouteTabComponent />
         <img className="getJinagli" onClick={ this.clickTuiJian } src={ require("../../img/download.gif") } alt="小钱包"/>

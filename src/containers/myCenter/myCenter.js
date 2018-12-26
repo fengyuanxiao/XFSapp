@@ -32,6 +32,12 @@ class MyCenterPage extends Component {
       console.log(error);
     });
   }
+  // 处理内存泄露
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
 
   render() {
     const { complain_count, total_commission, money_account, commission_account, tbbind_count } = this.state;

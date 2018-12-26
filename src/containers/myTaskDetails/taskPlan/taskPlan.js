@@ -8,8 +8,8 @@ import threeImg from '../../../img/img2.png';
 import fourImg from '../../../img/img2.png'
 
 class TaskPlan extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       previewVisibleOne: false,
       previewVisibleTwo: false,
@@ -20,6 +20,7 @@ class TaskPlan extends Component {
       previewImageThree: threeImg,
       previewImageFour: fourImg,
     }
+    console.log(props);
   }
 
   // 点击图片显示截图
@@ -40,6 +41,7 @@ class TaskPlan extends Component {
 
   render() {
     const { previewVisibleOne, previewVisibleTwo, previewVisibleThree, previewVisibleFour, previewImageOne, previewImageTwo, previewImageThree, previewImageFour } = this.state;
+    const { addtime, chat_pay_content, need_principal, order_id, user_taobao, itemprice, itemnum } = this.props;
     return(
       <div className="task-plan">
         <div className="plan">
@@ -47,10 +49,10 @@ class TaskPlan extends Component {
           <p>下一步：请点击操作任务按钮操作</p>
         </div>
         <div className="plan-box">
-          <p className="title"><b className="plan-title">接受任务</b><span>2018-10-27 09:21:51</span></p>
-          <p className="task-plan-list"><span>任务编号</span><span>13</span></p>
-          <p className="task-plan-list"><span>买号</span><span>双方各</span></p>
-          <div className="task-plan-list"><span>商品金额</span><span>100.00元*1件</span></div>
+          <p className="title"><b className="plan-title">接受任务</b><span>{addtime}</span></p>
+          <p className="task-plan-list"><span>任务编号</span><span>{order_id}</span></p>
+          <p className="task-plan-list"><span>买号</span><span>{user_taobao}</span></p>
+          <div className="task-plan-list"><span>商品金额</span><span>{itemprice}*{itemnum}件</span></div>
         </div>
         {/* 任务要求 */}
         <div className="plan-box">
@@ -78,7 +80,7 @@ class TaskPlan extends Component {
           <p className="task-plan-list"><span>支付宝商户订单号</span><span>123456789111234575</span></p>
           <p className="task-plan-list"><span>返款方式</span><span>平台返款</span></p>
           <p className="task-plan-list"><span>返款账号</span><span>默认返款账号</span></p>
-          <div className="task-plan-list"><span>返款金额</span><span>100.00元</span></div>
+          <div className="task-plan-list"><span>返款金额</span><span>{need_principal}</span></div>
         </div>
         {/* 收货好评 */}
         <div className="plan-box">
