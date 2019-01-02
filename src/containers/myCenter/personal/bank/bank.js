@@ -113,6 +113,7 @@ class Banks extends Component {
             if ( data_.status ) {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.success(data_.msg);
+              this.props.history.push("/personal")
             } else {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.error(data_.msg);

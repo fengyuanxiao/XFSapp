@@ -41,7 +41,7 @@ class TaskPlan extends Component {
 
   render() {
     const { previewVisibleOne, previewVisibleTwo, previewVisibleThree, previewVisibleFour, previewImageOne, previewImageTwo, previewImageThree, previewImageFour } = this.state;
-    const { addtime, chat_pay_content, need_principal, order_id, user_taobao, itemprice, itemnum } = this.props;
+    const { addtime, need_principal, order_id, user_taobao, itemprice, itemnum } = this.props;
     return(
       <div className="task-plan">
         <div className="plan">

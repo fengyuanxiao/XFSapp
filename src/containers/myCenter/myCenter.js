@@ -10,7 +10,7 @@ class MyCenterPage extends Component {
   constructor() {
     super();
     this.state = {
-
+      
     }
   }
 

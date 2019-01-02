@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { Link  } from 'react-router-dom';
+import axios from 'axios';
 
 class TongZhiChild extends Component {
+  constructor(props) {
+    super();
+    // console.log(props.location.state);       父组件传递过来的数据
+  }
+
+  componentWillMount() {
+    axios.post('/api/help/noticeDetail', {
+      notice_id: this.props.location.state.data,
+    },
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}
+    })
+    .then( res => {
+      console.log(res.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   render() {
     return(
       <div>

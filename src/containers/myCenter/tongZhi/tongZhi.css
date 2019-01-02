@@ -7,14 +7,14 @@
   background-color: #fff;
   margin-bottom: 0.5rem;
 }
-.tongZhi-box > li > a {
+.tongZhi-box > li > div {
   padding: 0.6rem 0.8rem;
   color: #333;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.tongZhi-box > li > a > span:last-child {
+.tongZhi-box > li > div > span:last-child {
   display: block;
   padding: 0.2rem 0.4rem;
   background-color: rgba(0,0,0,.15);
@@ -36,4 +36,8 @@
 .tongZhiChild > img {
   width: 100%;
   padding-bottom: 0.7rem;
+}
+
+.loadings {
+  padding-top: 50%;
 }

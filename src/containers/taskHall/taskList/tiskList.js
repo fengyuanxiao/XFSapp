@@ -66,8 +66,6 @@ class TaskList extends Component {
     let data_ = response.data;
     // console.log(data_);
     if ( data_.status ) {
-      // localStorage.setItem("order_id", data_.data.order_id);
-      // this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}})
       message.success("恭喜您，抢到啦！", successSkip => {
         // 保存order_id到本地
         localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
@@ -130,7 +128,8 @@ class TaskList extends Component {
                       return(
                         <li key={item.task_id} className="task-list">
                           <div className="listLeft">
-                            <p>佣金{item.commission}元{item.commission_desc}</p>
+                            <p>{item.commission}元</p>
+                            <p>{item.platform}佣金任务</p>
                             <div className="amount">
                               <span>共{item.common_orderitem_num}单</span>
                               <span>剩{item.residue_order}单</span>

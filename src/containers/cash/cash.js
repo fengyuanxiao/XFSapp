@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Input, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
-// import { Tabs, WhiteSpace } from 'antd-mobile';
+import axios from 'axios';
 import Tabs from 'antd-mobile/lib/tabs';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 
@@ -21,11 +21,22 @@ class CashPage extends Component {
       inputYJ: null,  //佣金提现input内输入金额
       inputBJ: null   //本金提现input内输入金额
     }
-
-    this.yJTiXianBtn = this.yJTiXianBtn.bind(this);
-    this.yongJin = this.yongJin.bind(this);
-    this.bJTiXianBtn = this.bJTiXianBtn.bind(this);
   }
+
+  // componentWillMount() {
+  //   axios.post('/api/index/usermoneylog', {
+  //     type: 1,
+  //   },
+  //   {
+  //     headers: {AppAuthorization: localStorage.getItem("token")}
+  //   })
+  //   .then( res => {
+  //     console.log(res.data);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+  // }
 
   // 全部提现按钮
   allTiXianBtn = (e) => {

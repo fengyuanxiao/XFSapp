@@ -5,12 +5,20 @@ import axios from 'axios';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 import { Link  } from 'react-router-dom';
 
+import './shensu.css';
+
 const tabs = [
   { title: '我发起的申诉' },
   { title: '我收到的申诉' },
 ];
 
 class ShenSu extends Component {
+  constructor() {
+    super();
+    this.state = {
+      datasState: false,
+    }
+  }
 
   componentWillMount() {
     axios.post('/api/help/complainList', {
@@ -19,7 +27,11 @@ class ShenSu extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
     .then( res => {
-      console.log(res.data);
+      console.log(res.data.data);
+      this.setState({
+        datasState: true,
+        shenSuList: res.data.data,
+      })
     })
     .catch(function(error) {
       console.log(error);
@@ -33,7 +45,11 @@ class ShenSu extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
     .then( res => {
-      console.log(res.data);
+      console.log(res.data.data);
+      this.setState({
+        datasState: true,
+        shenSuList: res.data.data,
+      })
     })
     .catch(function(error) {
       console.log(error);
@@ -42,6 +58,7 @@ class ShenSu extends Component {
   }
 
   render() {
+    const { datasState, shenSuList } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -51,13 +68,58 @@ class ShenSu extends Component {
         <WhiteSpace style={{ paddingTop: '3rem' }} />
         <Tabs onTabClick={ this.onTabClick } tabs={tabs} initialPage={0} animated={false} useOnPan={false}>
           {/* 我发起的申诉 */}
-          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
-            123
-          </div>
+          {
+            datasState ?
+              shenSuList.length ?
+                shenSuList.map((item, index) => {
+                  return(
+                    <div key={item.order_id} className="bodyBox">
+                      <div className="childOne">
+                        <div>
+                          <span>{item.complain_desc}</span>
+                          <span>{item.undo_time}</span>
+                        </div>
+                        <div>{item.order_status_text}</div>
+                      </div>
+                      <div className="childTwo">{item.status}</div>
+                    </div>
+                  )
+                })
+              :
+              <div>没有申诉内容！</div>
+            :
+            <div className="loading">
+              <img src={require("../../../img/loading.gif")} alt="loading"/>
+              <p>任务加载中...</p>
+            </div>
+          }
+
           {/* 我收到的申诉 */}
-          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
-            321
-          </div>
+          {
+            datasState ?
+              shenSuList.length ?
+                shenSuList.map((item, index) => {
+                  return(
+                    <div key={item.order_id} className="bodyBox">
+                      <div className="childOne">
+                        <div>
+                          <span>{item.complain_desc}</span>
+                          <span>{item.undo_time}</span>
+                        </div>
+                        <div>{item.order_status_text}</div>
+                      </div>
+                      <div className="childTwo">{item.status}</div>
+                    </div>
+                  )
+                })
+              :
+              <div>没有申诉内容！</div>
+            :
+            <div className="loading">
+              <img src={require("../../../img/loading.gif")} alt="loading"/>
+              <p>任务加载中...</p>
+            </div>
+          }
         </Tabs>
         <WhiteSpace />
       </div>

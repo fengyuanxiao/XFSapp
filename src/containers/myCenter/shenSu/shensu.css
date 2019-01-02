@@ -1,0 +1,31 @@
+.bodyBox {
+  padding: 0.3rem 0.3rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.childOne {
+  width: 80%;
+  margin-right: 5%;
+}
+.childOne > div > span:first-child {
+  color: #000;
+  font-size: 1rem;
+}
+.childOne > div > span:last-child {
+  padding-left: 2rem;
+}
+.childOne > div:last-child {
+  color: red;
+  font-size: 14px;
+}
+.childTwo {
+  width: 15%;
+  text-align: center;
+  padding: 0.2rem 0.1rem;
+  background-color: #f0ad4e;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 12px;
+}

@@ -1,14 +1,59 @@
 import React,{ Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd';
+import { Icon, message } from 'antd';
+import axios from 'axios';
+
+message.config({
+  top: 300,
+});
 
 class Personal extends Component {
 
+  componentWillMount() {
+    axios.get('/api/index/userInfo', {
+      headers: {AppAuthorization: localStorage.getItem("token")}
+    })
+    .then( res =>{
+      let datas = res.data.data;
+      // console.log(datas);
+      this.setState({
+        realname_status: datas.realname_status,
+        bank_status: datas.bank_status,
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
   // 处理内存泄露
   componentWillUnmount = () => {
     this.setState = (state, callback) => {
       return;
     };
+  }
+
+  // 实名认证
+  Certification = () => {
+    let states = this.state;
+    if ( states.realname_status === 0 || states.realname_status === 3 ) {
+      this.props.history.push("/certification")
+    } else if ( states.realname_status === 2 ) {
+      message.warning("实名认证审核中！");
+    } else {
+      message.success("已认证！");
+    }
+  }
+
+  // 银行卡绑定
+  bindBank = () => {
+    let states = this.state;
+    if ( states.bank_status === 0 || states.bank_status === 3 ) {
+      this.props.history.push("/bank")
+    } else if ( states.bank_status === 2 ) {
+      message.warning("银行卡审核中！");
+    } else {
+      message.success("已绑定！");
+    }
   }
 
   render() {
@@ -64,7 +109,8 @@ class Personal extends Component {
             </Link>
           </li>
           <li>
-            <Link className="myCenter-A" to="/certification">
+            <div onClick={ this.Certification } className="myCenter-A">
+              {/* <Link className="myCenter-A" to="/certification"> */}
               <div>
                 <Icon type="idcard" />
                 <span>实名认证</span>
@@ -72,10 +118,12 @@ class Personal extends Component {
               <div>
                 <Icon type="right" />
               </div>
-            </Link>
+              {/* </Link> */}
+            </div>
           </li>
           <li>
-            <Link className="myCenter-A" to="/bank">
+            <div onClick={ this.bindBank } className="myCenter-A">
+              {/* <Link className="myCenter-A" to="/bank"> */}
               <div>
                 <Icon type="property-safety" />
                 <span>银行卡绑定</span>
@@ -83,7 +131,8 @@ class Personal extends Component {
               <div>
                 <Icon type="right" />
               </div>
-            </Link>
+              {/* </Link> */}
+            </div>
           </li>
         </ul>
       </div>
