@@ -10,9 +10,9 @@ const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89]
 
 class Logins extends Component {
 
-  componentWillMount() {
-    localStorage.removeItem("token");
-  }
+  // componentWillMount() {
+  //   localStorage.removeItem("token");
+  // }
 
   componentDidMount () {
     this.props.form.setFieldsValue({
@@ -27,7 +27,7 @@ class Logins extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
+        // console.log(values);
         if ( !phoneNum.test(values.userName) ) {    //判断手机号码是否正确
           message.error("请输入正确的手机号码！")
         } else {

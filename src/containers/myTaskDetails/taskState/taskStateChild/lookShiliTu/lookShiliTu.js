@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 import { Modal, Input, Button, Form, message  } from 'antd';
-// import { ImagePicker } from 'antd-mobile';
 import ImagePicker from 'antd-mobile/lib/image-picker';
+import axios from 'axios';
+import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
+import WingBlank from 'antd-mobile/lib/wing-blank';
 
 // import TaskStateUpload from '../taskStateUpload/taskStateUpload';
 
 const FormItem = Form.Item;
 const data = [];
+let taobaoOride =  /^T200P\d{18}$/;
 
 message.config({
   top: 300,
 });
 
 class LookShiliTus extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      animating: false,
       onevisible: false,
       twovisible: false,
       threevisible: false,
       files: data,
     }
+    console.log(props);
   }
 
   // 货比三家示例图
@@ -45,21 +50,33 @@ class LookShiliTus extends Component {
 
   // 核对商家店铺名是否正确
   heDuiName = () =>  {
-    console.log("核对商家店铺名是否正确");
-    console.log(this);
+    let inshop_name = this.state.inshop_name;
+    let getshop_name = this.props.shop_name;
+    // console.log("核对商家店铺名是否正确");
+    if ( inshop_name === getshop_name ) {
+      message.success("店铺名称正确！")
+    } else {
+      message.error("店铺名称错误！")
+    }
   }
-
+  // 输入商家店铺名称value值
+  shopName =(e) => {
+    this.setState({
+      inshop_name: e.target.value
+    })
+    // console.log(e.target.value);
+  }
+  // 关闭查看示例图
   handleOk = (e) => {
-    console.log(e);
+    // console.log(e);
     this.setState({
       onevisible: false,
       twovisible: false,
       threevisible: false
     });
   }
-
   handleCancel = (e) => {
-    console.log(e);
+    // console.log(e);
     this.setState({
       onevisible: false,
       twovisible: false,
@@ -78,17 +95,39 @@ class LookShiliTus extends Component {
   // 操作任务页面 实付金额、支付宝商户订单号
   handleSubmit = (e) => {
     e.preventDefault();
-    let _this = this.state.files
+    let this_ = this;
+    let photos = this.state.files;        //图片集合
+    let order_id = this.props.order_id;
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && _this.length >= 2 ) {
-        let objs = {
-          val: values,
-          tu: _this
+      if ( !err === true && photos.length >= 2 ) {
+        this_.setState({ animating: true })            //数据提交中显示的login.....
+        let imgs = [photos[0].url, photos[1].url, photos[2].url];    //转换图片的格式
+        if ( !taobaoOride.test(values.orderNumber) ) {
+          message.error("请输入正确的商户订单号！")
+        } else {
+          // 此处执行ajax请求
+          axios.post('/api/task/operateTaskCommit', {
+            taobao_ordersn: values.orderNumber,   //用户下单的订单号
+            order_id: order_id,                   //订单ID
+            need_principal: values.money,         //实际返款金额
+            chat_pay_content: imgs,               //聊天、支付或者下单详情截图
+          },{
+            headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+          })
+          .then( res => {
+            if ( res.data.status ) {
+              this_.setState({ animating: false })          //数据提交成功关闭login.....
+              this_.props.history.push("/myTaskDetails");
+              message.success(res.data.msg);
+            } else {
+              this_.setState({ animating: false })          //数据提交成功关闭login.....
+              message.error(res.data.msg)
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          })
         }
-        // 此处执行ajax请求
-        console.log('要传给后端的数据', objs);
-        console.log('要传给后端的数据', objs.val);
-        console.log('要传给后端的数据', objs.tu);
       }else {
         message.error('请完善信息');
       }
@@ -97,69 +136,96 @@ class LookShiliTus extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { files } = this.state;
+    const { files, animating } = this.state;
+    const { shop_name, pic_uploads_num, pic_desc, platform } = this.props;
     return(
       <div>
         {/* 第一步货比三家 */}
         <div className="task-plan buzhou">
-          <div className="buzou-title"><span>第一步 货比三家</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
-          <p>.请确认使用双方各（淘宝账号）登入手机淘宝APP</p>
-          <p>.打开手机淘宝，在搜索框手动输入指定关键词</p>
-          <p>.按任务要求先浏览任意三家同类产品1-3分钟</p>
-          <h3 style={{ color:'#c15958', marginTop:'1rem' }}>核对商家店铺名是否正确</h3>
-          <div className="shop-title">
-            <span>1</span><span>商家店铺名称:京*旗舰店</span>
-          </div>
-          <div className="shop-title">
-            <span>2</span>
-            <Input placeholder="请在此输入店铺名核对" />
-            <Button type="primary" onClick={ this.heDuiName }>核对</Button>
-          </div>
-          {/* 第二步 浏览店铺 */}
-          <div className="buzou-title"><span>第二步 浏览店铺</span><span onClick={this.showTwoShiliTu}>点击查看示例</span></div>
-          <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
-          <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
-          <p>.返回任务商品，直接点击购买（警示：勿从购物车提交订单)</p>
-          {/* 第三步 聊天下单支付 */}
-          <div className="buzou-title"><span>第三步 聊天下单支付</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
-          <p>.需按商家要求选择是否聊天下单支付，或直接提交订单不聊天</p>
-          <p>.付款完成后，进人支付宝账单详情页面，截图上传</p>
-          <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p>
-          {/* 支付宝 账单截图 */}
-          <ImagePicker
-            length={2}
-            files={files}
-            onChange={this.onChange}
-            onImageClick={(index, fs) => console.log(index, fs)}
-            selectable={files.length < 2}
-            accept="image/gif,image/jpeg,image/jpg,image/png"
-          />
-
-          <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>聊天截图</span>和<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>支付宝账单截图</span></p>
-          <div className="buzou-title"><span style={{ color:'#63bb95' }}>第四步 订单信息核对</span></div>
-          <p>应垫付金额:100元(请按实际垫付金额填写，实际相差超50元请取消任务)</p>
-          <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>商户订单号可在支付宝账单详情中复制</p>
-          <Form className="login-form" layout="inline" onSubmit={this.handleSubmit}>
-            <FormItem>
-              {getFieldDecorator('money', {
-                rules: [{ required: true, message: '请输入实际付款金额!' }],
-              })(
-                <Input type="Number" placeholder="请输入实际付款金额" className="jineInput" />
-              )}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator('orderNumber', {
-                rules: [{ required: true, message: '请输入支付宝商户订单号!' }],
-              })(
-                <Input placeholder="请输入支付宝商户订单号" className="jineInput" />
-              )}
-            </FormItem>
-            <FormItem>
-              <Button type="primary" htmlType="submit" className="login-form-button">
-                提交任务
-              </Button>
-            </FormItem>
-          </Form>
+          <WingBlank>
+            <div className="buzou-title"><span>第一步 货比三家</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
+            <p>.请确认使用双方各（淘宝账号）登入手机淘宝APP</p>
+            <p>.打开手机淘宝，在搜索框手动输入指定关键词</p>
+            <p>.按任务要求先浏览任意三家同类产品1-3分钟</p>
+            <h3 style={{ color:'#c15958', marginTop:'1rem' }}>核对商家店铺名是否正确</h3>
+            <div className="shop-title">
+              <span>1</span><span>商家店铺名称:{shop_name}</span>
+            </div>
+            <div className="shop-title">
+              <span>2</span>
+              <Input onChange={ this.shopName } placeholder="请在此输入店铺名核对" />
+              <Button type="primary" onClick={ this.heDuiName }>核对</Button>
+            </div>
+            {/* 第二步 浏览店铺 */}
+            <div className="buzou-title"><span>第二步 浏览店铺</span><span onClick={this.showTwoShiliTu}>点击查看示例</span></div>
+            <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
+            <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
+            <p>.返回任务商品，直接点击购买（警示：勿从购物车提交订单)</p>
+            {/* 第三步 聊天下单支付 */}
+            {
+              platform === 1 ?
+                <div>
+                  <div className="buzou-title"><span>第三步 聊天下单支付</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+                  <p>.需按商家要求选择是否聊天下单支付，或直接提交订单不聊天</p>
+                  <p>.付款完成后，进人支付宝账单详情页面，截图上传</p>
+                  <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p>
+                </div>
+              :
+              (platform === 2 ?
+                <div className="buzou-title"><span>第三步 上传订单截图</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+              :
+              <div className="buzou-title"><span>第三步 上传订单截图</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+              )
+            }
+            {/* <div>
+              <div className="buzou-title"><span>第三步 聊天下单支付</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+              <p>.需按商家要求选择是否聊天下单支付，或直接提交订单不聊天</p>
+              <p>.付款完成后，进人支付宝账单详情页面，截图上传</p>
+              <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p>
+            </div> */}
+            {/* 支付宝 账单截图 */}
+            <ImagePicker
+              length={pic_uploads_num}
+              files={files}
+              onChange={this.onChange}
+              onImageClick={(index, fs) => console.log(index, fs)}
+              selectable={files.length < pic_uploads_num}
+              accept="image/gif,image/jpeg,image/jpg,image/png"
+            />
+            <p className="jietuFont">注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>（{pic_desc}）</span></p>
+            <div className="buzou-title"><span style={{ color:'#63bb95' }}>第四步 订单信息核对</span></div>
+            <p>应垫付金额:100元(请按实际垫付金额填写，实际相差超50元请取消任务)</p>
+            <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>商户订单号可在支付宝账单详情中复制</p>
+            <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>订单号可在订单详情中复制</p>
+            <Form className="login-form" layout="inline" onSubmit={this.handleSubmit}>
+              <FormItem>
+                {getFieldDecorator('money', {
+                  rules: [{ required: true, message: '请输入实际付款金额!' }],
+                })(
+                  <Input type="Number" placeholder="请输入实际付款金额" className="jineInput" />
+                )}
+              </FormItem>
+              <FormItem>
+                {getFieldDecorator('orderNumber', {
+                  rules: [{ required: true, message: '请输入支付宝商户订单号!' }],
+                })(
+                  <Input placeholder="请输入支付宝商户订单号" className="jineInput" />
+                )}
+              </FormItem>
+              <FormItem>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                  提交任务
+                </Button>
+              </FormItem>
+            </Form>
+            <div className="toast-example">
+              <ActivityIndicator
+                toast
+                text="数据提交中..."
+                animating={animating}
+              />
+            </div>
+          </WingBlank>
         </div>
 
 
@@ -194,7 +260,7 @@ class LookShiliTus extends Component {
           okText={"知道了"}
           cancelText={"关闭"}
         >
-          <img className="shilitu" src={require('../../../../../img/6666.jpg')} alt="聊天下单" />
+          <img className="shilitu" src={platform === 1? require('../../../../../img/6666.jpg') : (platform === 2? require('../../../../../img/jdshili.jpg') : "")} alt="聊天下单" />
         </Modal>
       </div>
     )

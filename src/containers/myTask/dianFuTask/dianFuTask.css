@@ -5,14 +5,15 @@
   padding-top: 0.3rem;
 }
 .left-img {
-  width: 25%;
+  width: 30%;
 }
 .left-img > img {
   width: 100%;
   height: 100%;
+  padding-right: 0.4rem;
 }
 .right {
-  width: 75%;
+  width: 70%;
 }
 .right-top {
   display: flex;
@@ -27,17 +28,24 @@
   align-items: center;
   padding: 0.5rem 0.4rem;
 }
+.right-center > p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1890ff;
+}
 .right-bottom {
-  display: flex;
+  display: inline;
   justify-content: space-between;
-  padding: 0.5rem 0.4rem;
-  font-size: 0.2rem;
+  font-size: 1rem;
   color: #000;
+}
+.paddingBottom {
+  padding-bottom: 0.8rem;
 }
 .right-bottom > p > span:nth-child(2) {
   color: #007aff;
   margin-right: 0.4rem;
 }
-.right-bottom > span {
+.taskss {
   color: red;
 }

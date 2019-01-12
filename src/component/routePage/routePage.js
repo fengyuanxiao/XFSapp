@@ -15,6 +15,7 @@ import CommissionPage from '../../containers/commission/commission';            
 import MyTaskDetails from '../../containers/myTaskDetails/myTaskDetails';                              //我的详情任务页
 import QuestionsTask from '../../containers/myTaskDetails/questionsTask/questionsTask';               //问答任务
 import TaskStateChild from '../../containers/myTaskDetails/taskState/taskStateChild/taskStateChild';  //操作任务页面
+import TaskStateChilds from '../../containers/myTaskDetails/taskState/taskStateChild/taskStateChilds';  //多关键词操作任务页面
 import GoodPingJia from '../../containers/myTaskDetails/taskState/goodPingjia/goodPingjia';           //收货好评页面
 import AppealTask from '../../containers/myTaskDetails/taskState/appealTask/appealTask';              //申诉任务页面
 // 我的任务
@@ -72,6 +73,7 @@ class RouteTabComponent extends Component {
           <Route path="/questionsTask" component={QuestionsTask} />
           {/* <Route path="/myTaskDetails/:id" component={MyTaskDetails} />     {/*点击抢任务按钮 进入相对应的任务详情页面*/}
           <Route path="/taskStateChild" component={TaskStateChild}/>
+          <Route path="/taskStateChilds" component={TaskStateChilds}/>
           <Route path="/goodPingJia" component={GoodPingJia} />
           <Route path="/appealTask" component={AppealTask} />
           {/* 我的任务 */}

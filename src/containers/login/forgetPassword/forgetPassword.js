@@ -16,7 +16,8 @@ class ForgetPasswords extends Component {
       getCodesState: true,
       codeNum: 60,
       TestGetCode: "获取验证码",
-      placeholder: "请输入手机号"
+      placeholder: "请输入手机号",
+      tuValue: null,
     }
   }
 
@@ -48,31 +49,76 @@ class ForgetPasswords extends Component {
     })
   }
 
+  // 点击图片验证码重新获取 图片
+  getVerifyCode = () => {
+    axios.get('/api/user/getcaptcha')
+    .then(response => {
+      this.setState({
+        tuCodeLink: response.data.data.captcha_src,
+        sid: response.data.data.sid,
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    // console.log(this.state.tuCode);
+  }
+
+  // 图片验证码value值
+  tuCode = (e) => {
+    this.setState({
+      tuValue: e.target.value
+    })
+  }
+
   // 获取短信验证码
   setCode = () => {
-    if ( this.state.placeholder === "请输入手机号" ) {
+    let states = this.state;
+    let this_ = this;   //存入  this
+    if ( states.placeholder === "请输入手机号" ) {
       message.error("请输入手机号码！");
-    } else if ( !phoneNumber.test(this.state.placeholder) ) {
+    } else if ( !phoneNumber.test(states.placeholder) ) {
       message.error("请输入正确的手机号码！");
+    } else if (states.tuValue === null) {
+      message.error("请输图形验证码！");
     } else {
       // 再次调用获取验证码接口
-      message.success("获取验证码中");
-      let codeNum = this.state.codeNum
-      const timer = setInterval(() => {
-      this.setState({
-        getCodesState:false,
-        codeNum: (codeNum--)
-        }, () => {
-            if (codeNum === 0) {
-            clearInterval(timer);
-            this.setState({
-              getCodesState: true,
-              codeNum: 60,
-              TestGetCode: "重新获取"
+      axios.post('/api/user/sendcode', {
+        sid: states.sid,
+        tuCode: states.tuValue,
+        phoneNum: states.placeholder
+      })
+      .then(function (response) {   //调用接口成功执行
+        console.log(response.data);
+        // 判断后台返回数据 status 状态 true 图片验证码正确 执行下面
+        if ( response.data.status ) {
+          // 倒计时 获取短信验证码
+          let codeNum = states.codeNum;
+          const timer = setInterval(() => {
+          this_.setState({
+            getCodesState:false,
+            codeNum: (codeNum--)
+            }, () => {
+                if (codeNum === 0) {
+                clearInterval(timer);
+                this_.setState({
+                  getCodesState: true,
+                  codeNum: 60,
+                  TestGetCode: "重新获取"
+                })
+              }
             })
-          }
-        })
-      }, 1000)
+          }, 1000)
+          // 图片验证码正确显示提示
+          message.success(response.data.msg);
+        } else {  // 判断后台返回数据 status 状态 false执行else
+          // 图片验证码错误显示提示
+          message.error(response.data.msg);
+        }
+      })
+      .catch(function (error) {   //调用接口失败执行
+        console.log(error);
+      });
 
     }
     // console.log("在此调用获取短信验证码接口");
@@ -81,19 +127,38 @@ class ForgetPasswords extends Component {
   // 提交注册按钮 提交数据
   handleSubmit = (e) => {
     e.preventDefault();
+    let this_ = this;
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
-        if ( !phoneNumber.test(values.phoneNum) ) {
-          message.error("请输入正确的手机号码！")
-        }else if( values.loginPassword !== values.aloginPassword ) {
+        if( values.loginPassword !== values.aloginPassword ) {
           message.error("两次密码不一致！")
         }else {
           // 在此提交ajax数据
           console.log(values);
-          message.success("修改成功！", successSkip => { // 注册成功后执行回调跳转到任务大厅
-            this.props.history.push('/taskHallPage')
+          axios.post('/api/user/forgetPwd', {
+            mobile: values.phoneNum,
+            smscode: values.captcha,
+            password: values.loginPassword,
+            repassword: values.aloginPassword,
+          },{
+            headers: {AppAuthorization: localStorage.getItem("token")}
           })
+          .then( res => {
+            // console.log(res.data);
+            if ( res.data.status ) {
+              message.success(res.data.msg);
+              this_.props.history.push("/");
+            } else {
+              message.error(res.data.msg);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+          // message.success("修改成功！", successSkip => { // 注册成功后执行回调跳转到任务大厅
+          //   this.props.history.push('/taskHallPage')
+          // })
         }
       }
     });
@@ -150,14 +215,14 @@ class ForgetPasswords extends Component {
               label="图形验证码："
             >
               <div>
-                <img style={{ width: "100%" }} src={ tuCodeLink } alt="短信验证码"/>
+                <img onClick={ this.getVerifyCode } style={{ width: "100%" }} src={ tuCodeLink } alt="短信验证码"/>
               </div>
               {getFieldDecorator('tuCode', {
                 rules: [{
                   required: true, message: '请输入图形验证码!',
                 }],
               })(
-                <Input className="register-input" maxLength="11" placeholder="请输入图形验证码" />
+                <Input onChange={ this.tuCode } className="register-input" maxLength="11" placeholder="请输入图形验证码" />
               )}
             </FormItem>
             <FormItem

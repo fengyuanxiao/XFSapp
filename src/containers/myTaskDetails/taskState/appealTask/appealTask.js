@@ -1,41 +1,60 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Cascader, Input, Button, message } from 'antd';
-// import { ImagePicker } from 'antd-mobile';
+import axios from 'axios';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 
 import './appealTask.css';
 
 const { TextArea } = Input;
-const options = [{
-    value: 'commodity',
-    label: '商品错误',
-  },{
-    value: 'refund',
-    label: '返款问题',
-  },{
-    value: 'expressage',
-    label: '快递问题',
-  },{
-    value: 'other',
-    label: '其他',
-    }];
+const options = [];
+// {
+//     value: 1,
+//     label: '商品错误',
+//   },{
+//     value: 2,
+//     label: '返款问题',
+//   },{
+//     value: 3,
+//     label: '快递问题',
+//   },{
+//     value: 4,
+//     label: '其他',
+//     }
 const data = [];
 
 class AppealTask extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       files: data,        //图片数据
       tousu: null,        //投诉类型
-      contentInput: null  //投诉说明
+      contentInput: null,  //投诉说明
     }
-    this.uploadImg = this.uploadImg.bind(this);
+    // console.log(props);
+  }
+
+  componentWillMount() {
+    axios.post('/api/task/appealTask',{
+      order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
+    },{
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then( res =>{
+      let issueType = res.data.data;
+      this.setState({
+          optionss: options
+      })
+      // console.log(issueType);
+    })
+    .catch( error => {
+      console.log(error);
+    })
   }
 
   // 选择投诉类型
   onChange = (value) => {
-    // console.log(value);
+    console.log(value);
     this.setState({
       tousu: value
     })

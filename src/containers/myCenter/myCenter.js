@@ -10,7 +10,7 @@ class MyCenterPage extends Component {
   constructor() {
     super();
     this.state = {
-      
+
     }
   }
 
@@ -18,7 +18,7 @@ class MyCenterPage extends Component {
   componentWillMount() {
     axios.get('/api/index/index',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       let data_s = response.data.data;
       this.setState({
         complain_count: data_s.complain_count,            //	申诉记录数

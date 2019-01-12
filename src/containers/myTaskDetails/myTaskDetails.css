@@ -34,8 +34,8 @@
   margin-top: 10px;
 }
 .taskDetail-header-button > img {
-  width: 70px;
-  height: 70px;
+  width: 22%;
+  height: 0%;
   margin-right: 10px;
 }
 .make-num {
@@ -56,6 +56,8 @@
 .taskDetail-state > p {
   color: #0156B1;
   margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
 }
 
 /* 操作任务按钮 */
@@ -65,7 +67,7 @@
   display: flex;
   justify-content: space-around;
 }
-.start-task-btn > button {
+.tasktn {
   border: none;
   padding: 0.3rem 1rem;
   display: block;
@@ -74,16 +76,18 @@
   color: #fff;
   font-size: 1rem;
 }
-.start-task-btn > button:nth-child(2) {
-  background-color: #ff6235;
-  padding: 0;
-}
-.start-task-btn > button:nth-child(3) {
-  padding: 0;
-}
 .start-task-btn > button > a {
-  padding: 0.3rem 1rem;
+  padding: 0;
   color: #fff;
+}
+.stateBtns {
+  border: none;
+  padding: 0.3rem 1rem;
+  display: block;
+  border-radius: 7px;
+  background-color: #ff6235;
+  color: #fff;
+  font-size: 1rem;
 }
 
 /* 任务进度 */
@@ -137,11 +141,9 @@
   font-size: 0.9rem;
 }
 .task-plan-list > button {
-  padding: 0.2rem 0.6rem;
+  padding: 0.5rem 0.6rem;
   background-color: #66caa8;
   border: none;
   border-radius: 7px;
-}
-.task-plan-list > button > a {
   color: #fff;
 }

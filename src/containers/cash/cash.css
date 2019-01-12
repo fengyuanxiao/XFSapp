@@ -19,3 +19,12 @@
 .cash-footer > p:last-child {
   color: #000;
 }
+
+.modal-top {
+  display: flex;
+  padding-top: 0.5rem;
+}
+.modal-top > img {
+  width: 50%;
+  height: 50%;
+}

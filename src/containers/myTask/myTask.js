@@ -1,12 +1,51 @@
 import React, { Component } from 'react';
 import { Badge, Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import './myTask.css';
 import RouteTabComponent from '../../component/routeTab/routeTab';  //tabs
 
 class MyTaskPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+
+    }
+  }
+  componentWillMount() {
+    axios.get('/api/task/mytaskindex', {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then( res=> {
+      let datas = res.data.data;
+      console.log(datas);
+      this.setState({
+        nocomplete_task_count: datas.nocomplete_task_count,               //垫付任务未完成的订单数
+        complete_task_count: datas.complete_task_count,                   //垫付任务已完成的订单数
+        cancel_task_count: datas.cancel_task_count,                       //垫付任务已撤销的订单数
+
+        nocomplete_flowtask_count: datas.nocomplete_flowtask_count,       //浏览任务未完成的订单数
+        complete_flowtask_count: datas.complete_flowtask_count,           //浏览任务已完成的订单数
+        cancel_flowtask_count: datas.cancel_flowtask_count,               //浏览任务已撤销的订单数
+
+        nocomplete_answertask_count: datas.nocomplete_answertask_count,   //问答任务未完成的订单数
+        complete_answertask_count: datas.complete_answertask_count,       //问答任务已完成的订单数
+        cancel_answertask_count: datas.cancel_answertask_count,           //问答任务已撤销的订单数
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+}
+
   render() {
+    const { cancel_answertask_count,complete_answertask_count,nocomplete_answertask_count,cancel_flowtask_count,complete_flowtask_count,nocomplete_flowtask_count,nocomplete_task_count,complete_task_count,cancel_task_count } = this.state;
     return(
       <div>
         <header className="tabTitle">我的任务</header>
@@ -23,7 +62,7 @@ class MyTaskPage extends Component {
                 <span>未完成</span>
               </div>
               <div>
-                <Badge count={5} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={nocomplete_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -35,7 +74,7 @@ class MyTaskPage extends Component {
                 <span>已完成</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={complete_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -47,7 +86,7 @@ class MyTaskPage extends Component {
                 <span>已撤销</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={cancel_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -63,7 +102,7 @@ class MyTaskPage extends Component {
                 <span>未完成</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={nocomplete_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -75,7 +114,7 @@ class MyTaskPage extends Component {
                 <span>已完成</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={complete_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -87,7 +126,7 @@ class MyTaskPage extends Component {
                 <span>已撤销</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={cancel_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -103,7 +142,7 @@ class MyTaskPage extends Component {
                 <span>未完成</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={nocomplete_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -115,7 +154,7 @@ class MyTaskPage extends Component {
                 <span>已完成</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={complete_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -127,7 +166,7 @@ class MyTaskPage extends Component {
                 <span>已撤销</span>
               </div>
               <div>
-                <Badge count={1} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={cancel_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
