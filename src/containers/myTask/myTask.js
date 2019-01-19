@@ -19,7 +19,7 @@ class MyTaskPage extends Component {
     })
     .then( res=> {
       let datas = res.data.data;
-      console.log(datas);
+      // console.log(datas);
       this.setState({
         nocomplete_task_count: datas.nocomplete_task_count,               //垫付任务未完成的订单数
         complete_task_count: datas.complete_task_count,                   //垫付任务已完成的订单数

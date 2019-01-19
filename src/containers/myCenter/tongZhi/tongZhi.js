@@ -18,7 +18,7 @@ class TongZhi extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
     .then( res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       if ( res.data.data ) {
         this.setState({
           shows: true,
@@ -32,7 +32,7 @@ class TongZhi extends Component {
   }
 
   linkTo = (item) => {
-    console.log(item);
+    // console.log(item);
     this.props.history.push({pathname: "/tongZhiChild", state: {data: item}});
   }
 

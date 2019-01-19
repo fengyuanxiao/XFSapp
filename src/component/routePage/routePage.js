@@ -11,13 +11,17 @@ import TaskHallPage from '../../containers/taskHall/taskHall';                  
 import MyTaskPage from '../../containers/myTask/myTask';                                               //我的任务
 import MyCenterPage from '../../containers/myCenter/myCenter';                                         //个人中心
 import CashPage from '../../containers/cash/cash';                                                     //提现页面
+import CashRecord from '../../containers/cash/cashRecord';                                              //提现记录页面
 import CommissionPage from '../../containers/commission/commission';                                   //佣金页面
 import MyTaskDetails from '../../containers/myTaskDetails/myTaskDetails';                              //我的详情任务页
 import QuestionsTask from '../../containers/myTaskDetails/questionsTask/questionsTask';               //问答任务
+  import QuestionsTasks from '../../containers/myTaskDetails/questionsTask/questionsTasks';             //问答任务审核进入页面
 import TaskStateChild from '../../containers/myTaskDetails/taskState/taskStateChild/taskStateChild';  //操作任务页面
 import TaskStateChilds from '../../containers/myTaskDetails/taskState/taskStateChild/taskStateChilds';  //多关键词操作任务页面
 import GoodPingJia from '../../containers/myTaskDetails/taskState/goodPingjia/goodPingjia';           //收货好评页面
+  import AddPingJia from '../../containers/myTaskDetails/taskState/goodPingjia/addPingjia';             //追加评价
 import AppealTask from '../../containers/myTaskDetails/taskState/appealTask/appealTask';              //申诉任务页面
+  import AppealTaskDetails from '../../containers/myTaskDetails/taskState/appealTask/appealTaskDetails';  //申诉任务详情页面
 // 我的任务
 import DfTaskNo from '../../containers/myTask/dianFuTask/dfTaskNo';                                   //已接垫付任务  未完成
 import DfTaskOk from '../../containers/myTask/dianFuTask/dfTaskOk';                                   //已接垫付任务  已完成
@@ -68,14 +72,18 @@ class RouteTabComponent extends Component {
           <Route path="/myTask" component={MyTaskPage} />
           <Route path="/myCenter" component={MyCenterPage} />
           <Route path="/cash" component={CashPage} />
+          <Route path="/cashRecord" component={CashRecord} />
           <Route path="/commission" component={CommissionPage} />
           <Route path="/myTaskDetails" component={MyTaskDetails} />
           <Route path="/questionsTask" component={QuestionsTask} />
+          <Route path="/questionsTasks" component={QuestionsTasks}/>
           {/* <Route path="/myTaskDetails/:id" component={MyTaskDetails} />     {/*点击抢任务按钮 进入相对应的任务详情页面*/}
           <Route path="/taskStateChild" component={TaskStateChild}/>
           <Route path="/taskStateChilds" component={TaskStateChilds}/>
           <Route path="/goodPingJia" component={GoodPingJia} />
+          <Route path="/addPingJia" component={AddPingJia}/>
           <Route path="/appealTask" component={AppealTask} />
+          <Route path="/appealTaskDetails" component={AppealTaskDetails} />
           {/* 我的任务 */}
           {/* 已接垫付任务 */}
           <Route path="/dfTaskNo" component={DfTaskNo} />

@@ -44,14 +44,7 @@ class TaskList extends Component {
     });
   }
 
-  componentDidMount() {
-
-  }
-
-  //点击抢任务 进入对应的任务详情页面
-  // routerTo = (item) => {
-  //   console.log(item);
-  // }
+  //垫付任务抢任务按钮 进入对应的任务详情页面
   routerTo (item) {
     let this_ = this;
     axios.post('/api/task/grabTask',
@@ -72,13 +65,40 @@ class TaskList extends Component {
         this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
       })
     } else {
-      message.warning(data_.message);       //没有绑定买号提醒
+      message.warning(data_.msg);       //没有绑定买号提醒
     }
   })
   .catch(function (error) {
     console.log(error);
   });
     // this.props.history.push("/myTaskDetails")
+  }
+
+  // 问答任务抢任务按钮
+  routerToWenda (item) {
+    let this_ = this;
+    axios.post('/api/task/grabquestask',
+    {
+      task_id: item,
+    },
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then(function (response) {
+      let data_ = response.data;
+      // console.log(data_);
+      if ( data_.status ) {
+        message.success("恭喜您，抢到啦！", successSkip => {
+          this_.props.history.push({pathname: "/questionsTask", state: {data: item}});
+          // this_.props.history.push("/questionsTask");
+        })
+      } else {
+        message.warning(data_.msg);       //没有绑定买号提醒
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
@@ -98,7 +118,7 @@ class TaskList extends Component {
             // 刷新成功在调用ajax获取任务列表
             axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
             .then(response => {
-              console.log(response.data.data.task_list);
+              // console.log(response.data.data.task_list);
               this.setState({
                 task_lists: response.data.data.task_list,
                 refreshing: false     //获取任务列表成功 下拉状态将改为 false  隐藏
@@ -128,7 +148,12 @@ class TaskList extends Component {
                       return(
                         <li key={item.task_id} className="task-list">
                           <div className="listLeft">
-                            <p>{item.commission}元</p>
+                            {
+                              item.task_type === 2 ?
+                                <p style={{ fontSize: '0.9rem' }}>佣金{item.commission}元 + {item.extra_commission}元额外奖励</p>
+                              :
+                              <p>{item.commission}元</p>
+                            }
                             <p>{item.platform}佣金任务</p>
                             <div className="amount">
                               <span>共{item.common_orderitem_num}单</span>
@@ -136,18 +161,15 @@ class TaskList extends Component {
                             </div>
                           </div>
                           <div className="listCenter">
-                            <p>{item.itemprice}￥</p>
+                            <p>{item.itemprice + item.subtotal_commission}￥</p>
                             <p>{item.task_type_text}</p>
                           </div>
                           <div className="listRight">
-                            {/* ../particularsPage/particularsPage?id={{item.goods_id}} */}
                             {
                               item.subtotal_commission?
-                                <button className="button"><Link to="/questionsTask">查看任务</Link></button>
-                                /* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */
+                                <button className="button" onClick={ ()=>this.routerToWenda(item.task_id) }>查看任务</button>
                               :
                               <button className="button" onClick={ ()=>this.routerTo(item.task_id) }>抢此任务</button>
-                              // <button className="button" onClick={ this.routerTo }>抢此任务</button>
                             }
                             {/* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */}
                             {/* <button onClick={ ()=>this.routerTo(item) }>抢此任务</button> */}

@@ -25,7 +25,7 @@ class LookShiliTus extends Component {
       threevisible: false,
       files: data,
     }
-    console.log(props);
+    // console.log(props);
   }
 
   // 货比三家示例图
@@ -33,7 +33,6 @@ class LookShiliTus extends Component {
     this.setState({
       onevisible: true,
     })
-    console.log(123);
   }
   // 浏览店铺示例图
   showTwoShiliTu = () => {
@@ -115,6 +114,7 @@ class LookShiliTus extends Component {
             headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
           })
           .then( res => {
+            // console.log(res.data.data);
             if ( res.data.status ) {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               this_.props.history.push("/myTaskDetails");
@@ -137,15 +137,15 @@ class LookShiliTus extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { files, animating } = this.state;
-    const { shop_name, pic_uploads_num, pic_desc, platform } = this.props;
+    const { chatpic,is_muti_keyword,shop_name, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
     return(
       <div>
         {/* 第一步货比三家 */}
         <div className="task-plan buzhou">
           <WingBlank>
             <div className="buzou-title"><span>第一步 货比三家</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
-            <p>.请确认使用双方各（淘宝账号）登入手机淘宝APP</p>
-            <p>.打开手机淘宝，在搜索框手动输入指定关键词</p>
+            <p>.请确认使用{user_taobao}（{platformname}账号）登入{tasktype_itemname}APP</p>
+            <p>.打开{tasktype_itemname}，在搜索框手动输入指定关键词</p>
             <p>.按任务要求先浏览任意三家同类产品1-3分钟</p>
             <h3 style={{ color:'#c15958', marginTop:'1rem' }}>核对商家店铺名是否正确</h3>
             <div className="shop-title">
@@ -159,30 +159,55 @@ class LookShiliTus extends Component {
             {/* 第二步 浏览店铺 */}
             <div className="buzou-title"><span>第二步 浏览店铺</span><span onClick={this.showTwoShiliTu}>点击查看示例</span></div>
             <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
-            <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
-            <p>.返回任务商品，直接点击购买（警示：勿从购物车提交订单)</p>
+            {
+              platform === 5 ?
+                <p>按照商家指定的下单方式进行下单，下单方式请拉到顶部查看拼团类型</p>
+              :
+              (platform === 6 ?
+                <div>
+                  <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
+                  <p>.然后从购物车提交订单</p>
+                </div>
+              :
+              <div>
+                <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
+                <p>.返回任务商品，直接点击购买（警示：勿从购物车提交订单）</p>
+              </div>)
+            }
             {/* 第三步 聊天下单支付 */}
             {
               platform === 1 ?
                 <div>
-                  <div className="buzou-title"><span>第三步 聊天下单支付</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+                  <div className="buzou-title"><span>第三步 {platform === 1 ? "聊天下单支付" : "上传订单截图"}</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+                  {is_muti_keyword ?
+                    <div>
+                      <p>.主关键词搜索 找到对应任务宝贝店外截图 进店浏览2-3分钟 任务宝贝加入购物车 退出 上传正确的图</p>
+                      <p>.点开购物车 截图购物车里的任务宝贝 上传正确的图</p>
+                    </div>
+                  :
+                    ""
+                  }
                   <p>.需按商家要求选择是否聊天下单支付，或直接提交订单不聊天</p>
                   <p>.付款完成后，进人支付宝账单详情页面，截图上传</p>
-                  <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p>
+                  {/* <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p> */}
+                  {
+                    is_muti_keyword ?
+                      ""
+                    :
+                    (chatpic ?
+                      <p className="liaotian">此任务商家要求聊天</p>
+                    :
+                    <p className="liaotian">此任务不需要聊天</p>)
+                  }
                 </div>
               :
               (platform === 2 ?
                 <div className="buzou-title"><span>第三步 上传订单截图</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
               :
-              <div className="buzou-title"><span>第三步 上传订单截图</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+              (platform === 5 ? <div className="buzou-title"><span>第三步 上传订单截图</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
+              : <div className="buzou-title"><span>第三步 上传订单截图</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div> )
               )
             }
-            {/* <div>
-              <div className="buzou-title"><span>第三步 聊天下单支付</span><span onClick={this.showThreeShiliTu}>点击查看示例</span></div>
-              <p>.需按商家要求选择是否聊天下单支付，或直接提交订单不聊天</p>
-              <p>.付款完成后，进人支付宝账单详情页面，截图上传</p>
-              <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p>
-            </div> */}
             {/* 支付宝 账单截图 */}
             <ImagePicker
               length={pic_uploads_num}
@@ -195,8 +220,12 @@ class LookShiliTus extends Component {
             <p className="jietuFont">注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>（{pic_desc}）</span></p>
             <div className="buzou-title"><span style={{ color:'#63bb95' }}>第四步 订单信息核对</span></div>
             <p>应垫付金额:100元(请按实际垫付金额填写，实际相差超50元请取消任务)</p>
-            <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>商户订单号可在支付宝账单详情中复制</p>
-            <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>订单号可在订单详情中复制</p>
+            {
+              platform === 1 ?
+                <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>商户订单号可在支付宝账单详情中复制</p>
+              :
+              <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>订单号可在订单详情中复制</p>
+            }
             <Form className="login-form" layout="inline" onSubmit={this.handleSubmit}>
               <FormItem>
                 {getFieldDecorator('money', {
@@ -260,7 +289,7 @@ class LookShiliTus extends Component {
           okText={"知道了"}
           cancelText={"关闭"}
         >
-          <img className="shilitu" src={platform === 1? require('../../../../../img/6666.jpg') : (platform === 2? require('../../../../../img/jdshili.jpg') : "")} alt="聊天下单" />
+          <img className="shilitu" src={platform === 1? require('../../../../../img/6666.jpg') : (platform === 2? require('../../../../../img/jdshili.jpg') : (platform === 5? require('../../../../../img/pddorder.png') : require('../../../../../img/wphorder.jpg')))} alt="聊天下单" />
         </Modal>
       </div>
     )

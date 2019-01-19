@@ -234,15 +234,19 @@ class CashPage extends Component {
   }
 
   render() {
-    const { cashBJ, cashYJ, tuCodeLink, codeNum, TestGetCode } = this.state;
-    // const { getFieldDecorator } = this.props.form;
+    const { cashBJ, cashYJ, tuCodeLink, codeNum, TestGetCode,bank_name,bank_card_NO } = this.state;
     return(
       <div>
         <header className="tabTitle">
           <div className="return"><Link to="/myCenter"><Icon type="left" theme="outlined" />返回</Link></div>
           提现
+          <div className="returns"><Link to="/cashRecord">提现记录</Link></div>
         </header>
         <WhiteSpace style={{ paddingTop: '3rem' }} />
+        <div className="tongs">
+          <Icon style={{ paddingRight: '0.4rem' }} type="property-safety" theme="twoTone" />
+          <span>将提现到您 尾号（{bank_card_NO} {bank_name}）</span>
+        </div>
         <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false}>
           {/* 本金提现 */}
           <div className="cash">

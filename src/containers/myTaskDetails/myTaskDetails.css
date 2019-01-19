@@ -8,7 +8,20 @@
   top: 0;
 }
 .return > a {
-  padding: 0.7rem 0;
+  padding: 0.7rem 10px;
+  color: #fff;
+}
+.returns {
+  position: absolute;
+  z-index: 99;
+  font-size: 17px;
+  height: 46px;
+  line-height: 46px;
+  top: 0;
+  right: 0;
+}
+.returns > a {
+  padding: 0.7rem 15px;
   color: #fff;
 }
 

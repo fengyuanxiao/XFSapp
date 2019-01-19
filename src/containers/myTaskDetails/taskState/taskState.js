@@ -59,7 +59,7 @@ class TaskState extends Component {
     this.setState({
       visible: false,
     });
-    console.log("点击了取消");
+    // console.log("点击了取消");
   };
   // 取消任务的 确认按钮
   onConfirm = () => {
@@ -96,7 +96,7 @@ class TaskState extends Component {
 
   render() {
     //存父组件传来的数据
-    const { order_id,order_status, tasktype_pic, ordertatusText, order_message, remark_pic, is_muti_keyword,shop_around_time } = this.props;
+    const { order_status, tasktype_pic, ordertatusText, order_message, remark_pic, is_muti_keyword,shop_around_time } = this.props;
     const { cuttime } = this.state;
     // console.log(remark_pic);
     return(

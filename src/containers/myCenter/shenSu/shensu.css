@@ -1,5 +1,5 @@
 .bodyBox {
-  padding: 0.3rem 0.3rem;
+  padding: 0.5rem 0.5rem;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -9,16 +9,26 @@
   width: 80%;
   margin-right: 5%;
 }
-.childOne > div > span:first-child {
+.childOne_a {
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.childOne_as {
+  color: red;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+}
+/* .childOne > div > span:first-child {
   color: #000;
   font-size: 1rem;
 }
 .childOne > div > span:last-child {
   padding-left: 2rem;
-}
-.childOne > div:last-child {
-  color: red;
-  font-size: 14px;
+} */
+.childOne > div > span {
+  font-size: 0.9rem;
 }
 .childTwo {
   width: 15%;

@@ -26,7 +26,7 @@ class TuiJian extends Component {
         use_num: datas.use_num,
         active_num: datas.active_num,
       })
-      console.log(res.data.data);
+      // console.log(res.data.data);
     })
     .catch(function(error) {
       console.log(error);

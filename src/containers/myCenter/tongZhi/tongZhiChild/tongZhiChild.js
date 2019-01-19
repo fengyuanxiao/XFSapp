@@ -6,7 +6,9 @@ import axios from 'axios';
 class TongZhiChild extends Component {
   constructor(props) {
     super();
-    // console.log(props.location.state);       父组件传递过来的数据
+    this.state = {
+
+    }
   }
 
   componentWillMount() {
@@ -17,7 +19,13 @@ class TongZhiChild extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
     .then( res => {
-      console.log(res.data);
+      // console.log(res.data.data);
+      let datas = res.data.data;
+      this.setState({
+        title: datas.title,                 //公告标题
+        content: datas.content,             //公告内容
+      })
+      // console.log(this.state.content);
     })
     .catch(error => {
       console.log(error);
@@ -25,6 +33,7 @@ class TongZhiChild extends Component {
   }
 
   render() {
+    const { content,title } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -32,10 +41,8 @@ class TongZhiChild extends Component {
           公告详情
         </header>
         <div className="tongZhiChild">
-          <h3>23反垃圾垃圾客流集散点附近</h3>
-          <p>这是图片放大预览示例，点击如下图片体验全屏预览功能</p>
-          <img src={ require("../../../../img/headerImg.png") } alt="tu" />
-          <p>图片全屏后，双击或双指缩放均可对图片进行放大、缩小操作，左右滑动可查看同组(data-preview-group相同的图片为一组)其它图片，点击会关闭预览</p>
+          <h3>{title}</h3>
+          <div dangerouslySetInnerHTML={{ __html: content}}></div>      {/*react的识别html标签输出*/}
         </div>
       </div>
     )

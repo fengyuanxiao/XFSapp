@@ -1,22 +1,52 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Modal, Radio, Button } from 'antd';
+import { Icon, Modal, Radio, Button, Input, message } from 'antd';
+import axios from 'axios';
 import ImagePicker from 'antd-mobile/lib/image-picker';
+import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
+import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './questionsTask.css';
 
 const RadioGroup = Radio.Group;
-// const FormItem = Form.Item;
 const data = [];
 
 class QuestionsTask extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state= {
+      animating: false,
       visible: false,           //示例图显示状态
-      value: 1,                 //单选框 刷手选择的问题
+      value: null,                 //单选框 刷手选择的问题
+      inputValue: null,         //手动输入收到的问答
       files: data,              //上传图片数据
     }
+    // console.log(props.location.state.data);
+  }
+
+  componentWillMount() {
+    let this_ = this;
+    axios.post('/api/task/asktaskOne',
+    {
+      task_id: this_.props.location.state.data,
+    },
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then(function (response) {
+      let data_ = response.data.data;
+      this_.setState({
+        id: data_.id,                       //任务ID
+        goodsname: data_.goodsname,         //商品名称
+        goodspic: data_.goodspic,           //商品图片
+        questype: data_.questype,           //问题类型
+        quescontent: data_.quescontent,     //问题内容
+      })
+      // console.log(data_);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   // 点击查看示例图按钮  显示
@@ -27,14 +57,12 @@ class QuestionsTask extends Component {
   }
   // 点击知道了按钮隐藏示例图
   handleOk = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   }
   // 点击关闭按钮隐藏示例图
   handleCancel = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
@@ -42,7 +70,6 @@ class QuestionsTask extends Component {
 
   // 问答任务单选框
   onChange = (e) => {
-    // console.log(e.target.value);
     this.setState({
       value: e.target.value,
     });
@@ -56,57 +83,143 @@ class QuestionsTask extends Component {
     });
   }
 
+  //手动输入收到的问答
+  onInputValue = (e) => {
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
+
   // 提交商家审核按钮
   submitBtn = () => {
     let _this = this.state;
-    let objs = {
-      value: _this.value,
-      files: _this.files
+    let this_ = this;
+    if ( _this.questype === 1 ) {
+      if ( _this.value === null || _this.files.length < 1 ) {
+        message.error("请完善必要信息")
+      } else {
+        this_.setState({ animating: true })            //数据提交中显示的login.....
+        let infoPhoto = _this.files[0].url;
+        axios.post('/api/task/addOrder',{
+          task_id: _this.id,                       //任务ID
+          check_question: _this.value,                 //买手在商家问题列表中选择自己收到的问题
+          question_pic_content: infoPhoto,             //买手上传收到的问题截图
+        },{
+          headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+        })
+        .then( res => {
+          // console.log(res.data);
+          if ( res.data.status ) {
+            this_.setState({ animating: false })          //数据提交成功关闭login.....
+            this_.props.history.push("/wenDaTaskNo");
+            message.success(res.data.msg);
+          } else {
+            this_.setState({ animating: false })          //数据提交成功关闭login.....
+            message.success(res.data.msg);
+          }
+        })
+        .catch( err => {
+          console.log(err);
+        })
+      }
+    } else {
+      if ( _this.inputValue === null || _this.files.length < 1 ) {
+        message.error("请完善必要信息")
+      } else {
+        this_.setState({ animating: true })            //数据提交中显示的login.....
+        let infoPhoto = _this.files[0].url;
+        axios.post('/api/task/addOrder',{
+          task_id: _this.id,                           //任务ID
+          question_content: _this.inputValue,          //买手自己提交的问题
+          question_pic_content: infoPhoto,             //买手上传收到的问题截图
+        },{
+          headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+        })
+        .then( res => {
+          if ( res.data.status ) {
+            this_.setState({ animating: false })          //数据提交成功关闭login.....
+            this_.props.history.push("/wenDaTaskNo");
+            message.success(res.data.msg);
+          } else {
+            this_.setState({ animating: false })          //数据提交成功关闭login.....
+            message.success(res.data.msg);
+          }
+        })
+        .catch( err => {
+          console.log(err);
+        })
+      }
     }
-    console.log(objs);
+
   }
 
-  render() {
 
+  render() {
     const radioStyle = {
       display: 'block',
       height: '30px',
       lineHeight: '30px',
     };
-    const { files } = this.state;
-
+    const { goodsname,goodspic,quescontent,questype,files,animating } = this.state;
     return(
       <div>
         <header className="tabTitle">
           <div className="return"><Link to="/taskHallPage"><Icon type="left" theme="outlined" />返回</Link></div>
           问答任务
         </header>
-        <div className="questionsTask-box">
-          <h2>注意：此类任务需要商家审核，如商家审核未通过做了该任务没有佣金</h2>
-          <div className="product-details">
-            <img src={require("../../../img/custom-qq_03.png")} alt="产品主图"/>
-            <p>飞鹤奶粉宝宝奶粉 君乐宝 乐铂 400g 三段</p>
-          </div>
-          <p className="lookShili" onClick={ this.showModal }>查看示例图>></p>
-          <div className="taskList">
-            <p>商家需要回答的问题列表：(请选择互动消息中收到的问答)</p>
-            <p style={{ textAlign: 'center', color: 'red' }}>注：如有问题文字过长请左右拖动查看</p>
-            <RadioGroup onChange={this.onChange} value={this.state.value} style={{ width: '100%', wordBreak: 'keep-all', overflow: 'auto' }}>
-              <Radio style={radioStyle} value={1}>接口了奇偶ID建瓯市的攻击我接口了奇偶ID击我接口了奇击我接口了奇</Radio>
-              <Radio style={radioStyle} value={2}>各供热仍无人违反问坏人3我仍无人违反问坏人3我</Radio>
-              <Radio style={radioStyle} value={3}>还人工模拟哦及水电费是的</Radio>
-            </RadioGroup>
-          </div>
-          <ImagePicker
-            length={1}
-            files={files}
-            onChange={this.onUploadOne}
-            onImageClick={(index, fs) => console.log(index, fs)}
-            selectable={files.length < 1}
-            accept="image/gif,image/jpeg,image/jpg,image/png"
-          />
+        <div>
+          <WingBlank style={{ margin: '0' }}>
+            <div className="questionsTask-box">
+              <h2>注意：此类任务需要商家审核，如商家审核未通过做了该任务没有佣金</h2>
+              <div className="product-details">
+                <div style={{ width: '30%' }}>
+                  <img style={{ maxWidth: '100%',paddingRight: '0.5rem' }} src={goodspic} alt="产品主图"/>
+                </div>
+                <p style={{ width: '70%' }}>{goodsname}</p>
+              </div>
+              <p className="lookShili" onClick={ this.showModal }>查看示例图>></p>
+              <div className="taskList">
+                {
+                  questype === 1 ?
+                    <div>
+                      <p className="centerTitle">商家需要回答的问题列表：(请选择互动消息中收到的问答)</p>
+                      <p style={{ textAlign: 'center', color: 'red' }}>注：如有问题文字过长请左右拖动查看</p>
+                      <RadioGroup onChange={this.onChange} value={this.state.value} style={{ width: '100%', wordBreak: 'keep-all', overflow: 'auto' }}>
+                        {
+                          quescontent.map((item, index) => {
+                            return(
+                              <Radio key={index} style={radioStyle} value={item}>{item}</Radio>
+                            )})
+                        }
+                      </RadioGroup>
+                    </div>
+                  :
+                  <div>
+                    <p className="centerTitle">淘宝互动消息中收到对应商品的问答：</p>
+                    <Input onChange={ this.onInputValue } id="input" placeholder="请手动输入收到的问答" />
+                  </div>
+                }
+              </div>
+              <p className="fontTu">请在淘宝互动消息中查找收到的该商品的问答并截图上传!</p>
+              <ImagePicker
+                length={1}
+                files={files}
+                onChange={this.onUploadOne}
+                onImageClick={(index, fs) => console.log(index, fs)}
+                selectable={files.length < 1}
+                accept="image/gif,image/jpeg,image/jpg,image/png"
+              />
+            </div>
+            <Button onClick={ this.submitBtn } className="btn-buy" type="primary">点击提交商家审核</Button>
+            <div className="toast-example">
+              <ActivityIndicator
+                toast
+                text="数据提交中..."
+                animating={animating}
+              />
+            </div>
+          </WingBlank>
         </div>
-        <Button onClick={ this.submitBtn } className="btn-buy" type="primary">点击提交商家审核</Button>
 
 
         <Modal

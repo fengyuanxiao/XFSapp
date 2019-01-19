@@ -49,3 +49,9 @@
 .taskss {
   color: red;
 }
+.taskLists {
+  padding: 0.4rem 0.6rem;
+  background-color: #fbdbdb;
+  color: #f30;
+  font-size: 1rem;
+}

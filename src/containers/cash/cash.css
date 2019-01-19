@@ -28,3 +28,41 @@
   width: 50%;
   height: 50%;
 }
+.tongs {
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 1rem;
+  color: red;
+  font-weight: bold;
+}
+
+.cash_Record {
+  padding: 0.7rem 1rem;
+  background-color: #e3e3e3;
+  font-size: 0.9rem;
+  display: flex;
+}
+.cash_Record > p {
+  width: 33.33%;
+  text-align: center;
+}
+.caseList > li {
+  padding: 0.4rem 1.2rem;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.1rem;
+}
+.lis {
+  background-color: #01AAED;
+}
+.lia {
+  background-color: #5FB878;
+}
+.lib {
+  background-color: #FF5722;
+}
+.caseList > li > p {
+  width: 33.33%;
+  text-align: center;
+}

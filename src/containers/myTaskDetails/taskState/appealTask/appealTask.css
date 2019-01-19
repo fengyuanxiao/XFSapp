@@ -3,7 +3,7 @@
   background-color: #d1d1d1;
 }
 .shensu-box-child {
-  padding: 0.6rem 0.7rem 0.6rem 0.7rem;
+  padding-top: 0.6rem;
   margin-bottom: 3rem;
 }
 ._p {
@@ -13,4 +13,82 @@
 }
 .__p {
   margin: 0.7rem 0 0.7rem 0;
+}
+
+
+/* 申诉详情页面 */
+.top_ {
+  padding: 3.3rem 0.6rem 0 0.6rem;
+}
+._header {
+  display: flex;
+}
+._headerImg {
+  width: 30%;
+  padding-right: 0.7rem;
+}
+._headerImg > img {
+  width: 100%;
+}
+._header > ul {
+  width: 70%;
+  font-size: 0.9rem;
+}
+._header > ul > li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #ccc;
+}
+.quxiaoBtn {
+  text-align: center;
+  margin: 1rem 0 1rem 0;
+}
+.center_detail {
+  height: 40px;
+  background-color: #d1d1d1;
+  display: flex;
+  align-items: center;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+.center_detail > img {
+  width: 40px;
+  padding-right: 0.4rem;
+}
+.shop-titles > span:first-child {
+  padding: 1px 8px;
+  display: inline-block;
+  background-color: #66caa8;
+  border-radius: 50%;
+  color: #fff;
+  margin-right: 0.7rem;
+  margin-bottom: 0.4rem;
+  margin-top: 0.3rem;
+}
+.shop-titles_span {
+  display: inline-block;
+  width: 90%;
+  background-color: #e9ebea;
+  font-size: 1rem;
+}
+.shensu_phones {
+  margin-left: 10%;
+}
+.shensu_phones > img {
+  max-width: 100%;
+  padding-top: 0.4rem;
+  padding-right: 0.7rem;
+}
+.shensu_phones > p {
+  padding: 0.4rem 0;
+}
+.shensu_btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+.xieshang > p {
+  padding: 0.4rem 0;
 }

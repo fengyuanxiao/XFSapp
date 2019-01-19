@@ -30,11 +30,11 @@ class BindTaobaos extends Component {
 
   // 省市区联动回调
   onChange = (value) => {
-    console.log(value);
+    // console.log(value);
   }
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne = (files, type, index) => {
-    console.log(files, type, index);
+    // console.log(files, type, index);
     this.setState({
       files,
     });

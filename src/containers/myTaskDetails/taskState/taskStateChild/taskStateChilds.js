@@ -32,29 +32,37 @@ class TaskStateChilds extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
-      console.log(responses);   //任务详情数据，完成的任务进度
+      // console.log(responses);   //任务详情数据，完成的任务进度
       // console.log(responses.taskInfo.sku_set);
       this.setState({
         datas: true,
 
-        shop_name: responses.shop_name,                       //店铺名称
-        goodsname: responses.goodsname,                       //商品名称
-        goodspic: responses.goodspic,                         //商品主图
-        searchprice: responses.searchprice,                   //搜索展示价格：
-        itemnum: responses.itemnum,                           //下单商品数件
-        itemprice: responses.itemprice,                       //单件商品成交价格
-        tasktype_name: responses.tasktype_name,               //任务类型名称
-        tasktype_itemname: responses.tasktype_itemname,       //平台app
-        keyword_type_name: responses.keyword_type_name,       //"普通五星好评"
-        keyword: responses.keyword,                           //搜索主关键字
-        charset_one: responses.charset_one,                   //关键词1
-        charset_two: responses.charset_two,                   //关键词2
-        sortmsg: responses.taskInfo.sortmsg,                  //排序方式
-        position: responses.taskInfo.position,                //排序位置
-        order_id: responses.order_id,                         //订单ID
-        sku_set: responses.sku_set,                           //sku
-        user_taobao: responses.user_taobao,                   //用户名
-        platformname: responses.platformname,                 //平台类型
+        shop_name: responses.shop_name,                         //店铺名称
+        goodsname: responses.goodsname,                         //商品名称
+        goodspic: responses.goodspic,                           //商品主图
+        searchprice: responses.searchprice,                     //搜索展示价格：
+        itemnum: responses.itemnum,                             //下单商品数件
+        itemprice: responses.itemprice,                         //单件商品成交价格
+        platform: responses.platform,                           //指哪个平台
+        charset_one: responses.charset_one,                     //关键词1
+        charset_two: responses.charset_two,                     //关键词2
+        tasktype_name: responses.tasktype_name,                 //任务类型名称
+        tasktype_itemname: responses.tasktype_itemname,         //任务平台类型
+        keyword_type_name: responses.keyword_type_name,         //"普通五星好评"
+        keyword: responses.keyword,                             //搜索关键字
+        sortmsg: responses.taskInfo.sortmsg,                    //排序方式
+        position: responses.taskInfo.position,                  //排序位置
+        goods_address: responses.taskInfo.goods_address,        //商品所在地
+        maxprice: responses.taskInfo.maxprice,                  //最高价格
+        minprice: responses.taskInfo.minprice,                  //最低价格
+        remark: responses.taskInfo.remark,                      //商家留言
+        chatpic: responses.chatpic,                             //为1需要聊天
+        sku_set: responses.sku_set,                             //sku
+        paychannel: responses.taskInfo.paychannel,              //支付方式
+        order_id: responses.order_id,                           //订单ID
+        is_muti_keyword: responses.is_muti_keyword,             //为 1 的话 标明多关键词，那必须上传三张截图
+        pic_uploads_num: responses.pic_uploads_num,             //需要上传的图片张数
+        pic_desc: responses.pic_desc,                           //上传图片的描述
         // remark_pic: responses.remark_pic,                  //商家要求
       });
       // console.log(this.state.sku_set);
@@ -136,7 +144,7 @@ class TaskStateChilds extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        console.log(res.data);
+        // console.log(res.data);
         if ( res.data.status ) {
           this_.setState({ animating: false })          //数据提交成功关闭login.....
           message.success(res.data.msg)
@@ -155,7 +163,7 @@ class TaskStateChilds extends Component {
   }
 
   render() {
-    const { files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_name, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_name, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -212,9 +220,22 @@ class TaskStateChilds extends Component {
               }
               <p className="task-plan-list"><span>排序方式</span><span>{sortmsg}排序</span></p>
               <p className="task-plan-list"><span>排序位置</span><span>约{position}人收货/付款</span></p>
-              <p className="task-plan-list"><span>所在地</span><span>全国</span></p>
-              <p className="task-plan-list"><span>价格区间</span><span>无需筛选价格</span></p>
-              <p className="task-plan-list"><span>订单留言</span><span></span></p>
+              <p className="task-plan-list"><span>所在地</span><span>{goods_address? goods_address: "全国"}</span></p>
+              <p className="task-plan-list"><span>价格区间</span><span>{maxprice? minprice+"—"+maxprice : "无需筛选价格"}</span></p>
+              <p className="task-plan-list"><span>支付方式</span><span>
+                {
+                  paychannel ?
+                    paychannel.map((item,index) => {
+                      return(
+                        item
+                      )
+                    })
+                  :
+                  ""
+                }
+              </span></p>
+              <p className="task-plan-list"><span>订单留言</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{remark ? remark : ""}</span></p>
+              <p className="task-plan-list-Child"><span>(查看订单留言)</span><span style={{ color:'red',fontWeight:'bold' }}>注：如内容过长请左右拖动查看</span></p>
             </div>
             {/* 商家要求 */}
             <div className="taskRenw">

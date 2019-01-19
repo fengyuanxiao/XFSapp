@@ -29,11 +29,11 @@ class BindPinduoduos extends Component {
   }
   // 省市区联动回调
   onChange = (value) => {
-    console.log(value);
+    // console.log(value);
   }
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne = (files, type, index) => {
-    console.log(files, type, index);
+    // console.log(files, type, index);
     this.setState({
       files,
     });
@@ -106,7 +106,7 @@ class BindPinduoduos extends Component {
             } else {
               message.warning(data_.msg);
             }
-            console.log(data_);
+            // console.log(data_);
           })
           .catch(function (error) {   //调用接口失败执行
             console.log(error);

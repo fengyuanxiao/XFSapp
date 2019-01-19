@@ -88,3 +88,10 @@
 .charsets {
   color: red;
 }
+
+.liaotian {
+  font-size: 1rem;
+  padding: 0.7rem 0;
+  color: red;
+  font-weight: bold;
+}

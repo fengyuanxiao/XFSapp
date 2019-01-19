@@ -27,7 +27,7 @@ class ShenSu extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
     .then( res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       this.setState({
         datasState: true,
         shenSuList: res.data.data,
@@ -39,13 +39,14 @@ class ShenSu extends Component {
   }
 
   onTabClick = (e) => {
+    // console.log(e.title);
     axios.post('/api/help/complainList', {
-      typeid: e.title === "我发起的申诉" ? 1 : 2
+      typeid: e.title === "我收到的申诉" ? 2 : 1
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
     .then( res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       this.setState({
         datasState: true,
         shenSuList: res.data.data,
@@ -54,7 +55,6 @@ class ShenSu extends Component {
     .catch(function(error) {
       console.log(error);
     });
-    // console.log(e);
   }
 
   render() {
@@ -77,9 +77,9 @@ class ShenSu extends Component {
                       <div className="childOne">
                         <div>
                           <span>{item.complain_desc}</span>
-                          <span>{item.undo_time}</span>
+                          {/* <span>{item.undo_time}</span> */}
                         </div>
-                        <div>{item.order_status_text}</div>
+                        {/* <div>{item.order_status_text}</div> */}
                       </div>
                       <div className="childTwo">{item.status}</div>
                     </div>
@@ -102,11 +102,16 @@ class ShenSu extends Component {
                   return(
                     <div key={item.order_id} className="bodyBox">
                       <div className="childOne">
-                        <div>
+                        <div className="childOne_a">
                           <span>{item.complain_desc}</span>
                           <span>{item.undo_time}</span>
                         </div>
-                        <div>{item.order_status_text}</div>
+                        <div className="childOne_as">
+                          <span>{item.order_status_text}</span>
+                          <span>原因：{item.undo_desc}</span>
+                        </div>
+                        {/* <div>{item.order_status_text}</div>
+                        <div>原因：{item.undo_desc}</div> */}
                       </div>
                       <div className="childTwo">{item.status}</div>
                     </div>

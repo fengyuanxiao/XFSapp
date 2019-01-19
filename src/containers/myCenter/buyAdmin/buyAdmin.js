@@ -19,7 +19,7 @@ class BuyAdmins extends Component {
     axios.get('/api/index/tbBind',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       let responses = response.data.data;
-      console.log(response.data.data);
+      // console.log(response.data.data);
       // 获取绑定买号数据
       this.setState({
         datas_Status: response.data.data,                    //获取审核状态 判断是否点击进入平台对应的绑定买号

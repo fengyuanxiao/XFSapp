@@ -7,6 +7,7 @@ class TaskPlan extends Component {
     super(props);
     this.state = {
       previewVisibleOne: false,
+      previewVisibleTwo: false,
     }
     // console.log(props);
   }
@@ -19,10 +20,17 @@ class TaskPlan extends Component {
     });
     // console.log(item);
   }
+  showsShilia = () => {
+    this.setState({
+      previewVisibleTwo: true,
+      photosLinks: this.props.addition_pic,
+    });
+  }
   //点击隐藏截图
   handleCancel = () => {
     this.setState({
       previewVisibleOne: false,
+      previewVisibleTwo: false,
     })
   }
 
@@ -32,12 +40,12 @@ class TaskPlan extends Component {
   }
 
   render() {
-    const { photosLink,previewVisibleOne } = this.state;
-    const { is_addcomments,receive_evaluate_content,taobao_ordersn, addtime, need_principal, order_id, user_taobao, itemprice, itemnum, chat_pay_content, order_status } = this.props;
+    const { photosLink,photosLinks,previewVisibleOne,previewVisibleTwo } = this.state;
+    const { platformname,addition_pic,is_addcomments,receive_evaluate_content,taobao_ordersn, addtime, need_principal, order_id, user_taobao, itemprice, itemnum, chat_pay_content, order_status } = this.props;
     return(
       <div className="task-plan">
         <div className="plan">
-          <Progress className="plan-child" type="circle" percent={ order_status === 0? 25 : (order_status === 1? 50 : (order_status ===3? 75 : 100 )) } width={80} />
+          <Progress className="plan-child" type="circle" percent={ order_status === 0? 25 : (order_status === 1? 50 : (order_status ===3? 75 : (order_status ===5? 95 : 100) )) } width={80} />
           <p>下一步：请点击操作任务按钮操作</p>
         </div>
         <div className="plan-box">
@@ -80,6 +88,9 @@ class TaskPlan extends Component {
               <Modal visible={previewVisibleOne} footer={null} onCancel={this.handleCancel}>
                 <img alt="example" style={{ width: '100%' }} src={photosLink} />
               </Modal>
+              <Modal visible={previewVisibleTwo} footer={null} onCancel={this.handleCancel}>
+                <img alt="example" style={{ width: '100%' }} src={photosLinks} />
+              </Modal>
             </div>
           </div>
           <div className="task-plan-list">
@@ -90,7 +101,7 @@ class TaskPlan extends Component {
         {/* 商家确定订单 */}
         <div className="plan-box">
           <p className="title"><b className="plan-title">二：商家确定订单</b></p>
-          <p className="task-plan-list"><span>支付宝商户订单号</span><span>{taobao_ordersn}</span></p>
+          <p className="task-plan-list"><span>{platformname}订单号</span><span>{taobao_ordersn}</span></p>
           <p className="task-plan-list"><span>返款方式</span><span>平台返款</span></p>
           <p className="task-plan-list"><span>返款账号</span><span>默认返款账号</span></p>
           <p className="task-plan-list"><span>返款金额</span><span>{need_principal}</span></p>
@@ -131,17 +142,13 @@ class TaskPlan extends Component {
         {
           is_addcomments ?
             <div className="plan-box">
-              <p className="title"><b className="plan-title">三：收货好评</b><span></span></p>
+              <p className="title"><b className="plan-title">{ is_addcomments? "四" : "三" }：追加好评</b><span></span></p>
               <div className="task-plan-list"><span>追评截图</span>
                 <div className="task-plan-list-img">
                   {/* 循环出物流截图和好评截图显示 */}
                   {
-                    receive_evaluate_content ?
-                      receive_evaluate_content.map((item, index) => {
-                        return(
-                          <img key={index} onClick={()=>this.showsShili(item)} src={ item } alt="物流截图" />
-                        )
-                      })
+                    addition_pic ?
+                      <img onClick={this.showsShilia} src={ addition_pic } alt="物流截图" />
                     :
                     ""
                   }
@@ -150,8 +157,8 @@ class TaskPlan extends Component {
               <div className="task-plan-list">
                 <span className="ask-start">此单需要追评 点击查看追评图片</span>
                 {
-                  order_status === 3 ?
-                    <button style={{backgroundColor: '#66caa8'}}><Link style={{ color: '#fff' }} to={{ pathname: "/goodPingJia", state: order_id }}>去收货好评</Link></button>
+                  order_status === 5 ?
+                    <button style={{backgroundColor: '#66caa8'}}><Link style={{ color: '#fff' }} to={{ pathname: "/addPingJia", state: order_id }}>去追加评论</Link></button>
                   :
                   <button style={{backgroundColor: '#ccc'}}>去追加评论</button>
                 }

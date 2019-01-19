@@ -32,7 +32,7 @@ class MyTaskDetails extends Component {
     })
     .then(response => {
       let responses = response.data.data;
-      console.log(responses);
+      // console.log(responses);
         this.setState({
           datas: true,
           goodspic: responses.task_detail.goodspic,                         //商品图片
@@ -47,7 +47,9 @@ class MyTaskDetails extends Component {
           order_id: responses.task_detail.order_id,                         //任务编号
           user_taobao: responses.task_detail.user_taobao,                   //买号
           chat_pay_content: responses.task_detail.chat_pay_content,         //聊天下单图片
+          platformname: responses.platformname,                 //商家平台
           receive_evaluate_content: responses.task_detail.receive_evaluate_content,     //物流和好评截图
+          addition_pic: responses.task_detail.addition_pic,                 //追评截图
           need_principal: responses.task_detail.need_principal,             //返款金额
           addtime: responses.task_detail.addtime,                           //接受任务的时间
           order_status: responses.task_detail.order_status,                 //订单状态
@@ -63,7 +65,7 @@ class MyTaskDetails extends Component {
   }
 
   render() {
-    const { is_addcomments,receive_evaluate_content,taobao_ordersn, shop_around_time, is_muti_keyword, order_status, datas, goodspic, itemprice, itemnum, tasktype_pic, ordertatusText, time, remark_pic, order_message, order_id, user_taobao, chat_pay_content, need_principal, addtime } = this.state;
+    const { platformname,addition_pic,is_addcomments,receive_evaluate_content,taobao_ordersn, shop_around_time, is_muti_keyword, order_status, datas, goodspic, itemprice, itemnum, tasktype_pic, ordertatusText, time, remark_pic, order_message, order_id, user_taobao, chat_pay_content, need_principal, addtime } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -76,7 +78,7 @@ class MyTaskDetails extends Component {
         {/* 任务状态 */}
         { datas ? <TaskState history={this.props.history} order_id={order_id} order_status={order_status} shop_around_time={shop_around_time} is_muti_keyword={is_muti_keyword} tasktype_pic={tasktype_pic} ordertatusText={ordertatusText} time={time} remark_pic={remark_pic} order_message={order_message} /> : "" }
         {/* 任务进度 */}
-        { datas ? <TaskPlan is_addcomments={is_addcomments} receive_evaluate_content={receive_evaluate_content} taobao_ordersn={taobao_ordersn} order_status={order_status} order_id={order_id} user_taobao={user_taobao} chat_pay_content={chat_pay_content} need_principal={need_principal} addtime={addtime} itemprice={itemprice} itemnum={itemnum} /> : "" }
+        { datas ? <TaskPlan platformname={platformname} addition_pic={addition_pic} is_addcomments={is_addcomments} receive_evaluate_content={receive_evaluate_content} taobao_ordersn={taobao_ordersn} order_status={order_status} order_id={order_id} user_taobao={user_taobao} chat_pay_content={chat_pay_content} need_principal={need_principal} addtime={addtime} itemprice={itemprice} itemnum={itemnum} /> : "" }
         {/* tabs */}
         <RouteTabComponent />
       </div>

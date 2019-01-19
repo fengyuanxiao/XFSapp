@@ -30,7 +30,7 @@ class DfTaskNo extends Component {
     })
     .then( res => {
       let resData = res.data.data;
-      console.log(resData.task_list);
+      // console.log(resData.task_list);
       this.setState({
         datasShow: true,                              //为true 显示任务列表
         task_lists: resData.task_list,                //任务列表数据
@@ -44,7 +44,7 @@ class DfTaskNo extends Component {
 
   // Tabs 跳转传递不同类型参数
   onChange =(e) => {
-    console.log(e.title);
+    // console.log(e.title);
     if ( e.title === "待操作" ) {
       axios.post('/api/task/mytasklist',{
         status: 0,
@@ -52,7 +52,9 @@ class DfTaskNo extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        console.log(res.data.data);
+        this.setState({
+          statea: res.data.data.task_list,
+        })
       })
       .catch( error => {
         console.log(error);
@@ -64,7 +66,9 @@ class DfTaskNo extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        console.log(res.data.data);
+        this.setState({
+          stateb: res.data.data.task_list,
+        })
       })
       .catch( error => {
         console.log(error);
@@ -76,7 +80,9 @@ class DfTaskNo extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        console.log(res.data.data);
+        this.setState({
+          statec: res.data.data.task_list,
+        })
       })
       .catch( error => {
         console.log(error);
@@ -88,7 +94,7 @@ class DfTaskNo extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
       })
       .catch( error => {
         console.log(error);
@@ -97,7 +103,7 @@ class DfTaskNo extends Component {
   }
 
   render() {
-    const { datasShow,task_lists,is_expire_data } = this.state;
+    const { statec,stateb,statea,datasShow,task_lists} = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -109,110 +115,13 @@ class DfTaskNo extends Component {
           {/* 待操作 */}
           <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
             {/* 循环 all-task div */}
-            <div className="all-task">
-              <div className="left-img">
-                <img src={ require("../../../img/cbd.jpg") } alt=""/>
-              </div>
-              <div className="right">
-                {/* top */}
-                <div className="right-top">
-                  <span>
-                    <Icon type="user" theme="outlined" />
-                    用户名
-                  </span>
-                  <span>
-                    2018-11-08 15:43:47
-                  </span>
-                </div>
-                {/* center */}
-                <div className="right-center">
-                  <p>送精美礼品+5.85元额</p>
-                  <Button type="primary"><Link to="/taskStateChild">待操作</Link></Button>
-                </div>
-                <div className="right-bottom">
-                  <p>
-                    <span>垫资99.00元</span>
-                    <span>平台返款</span>
-                  </p>
-                  <span>请在11-08 17:43:47前操作</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* 待返款 */}
-          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
-            <div className="all-task">
-              <div className="left-img">
-                <img src={ require("../../../img/cbd.jpg") } alt=""/>
-              </div>
-              <div className="right">
-                {/* top */}
-                <div className="right-top">
-                  <span>
-                    <Icon type="user" theme="outlined" />
-                    用户名
-                  </span>
-                  <span>
-                    2018-11-08 15:43:47
-                  </span>
-                </div>
-                {/* center */}
-                <div className="right-center">
-                  <p>送精美礼品+5.85元额</p>
-                  <Button type="primary"><Link to="/taskStateChild">待商家确认</Link></Button>
-                </div>
-                <div className="right-bottom">
-                  <p>
-                    <span>垫资99.00元</span>
-                    <span>平台返款</span>
-                  </p>
-                  <span>商家48小时内完成</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* 待评价 */}
-          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
-            <div className="all-task">
-              <div className="left-img">
-                <img src={ require("../../../img/cbd.jpg") } alt=""/>
-              </div>
-              <div className="right">
-                {/* top */}
-                <div className="right-top">
-                  <span>
-                    <Icon type="user" theme="outlined" />
-                    用户名
-                  </span>
-                  <span>
-                    2018-11-08 15:43:47
-                  </span>
-                </div>
-                {/* center */}
-                <div className="right-center">
-                  <p>送精美礼品+5.85元额</p>
-                  <Button type="primary"><Link to="/taskStateChild">已返本金待提交评价</Link></Button>
-                </div>
-                <div className="right-bottom">
-                  <p>
-                    <span>垫资99.00元</span>
-                    <span>平台返款</span>
-                  </p>
-                  <span>务必等待签收后再评价</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* 所有 */}
-          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
-            {/* 循环 all-task div */}
             {
-              datasShow ?
-                task_lists.map((item, index) => {
+              statea ?
+                statea.map((item, index) => {
                   return(
-                    <div className="all-task" key={index}>
+                    <div key={index} className="all-task">
                       <div className="left-img">
-                        <img src={ item.goodspic } alt=""/>
+                        <img src={item.goodspic} alt=""/>
                       </div>
                       <div className="right">
                         {/* top */}
@@ -226,44 +135,182 @@ class DfTaskNo extends Component {
                           </span>
                         </div>
                         {/* center */}
-                        {/* 显示所有，并且判断任务是否过期 */}
-                        {
-                          item.is_expire_data ?
+                        <div>
+                          <div className="right-center">
+                            <p>￥{item.commission}</p>
+                            <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                          </div>
+                          <div className="right-bottom">
+                            <p className="paddingBottom">
+                              <span>垫资{item.need_principal}元</span>
+                              <span>{item.refundtext}</span>
+                            </p>
+                            <p className="taskss">请在{item.limittime}前操作</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })
+              :
+              <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
+            }
+          </div>
+          {/* 待返款 */}
+          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
+            {
+              stateb ?
+                stateb.map((item, index) => {
+                  return(
+                    <div key={index} className="all-task">
+                      <div className="left-img">
+                        <img src={item.goodspic} alt=""/>
+                      </div>
+                      <div className="right">
+                        {/* top */}
+                        <div className="right-top">
+                          <span style={{ display: 'flex' }}>
+                            <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
+                            {item.user_taobao}
+                          </span>
+                          <span>
+                            {item.addtime}
+                          </span>
+                        </div>
+                        {/* center */}
+                        <div>
+                          <div className="right-center">
+                            <p>￥{item.commission}</p>
+                            <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                          </div>
+                          <div className="right-bottom">
+                            <p className="paddingBottom">
+                              <span>垫资{item.need_principal}元</span>
+                              <span>{item.refundtext}</span>
+                            </p>
+                            <p className="taskss">请在{item.limittime}前操作</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })
+              :
+              <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
+            }
+          </div>
+          {/* 待评价 */}
+          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
+            {
+              statec ?
+                statec.map((item, index) => {
+                  return(
+                    <div key={index} className="all-task">
+                      <div className="left-img">
+                        <img src={item.goodspic} alt=""/>
+                      </div>
+                      <div className="right">
+                        {/* top */}
+                        <div className="right-top">
+                          <span style={{ display: 'flex' }}>
+                            <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
+                            {item.user_taobao}
+                          </span>
+                          <span>
+                            {item.addtime}
+                          </span>
+                        </div>
+                        {/* center */}
+                        <div>
+                          <div className="right-center">
+                            <p>￥{item.commission}</p>
+                            <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                          </div>
+                          <div className="right-bottom">
+                            <p className="paddingBottom">
+                              <span>垫资{item.need_principal}元</span>
+                              <span>{item.refundtext}</span>
+                            </p>
+                            <p className="taskss">请在{item.limittime}前操作</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })
+              :
+              <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
+            }
+          </div>
+          {/* 所有 */}
+          <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
+            {/* 循环 all-task div */}
+            {
+              datasShow ?
+                task_lists.length ?
+                  task_lists.map((item, index) => {
+                    return(
+                      <div className="all-task" key={index}>
+                        <div className="left-img">
+                          <img src={ item.goodspic } alt=""/>
+                        </div>
+                        <div className="right">
+                          {/* top */}
+                          <div className="right-top">
+                            <span style={{ display: 'flex' }}>
+                              <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
+                              {item.user_taobao}
+                            </span>
+                            <span>
+                              {item.addtime}
+                            </span>
+                          </div>
+                          {/* center */}
+                          {/* 显示所有，并且判断任务是否过期 */}
+                          {
+                            item.is_expire_data ?
+                              <div>
+                                <div className="right-center">
+                                  <p>￥{item.commission}</p>
+                                  {/* <Button type="primary"><Link to="/taskStateChild">{item.order_status_text}</Link></Button> */}
+
+                                  <Button type="primary" disabled>任务已过期</Button>
+                                </div>
+                                <div className="right-bottom">
+                                  <p className="paddingBottom">
+                                    <span>垫资{item.need_principal}元</span>
+                                    <span>{item.refundtext}</span>
+                                  </p>
+                                  <span>该任务已过期</span>
+                                </div>
+                              </div>
+                            :
                             <div>
                               <div className="right-center">
                                 <p>￥{item.commission}</p>
                                 {/* <Button type="primary"><Link to="/taskStateChild">{item.order_status_text}</Link></Button> */}
-
-                                <Button type="primary" disabled>任务已过期</Button>
+                                {
+                                  item.is_appeal === 1 ?
+                                    <Button type="primary"><Link to="/appealTaskDetails">该任务在审核中</Link></Button>
+                                  :
+                                  <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                                }
                               </div>
                               <div className="right-bottom">
                                 <p className="paddingBottom">
                                   <span>垫资{item.need_principal}元</span>
                                   <span>{item.refundtext}</span>
                                 </p>
-                                <span>该任务已过期</span>
+                                <p className="taskss">请在{item.limittime}前操作</p>
                               </div>
                             </div>
-                          :
-                          <div>
-                            <div className="right-center">
-                              <p>￥{item.commission}</p>
-                              {/* <Button type="primary"><Link to="/taskStateChild">{item.order_status_text}</Link></Button> */}
-                              <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
-                            </div>
-                            <div className="right-bottom">
-                              <p className="paddingBottom">
-                                <span>垫资{item.need_principal}元</span>
-                                <span>{item.refundtext}</span>
-                              </p>
-                              <p className="taskss">请在{item.limittime}前操作</p>
-                            </div>
-                          </div>
-                        }
+                          }
+                        </div>
                       </div>
-                    </div>
-                  )
-                })
+                    )
+                  })
+                :
+                <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
               :
               <div className="loading">
                 <img src={require("../../../img/loading.gif")} alt="loading"/>
