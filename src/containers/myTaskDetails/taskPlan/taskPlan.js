@@ -172,7 +172,7 @@ class TaskPlan extends Component {
           <p className="title"><b className="plan-title">{ is_addcomments? "五" : "四" }：完成任务</b><span></span></p>
           <div className="task-plan-list">
             <span className="ask-start">平台规定商家48小时内返款</span>
-            <button style={ order_status === 9 ? {backgroundColor: '#66caa8'} : {backgroundColor: '#ccc'} }>获得本金</button>
+            <button style={ order_status === 4 ? {backgroundColor: '#66caa8'} : {backgroundColor: '#ccc'} }>获得本金</button>
           </div>
         </div>
       </div>

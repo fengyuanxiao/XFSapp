@@ -10,7 +10,7 @@ import TaskPlan from './taskPlan/taskPlan';
 import './myTaskDetails.css';
 
 class MyTaskDetails extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       datas: false,
@@ -33,7 +33,7 @@ class MyTaskDetails extends Component {
     })
     .then(response => {
       let responses = response.data.data;
-      console.log(responses);
+      // console.log(responses);
         if ( response.data.status === "_0001" ) {
             message.success(response.data.msg, successSkip => {
               this_.props.history.push("/");

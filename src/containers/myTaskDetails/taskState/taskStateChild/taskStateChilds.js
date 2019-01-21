@@ -205,7 +205,7 @@ class TaskStateChilds extends Component {
               <p className="task-plan-list" style={{ border:'none' }}><span>搜索主关键字</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{keyword}</span></p>
               <p className="task-plan-list" style={{ border:'none' }}><span>搜索关键字1</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{charset_one}</span></p>
               <p className="task-plan-list" style={{ border:'none' }}><span>搜索关键字2</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{charset_two}</span></p>
-              <p className="task-plan-list-Child"><span>(打开淘宝搜索关键词)</span><span style={{ color:'red',fontWeight:'bold' }}>注：如有关键字过长请左右拖动查看</span></p>
+              <p className="task-plan-list-Child"><span>(打开淘宝搜索关键词)</span><span className="fontsi">注：如有关键字过长请左右拖动查看</span></p>
               <p className="task-plan-list"><span>购买数量</span><span>目标商品{itemnum}件</span></p>
               {/* 循环上平规格 */}
               {
@@ -235,7 +235,7 @@ class TaskStateChilds extends Component {
                 }
               </span></p>
               <p className="task-plan-list"><span>订单留言</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{remark ? remark : ""}</span></p>
-              <p className="task-plan-list-Child"><span>(查看订单留言)</span><span style={{ color:'red',fontWeight:'bold' }}>注：如内容过长请左右拖动查看</span></p>
+              <p className="task-plan-list-Child"><span>(查看订单留言)</span><span className="fontsi">注：如内容过长请左右拖动查看</span></p>
             </div>
             {/* 商家要求 */}
             <div className="taskRenw">

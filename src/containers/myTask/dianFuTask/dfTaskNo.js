@@ -30,7 +30,7 @@ class DfTaskNo extends Component {
     })
     .then( res => {
       let resData = res.data.data;
-      // console.log(resData.task_list);
+      console.log(resData.task_list);
       this.setState({
         datasShow: true,                              //为true 显示任务列表
         task_lists: resData.task_list,                //任务列表数据
@@ -100,6 +100,13 @@ class DfTaskNo extends Component {
         console.log(error);
       })
     }
+  }
+
+  // 点击操作任务
+  routerToWenda (item) {
+    let this_ = this;
+    localStorage.setItem("order_id", item);
+    this_.props.history.push("/myTaskDetails");
   }
 
   render() {
@@ -181,6 +188,7 @@ class DfTaskNo extends Component {
                         <div>
                           <div className="right-center">
                             <p>￥{item.commission}</p>
+                            <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
                             <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
                           </div>
                           <div className="right-bottom">
@@ -224,7 +232,8 @@ class DfTaskNo extends Component {
                         <div>
                           <div className="right-center">
                             <p>￥{item.commission}</p>
-                            <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                            <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
+                            {/* <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button> */}
                           </div>
                           <div className="right-bottom">
                             <p className="paddingBottom">
@@ -293,7 +302,7 @@ class DfTaskNo extends Component {
                                   item.is_appeal === 1 ?
                                     <Button type="primary"><Link to="/appealTaskDetails">该任务在审核中</Link></Button>
                                   :
-                                  <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                                  <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
                                 }
                               </div>
                               <div className="right-bottom">
