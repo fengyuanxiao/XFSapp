@@ -22,7 +22,7 @@ class certifications extends Component {
 
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne = (files, type, index) => {
-    console.log(files, type, index);
+    // console.log(files, type, index);
     this.setState({
       files,
     });
@@ -35,7 +35,7 @@ class certifications extends Component {
     let _this = this.state.files;
     this.props.form.validateFields((err, values) => {
       if (!err === true && _this.length >= 2) {
-      console.log(values);
+      // console.log(values);
         if ( !cards.test(values.cardno) ) {                                   //判断是否是正确的身份证号码
           message.error("请输入正确的身份证号！")
         } else {
@@ -51,7 +51,7 @@ class certifications extends Component {
           })
           .then( response => {
             let data_ = response.data;
-              console.log(data_);
+              // console.log(data_);
             if ( data_.status ) {                           //status 为true 执行下面代码
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.success(data_.msg);

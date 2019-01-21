@@ -26,18 +26,26 @@ class TaskList extends Component {
 
   // 进入任务大厅 调用任务接口
   componentWillMount() {
+    let this_ = this;
     // Toast.loading('任务加载中...');
     // 在此调用ajax 获取任务列表
     axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
-      // console.log(response.data);
       let datas = response.data.data;
-      this.setState({
-        task_lists: datas.task_list,                      //调用ajax 任务列表数据导入接口
-        datasState: true,
-        money_account: datas.money_account,               //本金
-        commission_account: datas.commission_account,     //佣金
-      })
+      // console.log(response.data);
+      if ( response.data.status === "_0001" ) {
+          message.success(response.data.msg, successSkip => {
+          this_.props.history.push("/");
+        })
+      } else {
+        this.setState({
+          task_lists: datas.task_list,                      //调用ajax 任务列表数据导入接口
+          datasState: true,
+          money_account: datas.money_account,               //本金
+          commission_account: datas.commission_account,     //佣金
+          is_bind: datas.is_bind,                           //是否绑定淘宝号
+        })
+      }
     })
     .catch(error => {
       console.log(error);
@@ -59,7 +67,7 @@ class TaskList extends Component {
     let data_ = response.data;
     // console.log(data_);
     if ( data_.status ) {
-      message.success("恭喜您，抢到啦！", successSkip => {
+        message.success("恭喜您，抢到啦！", successSkip => {
         // 保存order_id到本地
         localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
         this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
@@ -102,7 +110,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { task_lists, datasState, money_account, commission_account } = this.state;
+    const { is_bind,task_lists, datasState, money_account, commission_account } = this.state;
     return (
       <div style={{ paddingTop: '3.3rem' }}>
         <PullToRefresh
@@ -138,6 +146,15 @@ class TaskList extends Component {
           </section>
           {/* 提现用户数据冒泡 */}
           <UserCashList />
+          {
+            is_bind ?
+              ""
+            :
+            <div className="is_bind">
+              <span>未绑定淘宝账号！ >></span>
+              <Link to="/buyAdmin">前往绑定</Link>
+            </div>
+          }
           {/* 任务列表 */}
           {
             datasState ?

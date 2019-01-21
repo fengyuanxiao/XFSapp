@@ -99,7 +99,7 @@ class RegisterPages extends Component {
         phoneNum: dataCode_.placeholder
       })
       .then(function (response) {   //调用接口成功执行
-        console.log(response.data);
+        // console.log(response.data);
         // 判断后台返回数据 status 状态 true 图片验证码正确 执行下面
         if ( response.data.status ) {
           // 倒计时 获取短信验证码

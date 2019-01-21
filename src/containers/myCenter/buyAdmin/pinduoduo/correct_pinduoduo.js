@@ -45,7 +45,7 @@ class Correct_pinduoduos extends Component {
     })
     .then(function (response) {   //调用接口成功执行
       let responses = response.data.data;
-      console.log(responses);
+      // console.log(responses);
       this_.props.form.setFieldsValue({
         Account: responses.nickname,                //账号名称
         GoodsName: responses.receiver,              //收货人
@@ -62,11 +62,11 @@ class Correct_pinduoduos extends Component {
 
   // 省市区联动回调
   onChange = (value) => {
-    console.log(value);
+    // console.log(value);
   }
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne = (files, type, index) => {
-    console.log(files, type, index);
+    // console.log(files, type, index);
     this.setState({
       files,
     });
@@ -105,9 +105,9 @@ class Correct_pinduoduos extends Component {
     let this_ = this;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      console.log(values);
-      let imgss = data;
-      console.log(imgss);
+      // console.log(values);
+      // let imgss = data;
+      // console.log(imgss);
       if ( !err === true && _this.length >= 2 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
@@ -143,7 +143,7 @@ class Correct_pinduoduos extends Component {
             } else {
               message.warning(data_.msg);
             }
-            console.log(data_);
+            // console.log(data_);
           })
           .catch(function (error) {   //调用接口失败执行
             console.log(error);

@@ -52,7 +52,7 @@ class CashPage extends Component {
     })
     .then( res => {
       let datas = res.data.data;
-      console.log(res.data.data);
+      // console.log(res.data.data);
       if ( datas ) {
         this.setState({
           shows: true,

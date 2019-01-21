@@ -45,7 +45,7 @@ class Correct_weipinhuis extends Component {
     })
     .then(function (response) {   //调用接口成功执行
       let responses = response.data.data;
-      console.log(responses);
+      // console.log(responses);
       this_.props.form.setFieldsValue({
         Account: responses.nickname,                //账号名称
         GoodsName: responses.receiver,              //收货人
@@ -105,7 +105,7 @@ class Correct_weipinhuis extends Component {
     let this_ = this;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      console.log(values);
+      // console.log(values);
       if ( !err === true && _this.length >= 2 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
@@ -139,7 +139,7 @@ class Correct_weipinhuis extends Component {
             } else {
               message.warning(data_.msg);
             }
-            console.log(data_);
+            // console.log(data_);
           })
           .catch(function (error) {   //调用接口失败执行
             console.log(error);

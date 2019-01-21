@@ -135,7 +135,7 @@ class ForgetPasswords extends Component {
           message.error("两次密码不一致！")
         }else {
           // 在此提交ajax数据
-          console.log(values);
+          // console.log(values);
           axios.post('/api/user/forgetPwd', {
             mobile: values.phoneNum,
             smscode: values.captcha,

@@ -59,7 +59,7 @@ class Accounts extends Component {
         } //post 方法传 token
       })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.props.form.setFieldsValue({
           numb: response.data.data.phone, //获取手机号
         });
@@ -162,7 +162,7 @@ class Accounts extends Component {
             } //post 方法传 token
           })
           .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data.status) {
               this_.setState({
                 animating: false

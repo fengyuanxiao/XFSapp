@@ -29,6 +29,15 @@
   font-size: 0.8rem;
 }
 
+.is_bind {
+  padding: 0.4rem 0.4rem;
+  background-color: #f8e9bb;
+  color: red;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-around;
+}
+
 .listCenter {
   width: 25%;
   text-align: center;

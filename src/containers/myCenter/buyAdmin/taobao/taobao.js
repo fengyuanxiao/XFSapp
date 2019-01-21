@@ -108,7 +108,7 @@ class BindTaobaos extends Component {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.warning(data_.msg);
             }
-            console.log(data_);
+            // console.log(data_);
           })
           .catch(function (error) {   //调用接口失败执行
             console.log(error);

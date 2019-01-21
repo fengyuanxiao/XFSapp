@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Badge, Icon } from 'antd';
+import { Badge, Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,25 +14,33 @@ class MyTaskPage extends Component {
     }
   }
   componentWillMount() {
+    let this_ = this;
     axios.get('/api/task/mytaskindex', {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
     .then( res=> {
       let datas = res.data.data;
+      // console.log(res);
       // console.log(datas);
-      this.setState({
-        nocomplete_task_count: datas.nocomplete_task_count,               //垫付任务未完成的订单数
-        complete_task_count: datas.complete_task_count,                   //垫付任务已完成的订单数
-        cancel_task_count: datas.cancel_task_count,                       //垫付任务已撤销的订单数
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          this_.props.history.push("/");
+        })
+      } else {
+        this.setState({
+          nocomplete_task_count: datas.nocomplete_task_count,               //垫付任务未完成的订单数
+          complete_task_count: datas.complete_task_count,                   //垫付任务已完成的订单数
+          cancel_task_count: datas.cancel_task_count,                       //垫付任务已撤销的订单数
 
-        nocomplete_flowtask_count: datas.nocomplete_flowtask_count,       //浏览任务未完成的订单数
-        complete_flowtask_count: datas.complete_flowtask_count,           //浏览任务已完成的订单数
-        cancel_flowtask_count: datas.cancel_flowtask_count,               //浏览任务已撤销的订单数
+          nocomplete_flowtask_count: datas.nocomplete_flowtask_count,       //浏览任务未完成的订单数
+          complete_flowtask_count: datas.complete_flowtask_count,           //浏览任务已完成的订单数
+          cancel_flowtask_count: datas.cancel_flowtask_count,               //浏览任务已撤销的订单数
 
-        nocomplete_answertask_count: datas.nocomplete_answertask_count,   //问答任务未完成的订单数
-        complete_answertask_count: datas.complete_answertask_count,       //问答任务已完成的订单数
-        cancel_answertask_count: datas.cancel_answertask_count,           //问答任务已撤销的订单数
-      })
+          nocomplete_answertask_count: datas.nocomplete_answertask_count,   //问答任务未完成的订单数
+          complete_answertask_count: datas.complete_answertask_count,       //问答任务已完成的订单数
+          cancel_answertask_count: datas.cancel_answertask_count,           //问答任务已撤销的订单数
+        })
+      }
     })
     .catch(error => {
       console.log(error);

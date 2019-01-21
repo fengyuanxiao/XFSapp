@@ -92,13 +92,13 @@ class Logins extends Component {
                initialValue: true,
             })(
               <Checkbox>记住密码</Checkbox>
-             )}
-             {/* <a href=""></a> */}
-             <Link className="login-form-forgot" to="/forgetPassword">忘记密码？</Link>
-             <Button type="primary" htmlType="submit" className="login-form-buttons">立即登录</Button>
-             <Button className="login-form-buttons"><Link to="/registerPage">免费注册</Link></Button>
-           </FormItem>
-         </Form>
+            )}
+            {/* <a href=""></a> */}
+            <Link className="login-form-forgot" to="/forgetPassword">忘记密码？</Link>
+            <Button type="primary" htmlType="submit" className="login-form-buttons">立即登录</Button>
+            <Button className="login-form-buttons"><Link to="/registerPage">免费注册</Link></Button>
+          </FormItem>
+        </Form>
       </div>
     )
   }

@@ -19,7 +19,7 @@ class Correct_Accounts extends Component {
       codeNum: 60,        //倒计时 60 秒
       TestGetCode: "获取验证码",
     }
-    console.log(props);
+    // console.log(props);
   }
 
   componentWillMount() {

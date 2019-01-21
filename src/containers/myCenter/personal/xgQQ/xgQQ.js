@@ -23,7 +23,7 @@ class XgQQs extends Component {
         } //post 方法传 token
       })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.props.form.setFieldsValue({
           yuanQQ: response.data.data.qq, //获取手机号
         });
