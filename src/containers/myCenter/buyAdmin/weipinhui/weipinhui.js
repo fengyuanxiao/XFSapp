@@ -7,7 +7,7 @@ import WingBlank from 'antd-mobile/lib/wing-blank';
 import axios from 'axios';
 
 import '../buyAdmin.css';
-import '../../component/apis';
+import '../../../../component/apis';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
 const data = [];

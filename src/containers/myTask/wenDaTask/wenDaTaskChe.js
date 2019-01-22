@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import '../../component/apis';
+import '../../../component/apis';
 
 class WenDaTaskChe extends Component {
   constructor() {

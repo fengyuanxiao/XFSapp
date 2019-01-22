@@ -4,7 +4,7 @@ import { Icon, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
-import '../../component/apis';
+import '../../../../component/apis';
 
 const FormItem = Form.Item;
 

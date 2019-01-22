@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 import axios from 'axios';    //ajax
-import '../../component/apis';
+import '../../../component/apis';
 
 class BuyAdmins extends Component {
   constructor() {

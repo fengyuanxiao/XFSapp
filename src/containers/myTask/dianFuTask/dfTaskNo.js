@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Tabs from 'antd-mobile/lib/tabs';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 import axios from 'axios';
-import '../../component/apis';
+import '../../../component/apis';
 
 import './dianFuTask.css';
 

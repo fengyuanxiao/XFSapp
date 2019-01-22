@@ -2,7 +2,7 @@ import React,{ Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, message } from 'antd';
 import axios from 'axios';
-import '../../component/apis';
+import '../../../component/apis';
 
 message.config({
   top: 300,

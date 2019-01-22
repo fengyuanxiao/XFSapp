@@ -4,7 +4,7 @@ import { Link  } from 'react-router-dom';
 import axios from 'axios';    //ajax
 
 import './tongZhi.css';
-import '../../component/apis';
+import '../../../component/apis';
 
 class TongZhi extends Component {
   constructor(){

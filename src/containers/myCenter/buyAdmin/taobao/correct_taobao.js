@@ -6,7 +6,7 @@ import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
-import '../../component/apis';
+import '../../../../component/apis';
 import '../buyAdmin.css';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库

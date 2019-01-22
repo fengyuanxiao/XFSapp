@@ -5,7 +5,7 @@ import axios from 'axios';
 import copy from 'copy-to-clipboard';             //点击按钮拷贝
 
 import './tuijian.css';
-import '../../component/apis';
+import '../../../component/apis';
 
 class TuiJian extends Component {
   constructor() {

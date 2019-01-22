@@ -6,7 +6,7 @@ import WhiteSpace from 'antd-mobile/lib/white-space';
 import { Link  } from 'react-router-dom';
 
 import './shensu.css';
-import '../../component/apis';
+import '../../../component/apis';
 
 const tabs = [
   { title: '我发起的申诉' },

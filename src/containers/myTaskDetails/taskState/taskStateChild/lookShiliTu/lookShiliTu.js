@@ -4,7 +4,7 @@ import ImagePicker from 'antd-mobile/lib/image-picker';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
-import '../../component/apis';
+import '../../../../../component/apis';
 
 // import TaskStateUpload from '../taskStateUpload/taskStateUpload';
 

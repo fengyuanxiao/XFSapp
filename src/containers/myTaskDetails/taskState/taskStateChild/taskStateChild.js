@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import LookShiliTu from './lookShiliTu/lookShiliTu';
 import './taskStateChild.css';
-import '../../component/apis';
+import '../../../../component/apis';
 
 class TaskStateChild extends Component {
   constructor(props) {

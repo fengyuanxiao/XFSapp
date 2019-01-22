@@ -6,7 +6,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './questionsTask.css';
-import '../../component/apis';
+import '../../../component/apis';
 
 class QuestionsTasks extends Component {
   constructor(props) {

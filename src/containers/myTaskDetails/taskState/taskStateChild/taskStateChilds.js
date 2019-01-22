@@ -7,7 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './taskStateChild.css';
-import '../../component/apis';
+import '../../../../component/apis';
 
 const data = [];
 

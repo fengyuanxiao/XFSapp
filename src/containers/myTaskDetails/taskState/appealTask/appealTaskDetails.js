@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './appealTask.css';
-import '../../component/apis';
+import '../../../../component/apis';
 
 const prompt = Modal.prompt;
 const alert = Modal.alert;

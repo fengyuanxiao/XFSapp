@@ -4,7 +4,7 @@ import { Icon, Form, Input, Button, Row, Col, message } from 'antd';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
-import '../../component/apis';
+import '../../../component/apis';
 
 const FormItem = Form.Item;
 let phoneNumber = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则

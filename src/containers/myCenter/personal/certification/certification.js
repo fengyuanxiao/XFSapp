@@ -5,7 +5,7 @@ import axios from 'axios';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
-import '../../component/apis';
+import '../../../../component/apis';
 
 const FormItem = Form.Item;
 const data = [];

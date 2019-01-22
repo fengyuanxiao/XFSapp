@@ -7,7 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import '../buyAdmin.css';
-import '../../component/apis';
+import '../../../../component/apis';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
 const data = [];      //上传图片集合

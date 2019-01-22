@@ -7,7 +7,7 @@ import axios from 'axios';    //ajax
 import UserCashList from '../userCashList/userCashList'; //用户提现冒泡数据
 
 import './taskList.css';
-import '../../component/apis';
+import '../../../component/apis';
 
 message.config({
   duration: 1,

@@ -28,8 +28,13 @@
   background: 'transparency';
   overflow: hidden;
 }
-.user-cash-list > h3 {
-  color: #e7ae01;
+.user-cash-list > span {
+  font-size: 1rem;
+}
+.user-cash-list > span:first-child {
+  color: #000;
+}.user-cash-list > span:last-child {
+  color: blue;
 }
 
 /* 小钱包点击进入推荐页面 */

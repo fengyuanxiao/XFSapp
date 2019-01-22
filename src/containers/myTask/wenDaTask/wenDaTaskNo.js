@@ -6,7 +6,7 @@ import Tabs from 'antd-mobile/lib/tabs';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 
 import '../dianFuTask/dianFuTask.css';
-import '../../component/apis';
+import '../../../component/apis';
 
 const tabs = [
   { title: '商家审核' },

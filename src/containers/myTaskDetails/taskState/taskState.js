@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Drawer, Button, Menu, Icon, message } from 'antd';
-import '../../component/apis';
+import '../../../component/apis';
 
 class TaskState extends Component {
   constructor(props, context) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { Link  } from 'react-router-dom';
 import axios from 'axios';
-import '../../component/apis';
+import '../../../../component/apis';
 
 class TongZhiChild extends Component {
   constructor(props) {
