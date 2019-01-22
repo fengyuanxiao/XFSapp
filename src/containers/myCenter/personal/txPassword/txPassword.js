@@ -4,6 +4,7 @@ import { Icon, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import '../../component/apis';
 
 const FormItem = Form.Item;
 // let phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
@@ -19,7 +20,7 @@ class TxPasswords extends Component {
 
   componentWillMount() {
     // 进入登录手机号页面 调用图片验证码获取图片
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
@@ -33,7 +34,7 @@ class TxPasswords extends Component {
 
   componentDidMount() {
     // 获取手机号码接口
-    axios.get('/api/index/getmobilephone',
+    axios.get(global.constants.website+'/api/index/getmobilephone',
     {
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
@@ -59,7 +60,7 @@ class TxPasswords extends Component {
 
   // 点击图片验证码重新获取 图片
   getVerifyCode = () => {
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
@@ -86,7 +87,7 @@ class TxPasswords extends Component {
       message.error("请输入图形验证码！");
     } else {
       // 调用手机获取验证码接口
-      axios.post('/api/user/sendcode',
+      axios.post(global.constants.website+'/api/user/sendcode',
       {
         phoneNum: datas.placeholder,
         tuCode: datas.code,
@@ -135,7 +136,7 @@ class TxPasswords extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this_.setState({ animating: true });            //数据提交中显示的login.....
-        axios.post('/api/index/changeCashPassword', {
+        axios.post(global.constants.website+'/api/index/changeCashPassword', {
           smscode: values.dongtaiCode,
           password: values.newPassword,
           repassword: values.okNewPassword,

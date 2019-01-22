@@ -4,6 +4,7 @@ import { Icon, Form, Input, Button, Row, Col, message } from 'antd';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import '../../component/apis';
 
 const FormItem = Form.Item;
 let phoneNumber = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
@@ -23,7 +24,7 @@ class ForgetPasswords extends Component {
 
   // 生命周期函数 此函数最先执行
   componentWillMount() {
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       let responses = response.data.data
       this.setState({
@@ -51,7 +52,7 @@ class ForgetPasswords extends Component {
 
   // 点击图片验证码重新获取 图片
   getVerifyCode = () => {
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
@@ -83,7 +84,7 @@ class ForgetPasswords extends Component {
       message.error("请输图形验证码！");
     } else {
       // 再次调用获取验证码接口
-      axios.post('/api/user/sendcode', {
+      axios.post(global.constants.website+'/api/user/sendcode', {
         sid: states.sid,
         tuCode: states.tuValue,
         phoneNum: states.placeholder
@@ -136,7 +137,7 @@ class ForgetPasswords extends Component {
         }else {
           // 在此提交ajax数据
           // console.log(values);
-          axios.post('/api/user/forgetPwd', {
+          axios.post(global.constants.website+'/api/user/forgetPwd', {
             mobile: values.phoneNum,
             smscode: values.captcha,
             password: values.loginPassword,

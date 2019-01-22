@@ -7,6 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './questionsTask.css';
+import '../../component/apis';
 
 const RadioGroup = Radio.Group;
 const data = [];
@@ -26,7 +27,7 @@ class QuestionsTask extends Component {
 
   componentWillMount() {
     let this_ = this;
-    axios.post('/api/task/asktaskOne',
+    axios.post(global.constants.website+'/api/task/asktaskOne',
     {
       task_id: this_.props.location.state.data,
     },
@@ -100,7 +101,7 @@ class QuestionsTask extends Component {
       } else {
         this_.setState({ animating: true })            //数据提交中显示的login.....
         let infoPhoto = _this.files[0].url;
-        axios.post('/api/task/addOrder',{
+        axios.post(global.constants.website+'/api/task/addOrder',{
           task_id: _this.id,                       //任务ID
           check_question: _this.value,                 //买手在商家问题列表中选择自己收到的问题
           question_pic_content: infoPhoto,             //买手上传收到的问题截图
@@ -128,7 +129,7 @@ class QuestionsTask extends Component {
       } else {
         this_.setState({ animating: true })            //数据提交中显示的login.....
         let infoPhoto = _this.files[0].url;
-        axios.post('/api/task/addOrder',{
+        axios.post(global.constants.website+'/api/task/addOrder',{
           task_id: _this.id,                           //任务ID
           question_content: _this.inputValue,          //买手自己提交的问题
           question_pic_content: infoPhoto,             //买手上传收到的问题截图

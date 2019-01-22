@@ -6,6 +6,7 @@ import Tabs from 'antd-mobile/lib/tabs';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 
 import './commission.css';
+import '../../component/apis';
 
 const tabs = [
   { title: '本金账单' },
@@ -21,7 +22,7 @@ class CashPage extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/index/usermoneylog', {
+    axios.post(global.constants.website+'/api/index/usermoneylog', {
       type: 2,
     },
     {
@@ -44,7 +45,7 @@ class CashPage extends Component {
 
   onChange =(e) => {
     // 点击tabs 调用是否是本金账单 或者佣金账单
-    axios.post('/api/index/usermoneylog', {
+    axios.post(global.constants.website+'/api/index/usermoneylog', {
       type: e.title === "本金账单" ? 1 : 2,
     },
     {

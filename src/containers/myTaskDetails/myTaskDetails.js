@@ -8,6 +8,7 @@ import DetailsPouduct from './detailsProduct/detailsProduct';
 import TaskState from './taskState/taskState';
 import TaskPlan from './taskPlan/taskPlan';
 import './myTaskDetails.css';
+import '../../component/apis';
 
 class MyTaskDetails extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class MyTaskDetails extends Component {
   // 页面未加载就开始执行 生命周期函数，componentWillMount最先执行   此处函数调 ajax数据交互
   componentWillMount = () => {
     let this_ = this;
-    axios.post('api/task/myTaskDetail',
+    axios.post(global.constants.website+'/api/task/myTaskDetail',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },

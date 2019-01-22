@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './myTask.css';
+import '../../component/apis';
 import RouteTabComponent from '../../component/routeTab/routeTab';  //tabs
 
 class MyTaskPage extends Component {
@@ -15,7 +16,7 @@ class MyTaskPage extends Component {
   }
   componentWillMount() {
     let this_ = this;
-    axios.get('/api/task/mytaskindex', {
+    axios.get(global.constants.website+'/api/task/mytaskindex', {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
     .then( res=> {

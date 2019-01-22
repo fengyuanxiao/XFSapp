@@ -4,6 +4,7 @@ import { Icon, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import '../../component/apis';
 
 const FormItem = Form.Item;
 
@@ -22,7 +23,7 @@ class LoginPasswords extends Component {
       if (!err) {
         this.setState({ animating: true });            //数据提交中显示的login.....
         // 调用修改密码接口
-        axios.post('/api/index/updatepwd', {
+        axios.post(global.constants.website+'/api/index/updatepwd', {
           password: values.yuanPassword,
           new_password: values.okPassword,
           re_new_password: values.andOkPassword,

@@ -7,6 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './appealTask.css';
+import '../../component/apis';
 
 const { TextArea } = Input;
 const options = [{
@@ -37,7 +38,7 @@ class AppealTask extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/task/appealTask',{
+    axios.post(global.constants.website+'/api/task/appealTask',{
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -89,7 +90,7 @@ class AppealTask extends Component {
       let imgs = [photos[0].url, photos[1].url];    //转换图片的格式
       let numType = _this.tousu[0];
       //此处执行ajax请求
-      axios.post('/api/task/appealTaskCommit',{
+      axios.post(global.constants.website+'/api/task/appealTaskCommit',{
         order_id: _this.order_id,
         complain_type: numType,
         complain_desc: _this.contentInput,

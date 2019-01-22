@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';    //ajax
 
 import './myCenter.css';
+import '../../component/apis';
 import RouteTabComponent from '../../component/routeTab/routeTab';  //tabs
 
 class MyCenterPage extends Component {
@@ -17,7 +18,7 @@ class MyCenterPage extends Component {
   // 进入个人中心页面 调用ajax 获取数据
   componentWillMount() {
     let this_ = this;
-    axios.get('/api/index/index',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
+    axios.get(global.constants.website+'/api/index/index',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       // console.log(response.data);
       let data_s = response.data.data;

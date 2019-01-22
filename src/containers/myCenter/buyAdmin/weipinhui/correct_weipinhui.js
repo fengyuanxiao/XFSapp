@@ -7,6 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import '../buyAdmin.css';
+import '../../component/apis';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
 const data = [];      //上传图片集合
@@ -36,7 +37,7 @@ class Correct_weipinhuis extends Component {
   componentDidMount () {
     // 修改绑定买号返回已填写过的值
     let this_ = this;
-    axios.post('/api/index/updateall_bind',
+    axios.post(global.constants.website+'/api/index/updateall_bind',
     {
       id: this.props.location.state.data,   //由父页面传过来的绑定平台id
     },
@@ -117,7 +118,7 @@ class Correct_weipinhuis extends Component {
           let imgs = [values.images[0].url, values.images[1].url];
           // console.log(imgs);
           //以上数据都正确 在此 ajax交互
-          axios.post('/api/index/updatewph_bind',
+          axios.post(global.constants.website+'/api/index/updatewph_bind',
           {
             Account: values.Account,                  //绑定帐号昵称
             GoodsName: values.GoodsName,              //收货人

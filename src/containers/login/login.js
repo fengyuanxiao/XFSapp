@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './login.css';
+import '../../component/apis';
+// global.constants.website+
+// ,"proxy": "https://budan.php12.cn/"          代理
 
 const FormItem = Form.Item;
 const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
@@ -15,7 +18,8 @@ class Logins extends Component {
   // }
 
   componentDidMount () {
-    this.props.form.setFieldsValue({
+    // console.log(global.constants.website+"123");
+      this.props.form.setFieldsValue({
       userName: localStorage.getItem("mobile"),                //获取本地账号
       password: localStorage.getItem("password"),              //获取本地密码
     })
@@ -32,7 +36,7 @@ class Logins extends Component {
           message.error("请输入正确的手机号码！")
         } else {
           //以上数据都正确 在此 ajax交互
-          axios.post('/api/user/login', {
+          axios.post(global.constants.website+'/api/user/login', {
             // 用户注册提交的所有数据
             mobile: values.userName,
             password: values.password,

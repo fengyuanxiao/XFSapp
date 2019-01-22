@@ -7,6 +7,7 @@ import Modal from 'antd-mobile/lib/modal';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 
 import './cash.css';
+import '../../component/apis';
 
 const tabs = [
   { title: '本金记录' },
@@ -23,7 +24,7 @@ class cashRecord extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/index/applycashlist',{
+    axios.post(global.constants.website+'/api/index/applycashlist',{
       type: 1
     },
     {
@@ -63,7 +64,7 @@ class cashRecord extends Component {
   // Tabs 跳转传递不同类型参数
   onChange =(e) => {
     // console.log(e.title);
-    axios.post('/api/index/applycashlist',{
+    axios.post(global.constants.website+'/api/index/applycashlist',{
       type: e.title === "佣金记录" ? 2 : 1
     },
     {

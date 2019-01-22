@@ -6,6 +6,7 @@ import Tabs from 'antd-mobile/lib/tabs';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 
 import '../dianFuTask/dianFuTask.css';
+import '../../component/apis';
 
 const tabs = [
   { title: '商家审核' },
@@ -23,7 +24,7 @@ class WenDaTaskNo extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/task/mytaskanswerlist',{
+    axios.post(global.constants.website+'/api/task/mytaskanswerlist',{
       status: 5
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -45,7 +46,7 @@ class WenDaTaskNo extends Component {
   onChange =(e) => {
     // console.log(e.title);
     if ( e.title === "商家审核" ) {
-      axios.post('/api/task/mytaskanswerlist',{
+      axios.post(global.constants.website+'/api/task/mytaskanswerlist',{
         status: 0,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -60,7 +61,7 @@ class WenDaTaskNo extends Component {
         console.log(error);
       })
     } else if ( e.title === "提交问答.." ) {
-      axios.post('/api/task/mytaskanswerlist',{
+      axios.post(global.constants.website+'/api/task/mytaskanswerlist',{
         status: 1,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -75,7 +76,7 @@ class WenDaTaskNo extends Component {
         console.log(error);
       })
     } else if ( e.title === "待返佣金" ) {
-      axios.post('/api/task/mytaskanswerlist',{
+      axios.post(global.constants.website+'/api/task/mytaskanswerlist',{
         status: 4,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -89,7 +90,7 @@ class WenDaTaskNo extends Component {
         console.log(error);
       })
     } else {
-      axios.post('/api/task/mytaskanswerlist',{
+      axios.post(global.constants.website+'/api/task/mytaskanswerlist',{
         status: 5,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

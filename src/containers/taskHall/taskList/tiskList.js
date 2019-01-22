@@ -7,6 +7,7 @@ import axios from 'axios';    //ajax
 import UserCashList from '../userCashList/userCashList'; //用户提现冒泡数据
 
 import './taskList.css';
+import '../../component/apis';
 
 message.config({
   duration: 1,
@@ -29,7 +30,7 @@ class TaskList extends Component {
     let this_ = this;
     // Toast.loading('任务加载中...');
     // 在此调用ajax 获取任务列表
-    axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
+    axios.get(global.constants.website+'/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       let datas = response.data.data;
       // console.log(response.data);
@@ -55,7 +56,7 @@ class TaskList extends Component {
   //垫付任务抢任务按钮 进入对应的任务详情页面
   routerTo (item) {
     let this_ = this;
-    axios.post('/api/task/grabTask',
+    axios.post(global.constants.website+'/api/task/grabTask',
     {
       task_id: item,
     },
@@ -85,7 +86,7 @@ class TaskList extends Component {
   // 问答任务抢任务按钮
   routerToWenda (item) {
     let this_ = this;
-    axios.post('/api/task/grabquestask',
+    axios.post(global.constants.website+'/api/task/grabquestask',
     {
       task_id: item,
     },
@@ -124,7 +125,7 @@ class TaskList extends Component {
             // 下拉状态为 true
             this.setState({ refreshing: true });
             // 刷新成功在调用ajax获取任务列表
-            axios.get('/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
+            axios.get(global.constants.website+'/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
             .then(response => {
               // console.log(response.data.data.task_list);
               this.setState({

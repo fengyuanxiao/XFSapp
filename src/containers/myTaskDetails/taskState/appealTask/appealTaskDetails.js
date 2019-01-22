@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './appealTask.css';
+import '../../component/apis';
 
 const prompt = Modal.prompt;
 const alert = Modal.alert;
@@ -20,7 +21,7 @@ class AppealTaskDetails extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/task/appealTaskDetail',{
+    axios.post(global.constants.website+'/api/task/appealTaskDetail',{
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -69,7 +70,7 @@ class AppealTaskDetails extends Component {
     if ( dataState.itme_key === null ) {
       message.error("请选择原因再确认")
     } else {
-      axios.post('/api/task/cancleTask', {
+      axios.post(global.constants.website+'/api/task/cancleTask', {
         order_id: dataState.order_id,           //订单ID
         backout_type: dataState.itme_key,       //撤销类型
         backout_cause: dataState.itme_key === 1? "拍错店铺或者商品" : ( dataState.itme_key === 2? "用户串号" : (dataState.itme_key === 3? "用户已申请退款" : (dataState.itme_key === 4? "未拍下或未付款" : (dataState.itme_key === 5? "问题任务" : "用户操作不符合要求" )) ))
@@ -99,7 +100,7 @@ class AppealTaskDetails extends Component {
     prompt('输入名字', '这是名字的dfsdf', [
       {text: '取消'},
       {text: '提交', onPress: value => {
-        axios.post('/api/task/replyComplain',{
+        axios.post(global.constants.website+'/api/task/replyComplain',{
           order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
           consult_desc: value,        //回复内容val
         },{
@@ -126,7 +127,7 @@ class AppealTaskDetails extends Component {
     alert('完结申诉', '确定完结申诉？', [
       {text: '取消', onPress: () => {console.log('取消了')}},
       {text: '确定', onPress: () => {
-        axios.post('/api/task/completeAppeal',{
+        axios.post(global.constants.website+'/api/task/completeAppeal',{
           order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
         },{
           headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -152,7 +153,7 @@ class AppealTaskDetails extends Component {
     alert('平台介入', '确定申请平台介入？', [
       {text: '取消', onPress: () => {console.log('取消了')}},
       {text: '确定', onPress: () => {
-        axios.post('/api/task/applyToPlatfrom',{
+        axios.post(global.constants.website+'/api/task/applyToPlatfrom',{
           order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
         },{
           headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

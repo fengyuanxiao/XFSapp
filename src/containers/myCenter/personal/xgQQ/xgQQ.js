@@ -4,6 +4,7 @@ import { Icon, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import '../../component/apis';
 
 const FormItem = Form.Item;
 
@@ -17,7 +18,7 @@ class XgQQs extends Component {
 
   componentDidMount() {
     // 获取QQ号
-    axios.get('/api/index/getmobilephone', {
+    axios.get(global.constants.website+'/api/index/getmobilephone', {
         headers: {
           AppAuthorization: localStorage.getItem("token")
         } //post 方法传 token
@@ -40,7 +41,7 @@ class XgQQs extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         Submitthis.setState({ animating: true });            //数据提交中显示的login.....
-        axios.post('/api/index/changeQQ', {
+        axios.post(global.constants.website+'/api/index/changeQQ', {
           qq: values.newQQ,
         },
         {

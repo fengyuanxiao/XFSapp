@@ -6,6 +6,7 @@ import Tabs from 'antd-mobile/lib/tabs';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 
 import './cash.css';
+import '../../component/apis';
 
 const tabs = [
   { title: '本金提现' },
@@ -28,7 +29,7 @@ class CashPage extends Component {
   }
 
   componentWillMount() {
-    axios.get('/api/index/cash',
+    axios.get(global.constants.website+'/api/index/cash',
     {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
@@ -50,7 +51,7 @@ class CashPage extends Component {
     });
 
     // 图形验证码
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
@@ -70,7 +71,7 @@ class CashPage extends Component {
 
   // 点击图片验证码重新获取 图片
   getVerifyCode = () => {
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
@@ -104,7 +105,7 @@ class CashPage extends Component {
       message.error("请输图形验证码！");
     } else {
       // 再次调用获取验证码接口
-      axios.post('/api/user/sendcode', {
+      axios.post(global.constants.website+'/api/user/sendcode', {
         sid: states.sid,
         tuCode: states.tuValue,
         phoneNum: states.mobile
@@ -199,7 +200,7 @@ class CashPage extends Component {
     if ( that.tuValue === null || that.phoneCodes === null ) {
       message.error("请输入必填项")
     } else {
-      axios.post('api/index/cashcommit', {
+      axios.post(global.constants.website+'api/index/cashcommit', {
         money: that.inputBJ,
         commission: that.inputYJ,
         smscode: that.phoneCodes,

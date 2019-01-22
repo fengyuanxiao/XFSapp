@@ -14,6 +14,7 @@ import axios from 'axios';
 
 import Hongbao from '../../../img/hongbao.png';
 import './register.css';
+import '../../component/apis';
 
 const FormItem = Form.Item;
 let phoneNumber = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/; //手机号码正则
@@ -39,7 +40,7 @@ class RegisterPages extends Component {
 
   // 生命周期函数 此函数最先执行
   componentWillMount() {
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
@@ -59,7 +60,7 @@ class RegisterPages extends Component {
 
   // 点击图片验证码重新获取 图片
   getVerifyCode = () => {
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
@@ -93,7 +94,7 @@ class RegisterPages extends Component {
       message.error("请输图形验证码！");
     } else {
       // 获取短信验证码接口ajax
-      axios.post('/api/user/sendcode', {
+      axios.post(global.constants.website+'/api/user/sendcode', {
         sid: dataCode_.sid,
         tuCode: dataCode_.tuCode,
         phoneNum: dataCode_.placeholder
@@ -146,7 +147,7 @@ class RegisterPages extends Component {
           } else {
             // console.log(values);
             // 在此提交ajax数据
-            axios.post('/api/user/register', {
+            axios.post(global.constants.website+'/api/user/register', {
               // 用户注册提交的所有数据
               QQnum: values.QQnum,
               phoneNum: values.phoneNum,

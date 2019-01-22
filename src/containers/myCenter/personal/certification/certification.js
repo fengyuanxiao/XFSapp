@@ -5,6 +5,7 @@ import axios from 'axios';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import '../../component/apis';
 
 const FormItem = Form.Item;
 const data = [];
@@ -41,7 +42,7 @@ class certifications extends Component {
         } else {
           this_.setState({ animating: true })                                 //数据提交中显示的login.....
           let imgs = [values.images[0].url, values.images[1].url];            //保存图片集合
-          axios.post('api/index/realnamecommit', {
+          axios.post(global.constants.website+'/api/index/realnamecommit', {
             images: imgs,                                                     //用户身份证正反两面截图
             realName: values.realName,                                        //真实姓名
             cardno: values.cardno,                                            //身份证号

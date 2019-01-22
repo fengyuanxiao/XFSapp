@@ -14,6 +14,7 @@ import {
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import '../../component/apis';
 
 const FormItem = Form.Item;
 // const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
@@ -32,7 +33,7 @@ class Accounts extends Component {
 
   componentWillMount() {
     // 进入登录手机号页面 调用图片验证码获取图片
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
       .then(response => {
         // console.log(response.data.data);
         this.setState({
@@ -53,7 +54,7 @@ class Accounts extends Component {
 
   componentDidMount() {
     // 获取手机号码接口
-    axios.get('/api/index/getmobilephone', {
+    axios.get(global.constants.website+'/api/index/getmobilephone', {
         headers: {
           AppAuthorization: localStorage.getItem("token")
         } //post 方法传 token
@@ -74,7 +75,7 @@ class Accounts extends Component {
 
   // 点击图片验证码重新获取 图片
   getVerifyCode = () => {
-    axios.get('/api/user/getcaptcha')
+    axios.get(global.constants.website+'/api/user/getcaptcha')
       .then(response => {
         this.setState({
           tuCodeLink: response.data.data.captcha_src,
@@ -104,7 +105,7 @@ class Accounts extends Component {
     } else {
       // 再次调用获取验证码接口
 
-      axios.post('/api/user/sendcode', {
+      axios.post(global.constants.website+'/api/user/sendcode', {
           phoneNum: dataCode_.placeholder,
           tuCode: dataCode_.code,
           sid: dataCode_.sid,
@@ -154,7 +155,7 @@ class Accounts extends Component {
         this_.setState({
           animating: true
         }); //数据提交中显示的login.....
-        axios.post('api/index/changemobile', {
+        axios.post(global.constants.website+'/api/index/changemobile', {
             smscode: this_.state.phoneCode,
           }, {
             headers: {

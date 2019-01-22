@@ -7,6 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './goodPingjia.css';
+import '../../component/apis';
 
 const data = [];
 
@@ -26,7 +27,7 @@ class AddPingJia extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/task/additionalTask', {
+    axios.post(global.constants.website+'/api/task/additionalTask', {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -59,7 +60,7 @@ class AddPingJia extends Component {
     if ( photos.length === 1 ) {
       this_.setState({ animating: true })            //数据提交中显示的login.....
       let imgs = [photos[0].url];    //转换图片的格式
-      axios.post('/api/task/additioncommit',{
+      axios.post(global.constants.website+'/api/task/additioncommit',{
         order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id,           //订单ID
         addition_pic: imgs,             //传的图片集合
       },{

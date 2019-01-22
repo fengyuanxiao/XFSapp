@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Drawer, Button, Menu, Icon, message } from 'antd';
+import '../../component/apis';
 
 class TaskState extends Component {
   constructor(props, context) {
@@ -69,7 +70,7 @@ class TaskState extends Component {
     if ( dataState.itme_key === null ) {
       message.error("请选择原因再确认")
     } else {
-      axios.post('/api/task/cancleTask', {
+      axios.post(global.constants.website+'/api/task/cancleTask', {
         order_id: dataProps.order_id,           //订单ID
         backout_type: dataState.itme_key,       //撤销类型
         backout_cause: dataState.itme_key === 1? "商品找不到" : ( dataState.itme_key === 2? "用户主动撤销，不想做了" : (dataState.itme_key === 3? "达不到商家备注要求" : "问题任务") )

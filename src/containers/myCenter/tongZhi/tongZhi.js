@@ -4,6 +4,7 @@ import { Link  } from 'react-router-dom';
 import axios from 'axios';    //ajax
 
 import './tongZhi.css';
+import '../../component/apis';
 
 class TongZhi extends Component {
   constructor(){
@@ -14,7 +15,7 @@ class TongZhi extends Component {
   }
 
   componentWillMount() {
-    axios.get('/api/help/noticeList', {
+    axios.get(global.constants.website+'/api/help/noticeList', {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
     .then( res => {

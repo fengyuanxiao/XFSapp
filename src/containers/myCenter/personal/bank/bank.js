@@ -7,6 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import '../../buyAdmin/buyAdmin.css';
+import '../../component/apis';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
 const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
@@ -155,7 +156,7 @@ class Banks extends Component {
         } else {
           this_.setState({ animating: true })            //数据提交中显示的login.....
           let imgs = [values.images[0].url];            //保存图片集合
-          axios.post('/api/index/bankcardcommit', {
+          axios.post(global.constants.website+'/api/index/bankcardcommit', {
             Bank: values.Bank,
             realName: values.realName,
             provinces: values.provinces,

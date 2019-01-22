@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 import axios from 'axios';    //ajax
+import '../../component/apis';
 
 class BuyAdmins extends Component {
   constructor() {
@@ -16,7 +17,7 @@ class BuyAdmins extends Component {
 
   componentWillMount() {
     // 在此调用ajax 获取绑定买号列表
-    axios.get('/api/index/tbBind',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
+    axios.get(global.constants.website+'/api/index/tbBind',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       let responses = response.data.data;
       // console.log(response.data.data);

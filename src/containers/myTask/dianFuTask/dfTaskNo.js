@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Tabs from 'antd-mobile/lib/tabs';
 import WhiteSpace from 'antd-mobile/lib/white-space';
 import axios from 'axios';
+import '../../component/apis';
 
 import './dianFuTask.css';
 
@@ -23,7 +24,7 @@ class DfTaskNo extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/task/mytasklist',{
+    axios.post(global.constants.website+'/api/task/mytasklist',{
       status: 5
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -46,7 +47,7 @@ class DfTaskNo extends Component {
   onChange =(e) => {
     // console.log(e.title);
     if ( e.title === "待操作" ) {
-      axios.post('/api/task/mytasklist',{
+      axios.post(global.constants.website+'/api/task/mytasklist',{
         status: 0,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -60,7 +61,7 @@ class DfTaskNo extends Component {
         console.log(error);
       })
     } else if ( e.title === "待返款" ) {
-      axios.post('/api/task/mytasklist',{
+      axios.post(global.constants.website+'/api/task/mytasklist',{
         status: 1,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -74,7 +75,7 @@ class DfTaskNo extends Component {
         console.log(error);
       })
     } else if ( e.title === "待评价" ) {
-      axios.post('/api/task/mytasklist',{
+      axios.post(global.constants.website+'/api/task/mytasklist',{
         status: 3,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -88,7 +89,7 @@ class DfTaskNo extends Component {
         console.log(error);
       })
     } else {
-      axios.post('/api/task/mytasklist',{
+      axios.post(global.constants.website+'/api/task/mytasklist',{
         status: 5,
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

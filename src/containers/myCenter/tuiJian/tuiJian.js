@@ -5,6 +5,7 @@ import axios from 'axios';
 import copy from 'copy-to-clipboard';             //点击按钮拷贝
 
 import './tuijian.css';
+import '../../component/apis';
 
 class TuiJian extends Component {
   constructor() {
@@ -15,7 +16,7 @@ class TuiJian extends Component {
   }
 
   componentWillMount() {
-    axios.get('/api/index/invite', {
+    axios.get(global.constants.website+'/api/index/invite', {
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
     .then( res => {

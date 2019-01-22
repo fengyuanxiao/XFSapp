@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import '../../component/apis';
 
 class WenDaTaskChe extends Component {
   constructor() {
@@ -12,7 +13,7 @@ class WenDaTaskChe extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/task/mytaskanswerlist',{
+    axios.post(global.constants.website+'/api/task/mytaskanswerlist',{
       status: 10,             //已撤销
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

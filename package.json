@@ -2,6 +2,7 @@
   "name": "xhx-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "antd": "^3.10.9",
     "antd-mobile": "^2.2.6",
@@ -29,6 +30,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": "https://budan.php12.cn/"
+  ]
 }

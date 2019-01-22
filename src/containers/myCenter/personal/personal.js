@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, message } from 'antd';
 import axios from 'axios';
+import '../../component/apis';
 
 message.config({
   top: 300,
@@ -10,7 +11,7 @@ message.config({
 class Personal extends Component {
 
   componentWillMount() {
-    axios.get('/api/index/userInfo', {
+    axios.get(global.constants.website+'/api/index/userInfo', {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
     .then( res =>{

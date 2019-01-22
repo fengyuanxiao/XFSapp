@@ -6,6 +6,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './questionsTask.css';
+import '../../component/apis';
 
 class QuestionsTasks extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class QuestionsTasks extends Component {
 
   componentWillMount() {
     let this_ = this;
-    axios.post('/api/task/askTaskTwo',
+    axios.post(global.constants.website+'/api/task/askTaskTwo',
     {
       order_id: this_.props.location.state,
     },
@@ -61,7 +62,7 @@ class QuestionsTasks extends Component {
       message.error("请输入问答链接")
     } else {
       this_.setState({ animating: true })            //数据提交中显示的login.....
-      axios.post('/api/task/sublink',{
+      axios.post(global.constants.website+'/api/task/sublink',{
         order_id: _this.id,                       //任务ID
         answer_link: _this.inputValue,                 //买手在商家问题列表中选择自己收到的问题
       },{

@@ -7,6 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './taskStateChild.css';
+import '../../component/apis';
 
 const data = [];
 
@@ -23,7 +24,7 @@ class TaskStateChilds extends Component {
   }
 
   componentWillMount = () => {
-    axios.post('api/task/operateTask',
+    axios.post(global.constants.website+'/api/task/operateTask',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },
@@ -137,7 +138,7 @@ class TaskStateChilds extends Component {
       this_.setState({ animating: true })            //数据提交中显示的login.....
       let imgs = [thisState.files[0].url, thisState.files[1].url, thisState.files[2].url, thisState.files[3].url];
       // console.log(imgs);
-      axios.post('/api/task/mutikeyword', {
+      axios.post(global.constants.website+'/api/task/mutikeyword', {
         order_id: thisState.order_id,
         shop_around_content: imgs,
       },{

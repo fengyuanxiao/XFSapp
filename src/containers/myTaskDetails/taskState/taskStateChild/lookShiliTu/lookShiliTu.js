@@ -4,6 +4,7 @@ import ImagePicker from 'antd-mobile/lib/image-picker';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import '../../component/apis';
 
 // import TaskStateUpload from '../taskStateUpload/taskStateUpload';
 
@@ -105,7 +106,7 @@ class LookShiliTus extends Component {
           message.error("请输入正确的商户订单号！")
         } else {
           // 此处执行ajax请求
-          axios.post('/api/task/operateTaskCommit', {
+          axios.post(global.constants.website+'/api/task/operateTaskCommit', {
             taobao_ordersn: values.orderNumber,   //用户下单的订单号
             order_id: order_id,                   //订单ID
             need_principal: values.money,         //实际返款金额

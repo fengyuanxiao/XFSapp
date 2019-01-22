@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { Link  } from 'react-router-dom';
 import axios from 'axios';
+import '../../component/apis';
 
 class TongZhiChild extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class TongZhiChild extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/help/noticeDetail', {
+    axios.post(global.constants.website+'/api/help/noticeDetail', {
       notice_id: this.props.location.state.data,
     },
     {

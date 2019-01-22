@@ -6,6 +6,7 @@ import WhiteSpace from 'antd-mobile/lib/white-space';
 import { Link  } from 'react-router-dom';
 
 import './shensu.css';
+import '../../component/apis';
 
 const tabs = [
   { title: '我发起的申诉' },
@@ -21,7 +22,7 @@ class ShenSu extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/help/complainList', {
+    axios.post(global.constants.website+'/api/help/complainList', {
       typeid: 1
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
@@ -40,7 +41,7 @@ class ShenSu extends Component {
 
   onTabClick = (e) => {
     // console.log(e.title);
-    axios.post('/api/help/complainList', {
+    axios.post(global.constants.website+'/api/help/complainList', {
       typeid: e.title === "我收到的申诉" ? 2 : 1
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token

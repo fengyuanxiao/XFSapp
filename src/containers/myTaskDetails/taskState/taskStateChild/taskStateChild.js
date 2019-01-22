@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import LookShiliTu from './lookShiliTu/lookShiliTu';
 import './taskStateChild.css';
+import '../../component/apis';
 
 class TaskStateChild extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class TaskStateChild extends Component {
   }
 
   componentWillMount = () => {
-    axios.post('api/task/operateTask',
+    axios.post(global.constants.website+'/api/task/operateTask',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },

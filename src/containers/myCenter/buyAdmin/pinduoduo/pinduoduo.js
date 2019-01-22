@@ -7,6 +7,7 @@ import WingBlank from 'antd-mobile/lib/wing-blank';
 import axios from 'axios';
 
 import '../buyAdmin.css';
+import '../../component/apis';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
 const data = [];
@@ -83,7 +84,7 @@ class BindPinduoduos extends Component {
           let imgs = [values.images[0].url, values.images[1].url]
           // console.log(imgs);
           //以上数据都正确 在此 ajax交互
-          axios.post('/api/index/pdd_bind',
+          axios.post(global.constants.website+'/api/index/pdd_bind',
           {
             Account: values.Account,                  //绑定帐号昵称
             GoodsName: values.GoodsName,              //收货人

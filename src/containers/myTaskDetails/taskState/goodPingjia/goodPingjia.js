@@ -7,6 +7,7 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
 import './goodPingjia.css';
+import '../../component/apis';
 
 const data = [];
 
@@ -26,7 +27,7 @@ class GoodPingJia extends Component {
   }
 
   componentWillMount() {
-    axios.post('/api/task/receivetask', {
+    axios.post(global.constants.website+'/api/task/receivetask', {
       order_id: this.props.location.state,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -61,7 +62,7 @@ class GoodPingJia extends Component {
     if ( photos.length === 2 ) {
       this_.setState({ animating: true })            //数据提交中显示的login.....
       let imgs = [photos[0].url, photos[1].url];    //转换图片的格式
-      axios.post('/api/task/receivetaskcommit',{
+      axios.post(global.constants.website+'/api/task/receivetaskcommit',{
         order_id: order_id,                         //订单ID
         receive_evaluate_content: imgs,             //传的图片集合
       },{
