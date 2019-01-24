@@ -180,7 +180,10 @@ class Correct_Accounts extends Component {
             <FormItem
               label="图片验证码"
             >
-              <img onClick={ this.getVerifyCode } style={{ width: "100%" }} src={ tuCodeLink } alt="图片验证码"/>
+              <div style={{ display: 'flex' }}>
+                <img style={{ width: "80%" }} src={ tuCodeLink } alt="图片验证码"/>
+                <Button style={{ height: 'auto' }} onClick={ this.getVerifyCode }>刷新</Button>
+              </div>
               {getFieldDecorator('code', {
                 rules: [{ required: true, message: '请输入图片验证码!' }],
               })(

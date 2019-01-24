@@ -145,7 +145,7 @@ class TaskStateChilds extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        // console.log(res.data);
+        console.log(res.data);
         if ( res.data.status ) {
           this_.setState({ animating: false })          //数据提交成功关闭login.....
           message.success(res.data.msg)

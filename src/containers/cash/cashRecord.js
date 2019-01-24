@@ -129,7 +129,7 @@ class cashRecord extends Component {
                         )
                       })
                     :
-                    <li className="null-list">暂时没有任务，稍后再来看看^-^</li>
+                    <li className="null-list">没有提现记录^-^</li>
                   }
                 </ul>
               :
@@ -169,7 +169,7 @@ class cashRecord extends Component {
                         )
                       })
                     :
-                    <li className="null-list">暂时没有任务，稍后再来看看^-^</li>
+                    <li className="null-list">没有提现记录^-^</li>
                   }
                 </ul>
               :

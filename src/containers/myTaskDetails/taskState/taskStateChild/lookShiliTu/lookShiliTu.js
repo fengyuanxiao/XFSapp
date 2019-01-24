@@ -101,7 +101,10 @@ class LookShiliTus extends Component {
     this.props.form.validateFields((err, values) => {
       if ( !err === true && photos.length >= 2 ) {
         this_.setState({ animating: true })            //数据提交中显示的login.....
-        let imgs = [photos[0].url, photos[1].url, photos[2].url];    //转换图片的格式
+        let imgs = [];    //转换图片的格式
+        for (var i = 0; i < photos.length; i++) {
+          imgs.push(photos[i].url)
+        }
         if ( !taobaoOride.test(values.orderNumber) ) {
           message.error("请输入正确的商户订单号！")
         } else {

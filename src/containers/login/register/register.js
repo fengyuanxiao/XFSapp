@@ -204,9 +204,9 @@ class RegisterPages extends Component {
       this.props.history.push('/taskHallPage')
     }
 
-    // 前往提现页面
+    // 返回登录页面
     gotoCash = () => {
-      this.props.history.push('/cash')
+      this.props.history.push('/')
     }
 
     render() {
@@ -266,11 +266,14 @@ class RegisterPages extends Component {
             }
           </FormItem>
           <FormItem {...formItemLayout} label="图形验证码：">
-            <div>
+            {/* <div>
               <img onClick={ this.getVerifyCode } style={{
-                  width: "100%"
+              width: "100%"
               }} src={this.state.tuCodeLink} alt="图形验证码"/>
-              {/* <a onClick={ this.getVerifyCode } style={{width: "100%"}} href={this.state.tuCode}></a> */}
+            </div> */}
+            <div style={{ display: 'flex' }}>
+              <img style={{ width: "80%" }} src={ this.state.tuCodeLink } alt="图片验证码"/>
+              <Button style={{ height: 'auto' }} onClick={ this.getVerifyCode }>刷新</Button>
             </div>
             {
               getFieldDecorator('tuCode', {
@@ -371,7 +374,7 @@ class RegisterPages extends Component {
           onOk={this.gotoTaskHall}
           onCancel={this.gotoCash}
           okText={"前往任务大厅"}
-          cancelText={"去提现"}
+          cancelText={"返回登录"}
         >
           <p>{ register_money }</p>
         </Modal>

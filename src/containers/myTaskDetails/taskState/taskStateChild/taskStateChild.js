@@ -26,7 +26,7 @@ class TaskStateChild extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
-      // console.log(responses);   //任务详情数据，完成的任务进度
+      console.log(responses);   //任务详情数据，完成的任务进度
       this.setState({
         datas: true,
 
@@ -40,6 +40,8 @@ class TaskStateChild extends Component {
         tasktype_name: responses.tasktype_name,                 //任务类型名称
         tasktype_itemname: responses.tasktype_itemname,         //任务平台类型
         keyword_type_name: responses.keyword_type_name,         //"普通五星好评"
+        charset_one: responses.charset_one,
+        charset_two: responses.charset_two,
         keyword: responses.keyword,                             //搜索关键字
         sortmsg: responses.taskInfo.sortmsg,                    //排序方式
         position: responses.taskInfo.position,                  //排序位置
@@ -74,7 +76,7 @@ class TaskStateChild extends Component {
   }
 
   render() {
-    const { remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_name, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { charset_two,charset_one,remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_name, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -112,6 +114,15 @@ class TaskStateChild extends Component {
           <p className="task-plan-list"><span>任务类型</span><span style={{ color:'red' }}>{tasktype_name}({tasktype_itemname})</span></p>
           <p className="task-plan-list"><span>评价要求</span><span>{keyword_type_name}</span></p>
           <p className="task-plan-list" style={{ border:'none' }}><span>搜索关键字</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{keyword}</span></p>
+          {
+            is_muti_keyword ?
+              <div>
+                <p className="task-plan-list" style={{ border:'none' }}><span>搜索关键字1</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{charset_two}</span></p>
+                <p className="task-plan-list" style={{ border:'none' }}><span>搜索关键字2</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{charset_one}</span></p>
+              </div>
+            :
+            ""
+          }
           <p className="task-plan-list-Child"><span>(打开淘宝搜索关键词)</span><span className="fontsi">注：如有关键字过长请左右拖动查看</span></p>
           <p className="task-plan-list"><span>购买数量</span><span>目标商品{itemnum}件</span></p>
           {/* 循环上平规格 */}
@@ -156,7 +167,7 @@ class TaskStateChild extends Component {
           </div>
           <div>
             {
-              this.props.location.state.length ?
+              this.props.location.state ?
                 this.props.location.state.map((item, index) => {
                   return(
                     <img style={{ maxWidth:'100%' }} key={index} src={item} alt="要求图"/>

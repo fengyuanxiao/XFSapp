@@ -17,8 +17,8 @@ class CashPage extends Component {
   constructor() {
     super();
     this.state = {
-      inputYJ: null,                      //佣金提现input内输入金额
-      inputBJ: null,                      //本金提现input内输入金额
+      inputYJ: "",                      //佣金提现input内输入金额
+      inputBJ: "",                      //本金提现input内输入金额
       visibleBJ: false,                   //本金点击提现按钮显示modal
       getCodesState: true,                //如果为true 显示 获取验证码按钮
       codeNum: 60,                        //获取验证码按钮 倒计时 60s
@@ -34,7 +34,7 @@ class CashPage extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
     .then( res => {
-      // console.log(res.data.data);
+      console.log(res.data.data);
       let datas = res.data.data;
       this.setState({
         cashBJ: datas.money_account,                      //本金
@@ -162,8 +162,9 @@ class CashPage extends Component {
   }
   // 佣金提现按钮
   yJTiXianBtn = (e) => {
-    if ( this.state.inputYJ == null ) {
-      message.error('请输入提现金额！');
+    console.log(this.state.inputYJ);
+    if ( this.state.inputYJ === "" || this.state.cashYJ === "0.00" ) {
+      message.error('请输入正确金额！');
     } else {
       this.setState({
         visibleBJ: true,
@@ -184,8 +185,9 @@ class CashPage extends Component {
   // 本金提现按钮
   bJTiXianBtn = () => {
     let this_ = this;
-    if ( this.state.inputBJ == null ) {
-      message.error('请输入提现金额！');
+    console.log(this.state.cashBJ);
+    if ( this.state.inputBJ === "" || this.state.cashBJ === "0.00" ) {
+      message.error('请输入正确金额！');
     } else {
       this_.setState({
         visibleBJ: true,

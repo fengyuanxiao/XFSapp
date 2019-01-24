@@ -31,7 +31,7 @@ class DfTaskNo extends Component {
     })
     .then( res => {
       let resData = res.data.data;
-      console.log(resData.task_list);
+      // console.log(resData.task_list);
       this.setState({
         datasShow: true,                              //为true 显示任务列表
         task_lists: resData.task_list,                //任务列表数据

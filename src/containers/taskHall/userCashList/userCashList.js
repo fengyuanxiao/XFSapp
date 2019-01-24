@@ -44,7 +44,7 @@ class UserCashList extends Component {
             })
           :
           <div className="user-cash-list">
-            <h3>没有体现记录！</h3>
+            <h3>没有提现记录！</h3>
           </div>
         }
       </Carousel>

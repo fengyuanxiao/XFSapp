@@ -34,11 +34,14 @@ class MyTaskDetails extends Component {
     })
     .then(response => {
       let responses = response.data.data;
-      // console.log(responses);
+      // console.log(response.data);
         if ( response.data.status === "_0001" ) {
             message.success(response.data.msg, successSkip => {
               this_.props.history.push("/");
             })
+        } else if ( response.data.status === false ) {
+            message.success("任务异常")
+          this_.props.history.push("/dfTaskChe");
         } else {
           this.setState({
             datas: true,
