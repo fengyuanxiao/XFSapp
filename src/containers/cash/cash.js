@@ -162,7 +162,7 @@ class CashPage extends Component {
   }
   // 佣金提现按钮
   yJTiXianBtn = (e) => {
-    if ( this.state.inputYJ === "" || Number(this.state.inputYJ) > Number(this.state.cashYJ) ) {
+    if ( this.state.inputYJ === "" || Number(this.state.inputYJ) > Number(this.state.cashYJ) || Number(this.state.inputYJ) < 10 ) {
       message.error('请输入正确金额！');
     } else {
       this.setState({
@@ -176,17 +176,17 @@ class CashPage extends Component {
 
 
   // 本金input输入提现金额
-  benJin = (e) => {
-    this.setState({
-      inputBJ: e.target.value
-    })
-  }
+  // benJin = (e) => {
+  //   this.setState({
+  //     inputBJ: e.target.value
+  //   })
+  // }
   // 本金提现按钮
   bJTiXianBtn = () => {
     let this_ = this;
-    console.log(this.state.cashBJ);
-    if ( this.state.inputBJ === "" || this.state.cashBJ === "0.00" ) {
-      message.error('请输入正确金额！');
+    // console.log(this.state.cashBJ);
+    if ( this.state.cashBJ === "0.00" ) {
+      message.error('没有本金可提现！');
     } else {
       this_.setState({
         visibleBJ: true,
@@ -259,7 +259,7 @@ class CashPage extends Component {
             <div className="cash-money">
               <p>
                 <span>本金提现：</span>
-                <Input value={ this.state.inputBJ } type="Number" onChange={ this.benJin } placeholder="提现金额" />元
+                <Input value={ cashBJ } type="Number" disabled={true} onChange={ this.benJin } placeholder="提现金额" />元
               </p>
               {/* <p>
                   <span style={{ color: '#01AAED' }}>全部提现</span>
@@ -280,6 +280,7 @@ class CashPage extends Component {
               <span style={{ color: '#01AAED' }}>佣金余额：</span>
               <span>￥ { cashYJ }元</span>
             </p>
+            <div style={{ color: 'red', fontWeight: 'bold', textAlign: 'center' }}>*提现金额小于10元无法提现！</div>
             <div className="cash-money">
               <p>
                 <span>佣金提现：</span>
