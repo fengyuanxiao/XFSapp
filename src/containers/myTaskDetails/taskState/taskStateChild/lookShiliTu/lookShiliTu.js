@@ -10,7 +10,10 @@ import '../../../../../component/apis';
 
 const FormItem = Form.Item;
 const data = [];
-let taobaoOride =  /^T200P\d{18}$/;
+let taobaoOride =  /^T200P\d{18}$/;   //淘宝订单号
+let jingdongOride = /^\d{11}$/;       //京东订单号
+let pinduoduoOride = /^\d{6}[-]\d+$/; //拼多多订单号
+let weipinhuiOride = /^\d{14}$/;      //唯品会订单号
 
 message.config({
   top: 300,
@@ -106,10 +109,10 @@ class LookShiliTus extends Component {
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
       if ( !err === true && imgs.length >= this.props.pic_uploads_num ) {
-        this_.setState({ animating: true })            //数据提交中显示的login.....
-        if ( !taobaoOride.test(values.orderNumber) ) {
-          message.error("请输入正确的商户订单号！")
+        if ( !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber) ) {
+          message.error("请输入正确的订单号！")
         } else {
+          this_.setState({ animating: true })            //数据提交中显示的login.....
           // 此处执行ajax请求
           axios.post(global.constants.website+'/api/task/operateTaskCommit', {
             taobao_ordersn: values.orderNumber,   //用户下单的订单号

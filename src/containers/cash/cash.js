@@ -162,8 +162,7 @@ class CashPage extends Component {
   }
   // 佣金提现按钮
   yJTiXianBtn = (e) => {
-    console.log(this.state.inputYJ);
-    if ( this.state.inputYJ === "" || this.state.cashYJ === "0.00" ) {
+    if ( this.state.inputYJ === "" || Number(this.state.inputYJ) > Number(this.state.cashYJ) ) {
       message.error('请输入正确金额！');
     } else {
       this.setState({

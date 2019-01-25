@@ -47,8 +47,9 @@ class MyCenterPage extends Component {
     };
   }
 
+  // , tbbind_count
   render() {
-    const { complain_count, total_commission, money_account, commission_account, tbbind_count } = this.state;
+    const { complain_count, total_commission, money_account, commission_account } = this.state;
     return(
       <div>
         {/* top */}

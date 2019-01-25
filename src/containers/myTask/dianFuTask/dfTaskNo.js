@@ -110,6 +110,13 @@ class DfTaskNo extends Component {
     this_.props.history.push("/myTaskDetails");
   }
 
+  //点击进入申诉详情页面
+    routerToWendas (item) {
+      let this_ = this;
+      // console.log(item);
+      this_.props.history.push({pathname: "/appealTaskDetails", state: {data: item}});
+    }
+
   render() {
     const { statec,stateb,statea,datasShow,task_lists} = this.state;
     return(
@@ -146,7 +153,12 @@ class DfTaskNo extends Component {
                         <div>
                           <div className="right-center">
                             <p>￥{item.commission}</p>
-                            <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                            {
+                              item.is_appeal === 1 ?
+                                <Button type="primary" onClick={ ()=>this.routerToWendas(item.order_id)}>该任务在申诉中</Button>
+                              :
+                              <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                            }
                           </div>
                           <div className="right-bottom">
                             <p className="paddingBottom">
@@ -301,7 +313,7 @@ class DfTaskNo extends Component {
                                 {/* <Button type="primary"><Link to="/taskStateChild">{item.order_status_text}</Link></Button> */}
                                 {
                                   item.is_appeal === 1 ?
-                                    <Button type="primary"><Link to="/appealTaskDetails">该任务在审核中</Link></Button>
+                                    <Button type="primary" onClick={ ()=>this.routerToWendas(item.order_id)}>该任务在申诉中</Button>
                                   :
                                   <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
                                 }

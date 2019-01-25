@@ -41,7 +41,7 @@ class AppealTaskDetails extends Component {
         is_self: datas.is_self,                     //为1 显示申诉完结按钮
         complain_consult: datas.complain_consult,   //申诉协商记录，为[]时代表没有协商记录，有值表示有协商记录
       })
-      console.log(datas);
+      console.log(res.data);
     })
     .catch( error => {
       console.log(error);

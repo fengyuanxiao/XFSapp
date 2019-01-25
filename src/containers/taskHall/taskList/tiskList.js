@@ -68,11 +68,11 @@ class TaskList extends Component {
     let data_ = response.data;
     // console.log(data_);
     if ( data_.status ) {
-        message.success("恭喜您，抢到啦！", successSkip => {
-        // 保存order_id到本地
-        localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
-        this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
-      })
+      //   message.success("恭喜您，抢到啦！", successSkip => {
+      // })
+      // 保存order_id到本地
+      localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
+      this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
     } else {
       message.warning(data_.msg);       //没有绑定买号提醒
     }
