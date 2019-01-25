@@ -28,7 +28,7 @@ class ShenSu extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
     .then( res => {
-      // console.log(res.data.data);
+      console.log(res.data.data);
       this.setState({
         datasState: true,
         shenSuList: res.data.data,
@@ -58,6 +58,12 @@ class ShenSu extends Component {
     });
   }
 
+  routerToWenda (item) {
+    let this_ = this;
+    // console.log(item);
+    this_.props.history.push({pathname: "/appealTaskDetails", state: {data: item}});
+  }
+
   render() {
     const { datasState, shenSuList } = this.state;
     return(
@@ -74,13 +80,41 @@ class ShenSu extends Component {
               shenSuList.length ?
                 shenSuList.map((item, index) => {
                   return(
-                    <div key={item.order_id} className="bodyBox">
+                    item.company_status ?
+                      <div key={item.order_id} className="bodyBox">
+                        <div className="childOne">
+                          <div>
+                            <span>{item.complain_desc}</span>
+                          </div>
+                          {
+                            item.user_order_status ?
+                              <div>
+                                <span>{item.undo_time}</span>
+                                <span>{item.order_status_text}</span>
+                                <span>原因：{item.undo_desc}</span>
+                              </div>
+                            :
+                            ""
+                          }
+                        </div>
+                        <div className="childTwo">{item.status}</div>
+                      </div>
+                    :
+                    <div onClick={ ()=>this.routerToWenda(item.order_id)} key={item.order_id} className="bodyBox">
                       <div className="childOne">
                         <div>
                           <span>{item.complain_desc}</span>
-                          {/* <span>{item.undo_time}</span> */}
                         </div>
-                        {/* <div>{item.order_status_text}</div> */}
+                        {
+                          item.user_order_status ?
+                            <div>
+                              <span>{item.undo_time}</span>
+                              <span>{item.order_status_text}</span>
+                              <span>原因：{item.undo_desc}</span>
+                            </div>
+                          :
+                          ""
+                        }
                       </div>
                       <div className="childTwo">{item.status}</div>
                     </div>
@@ -101,7 +135,7 @@ class ShenSu extends Component {
               shenSuList.length ?
                 shenSuList.map((item, index) => {
                   return(
-                    <div key={item.order_id} className="bodyBox">
+                    <div onClick={ ()=>this.routerToWenda(item.order_id)} key={item.order_id} className="bodyBox">
                       <div className="childOne">
                         <div className="childOne_a">
                           <span>{item.complain_desc}</span>

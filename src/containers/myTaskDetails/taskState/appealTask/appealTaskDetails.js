@@ -18,11 +18,12 @@ class AppealTaskDetails extends Component {
       huifushensu: false,         //申请回复任务按钮
       itme_key: null,             //用户取消任务选取的 key值
     }
+    // console.log(props.location.state.data);
   }
 
   componentWillMount() {
     axios.post(global.constants.website+'/api/task/appealTaskDetail',{
-      order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
+      order_id: this.props.location.state.data,   //获取存储到本地的order_id
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -36,7 +37,8 @@ class AppealTaskDetails extends Component {
         complain_desc: datas.complain_desc,         //申诉内容描述
         images: datas.images,                       //申诉图片
         start_time: datas.start_time,               //申诉开始时间
-        complain_status: datas.complain_status,     //申诉数字状态
+        complain_status: datas.complain_status,     //为1 三个按钮读不显示
+        is_self: datas.is_self,                     //为1 显示申诉完结按钮
         complain_consult: datas.complain_consult,   //申诉协商记录，为[]时代表没有协商记录，有值表示有协商记录
       })
       console.log(datas);
@@ -97,7 +99,7 @@ class AppealTaskDetails extends Component {
 
   // 回复申诉按钮
   plainTextPrompt = () => {
-    prompt('输入名字', '这是名字的dfsdf', [
+    prompt('申诉回复', '请输入回复的内容', [
       {text: '取消'},
       {text: '提交', onPress: value => {
         axios.post(global.constants.website+'/api/task/replyComplain',{
@@ -174,7 +176,7 @@ class AppealTaskDetails extends Component {
   }
 
   render() {
-    const { complain_consult,complain_status,start_time,images,complain_desc,complain_type,order_id,seller_qq,goodspic } = this.state;
+    const { is_self,complain_status,complain_consult,start_time,images,complain_desc,complain_type,order_id,seller_qq,goodspic } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -247,11 +249,21 @@ class AppealTaskDetails extends Component {
 
             </div>
           </div>
-          <div className="shensu_btns">
-            <Button type="primary" onClick={this.plainTextPrompt}>回复申诉</Button>
-            <Button type="primary" onClick={this.showConfirm}>完结申诉</Button>
-            <Button type="primary" onClick={this.jieruBtn}>申请平台介入</Button>
-          </div>
+          {
+            complain_status ?
+              ""
+            :
+            <div className="shensu_btns">
+              <Button type="primary" onClick={this.plainTextPrompt}>回复申诉</Button>
+              {
+                is_self ?
+                  <Button type="primary" onClick={this.showConfirm}>完结申诉</Button>
+                :
+                  ""
+              }
+              <Button type="primary" onClick={this.jieruBtn}>申请平台介入</Button>
+            </div>
+          }
         </div>
 
 

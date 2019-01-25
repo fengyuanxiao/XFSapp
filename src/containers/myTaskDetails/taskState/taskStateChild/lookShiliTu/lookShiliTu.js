@@ -98,13 +98,15 @@ class LookShiliTus extends Component {
     let this_ = this;
     let photos = this.state.files;        //图片集合
     let order_id = this.props.order_id;
+    let imgs = [];    //转换图片的格式
+    for (var i = 0; i < photos.length; i++) {
+      imgs.push(photos[i].url)
+    }
+    // console.log(this.props.pic_uploads_num);
+    // console.log(imgs);
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && photos.length >= 2 ) {
+      if ( !err === true && imgs.length >= this.props.pic_uploads_num ) {
         this_.setState({ animating: true })            //数据提交中显示的login.....
-        let imgs = [];    //转换图片的格式
-        for (var i = 0; i < photos.length; i++) {
-          imgs.push(photos[i].url)
-        }
         if ( !taobaoOride.test(values.orderNumber) ) {
           message.error("请输入正确的商户订单号！")
         } else {

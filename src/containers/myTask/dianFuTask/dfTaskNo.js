@@ -190,7 +190,7 @@ class DfTaskNo extends Component {
                           <div className="right-center">
                             <p>￥{item.commission}</p>
                             <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
-                            <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+                            {/* <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button> */}
                           </div>
                           <div className="right-bottom">
                             <p className="paddingBottom">
