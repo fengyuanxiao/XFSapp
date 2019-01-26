@@ -45,7 +45,8 @@ a {
   padding-right: 0.5rem;
 }
 .bind-content {
-  color: #ff5500;
+  color: red;
   font-size: 1rem;
   font-weight: bold;
+  margin-left: 2rem;
 }
