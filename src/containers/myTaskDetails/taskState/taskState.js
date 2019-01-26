@@ -7,7 +7,7 @@ import '../../../component/apis';
 class TaskState extends Component {
   constructor(props, context) {
     super(props, context);
-    // console.log(props);
+    console.log(props);
     this.state = {
       visible: false,
       collapsed: false,
@@ -104,7 +104,7 @@ class TaskState extends Component {
       <section className="taskDetail-state">
         <img src={tasktype_pic} alt="taobaoImg" />
         <span style={{ fontSize: '1rem' }}>任务状态：{ordertatusText} </span>
-        <span style={{ color: 'red' }}> { shop_around_time ? "" : <span>提交倒计时：<b>{cuttime}</b>(未在截止时间之前提交将扣1元手续费)</span> }</span>
+        <span style={{ color: 'red' }}> { order_status ? "" : <span>提交倒计时：<b>{cuttime}</b>(未在截止时间之前提交将扣1元手续费)</span> }</span>
         <p>商家要求：</p>
         <div>
           {
@@ -123,11 +123,20 @@ class TaskState extends Component {
           <button className="tasktn" onClick={this.showDrawer}>取消任务</button>
           {/* <button className="tasktns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button> */}
           {/* 多关键词shop_around_time 为 1 的时候标明多关键词，要跳到传四张图片的多关键词页面，否则就跳到要传支付宝账单图片页面 */}
-          {
+          {/* {
             shop_around_time ?
               order_status ?
-                ""
+            ""
               :
+              <button className="stateBtns"><Link to={{ pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>
+            :
+            <button className="stateBtns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>
+          } */}
+          {
+            order_status ?
+              ""
+            :
+            shop_around_time ?
               <button className="stateBtns"><Link to={{ pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>
             :
             <button className="stateBtns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>

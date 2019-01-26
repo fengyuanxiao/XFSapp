@@ -31,7 +31,7 @@ class DfTaskNo extends Component {
     })
     .then( res => {
       let resData = res.data.data;
-      // console.log(resData.task_list);
+      console.log(resData.task_list);
       this.setState({
         datasShow: true,                              //为true 显示任务列表
         task_lists: resData.task_list,                //任务列表数据
@@ -95,7 +95,7 @@ class DfTaskNo extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
       })
       .catch( error => {
         console.log(error);
@@ -279,13 +279,13 @@ class DfTaskNo extends Component {
                         <div className="right">
                           {/* top */}
                           <div className="right-top">
-                            <span style={{ display: 'flex' }}>
+                            <p style={{ display: 'flex' }}>
                               <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
                               {item.user_taobao}
-                            </span>
-                            <span>
-                              {item.addtime}
-                            </span>
+                            </p>
+                            <p>
+                              接单时间：{item.addtime}
+                            </p>
                           </div>
                           {/* center */}
                           {/* 显示所有，并且判断任务是否过期 */}

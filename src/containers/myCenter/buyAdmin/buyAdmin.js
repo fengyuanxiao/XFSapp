@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 import axios from 'axios';    //ajax
+import RouteTabComponent from '../../../component/routeTab/routeTab';  //tabs
 import '../../../component/apis';
 
 class BuyAdmins extends Component {
@@ -103,13 +104,14 @@ class BuyAdmins extends Component {
   }
 
   render() {
-    const { jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
+    const { taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
     return(
       <div>
         <header className="tabTitle">
           <div className="return"><Link to="/myCenter"><Icon type="left" theme="outlined" />返回</Link></div>
           绑定买号
         </header>
+        <RouteTabComponent />
         <div className="buyAdmin-box">
           <ul>
             {/* 绑定淘宝账号 */}
@@ -120,7 +122,12 @@ class BuyAdmins extends Component {
                 <div><img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ taobao_bind }</span></div>
                 <div><span>{ taobao_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
               </div>
-              <p className="bind-content">{ taobao_remark }</p>
+              {
+                taobao__status === 3 ?
+                  <p className="bind-content">{ taobao_remark }</p>
+                :
+                  ""
+              }
               {/* </Link> */}
             </li>
             {/* 绑定拼多多账号 */}
@@ -129,7 +136,12 @@ class BuyAdmins extends Component {
                 <div><img src={require("../../../img/pinduoduo.png")} alt="拼多多图标"/><span>{ pdd_bind }</span></div>
                 <div><span>{ pdd_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
               </div>
-              <p className="bind-content">{ pdd_remark }</p>
+              {
+                pdd__status === 3 ?
+                  <p className="bind-content">{ pdd_remark }</p>
+                :
+                ""
+              }
             </li>
             {/* 绑定京东账号 */}
             <li>
@@ -137,7 +149,12 @@ class BuyAdmins extends Component {
                 <div><img src={require("../../../img/jingdong1.png")} alt="京东图标"/><span>{ jd_bind }</span></div>
                 <div><span>{ jd_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
               </div>
-              <p className="bind-content">{ jd_remark }</p>
+              {
+                jd__status === 3 ?
+                  <p className="bind-content">{ jd_remark }</p>
+                :
+                ""
+              }
             </li>
             {/* 唯品会账号 */}
             <li>
@@ -145,7 +162,12 @@ class BuyAdmins extends Component {
                 <div><img src={require("../../../img/weipinhui.png")} alt="唯品会图标"/><span>{ wph_bind }</span></div>
                 <div><span>{ wph_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
               </div>
-              <p className="bind-content">{ wph_remark }</p>
+              {
+                wph__status === 3 ?
+                  <p className="bind-content">{ wph_remark }</p>
+                :
+                  ""
+              }
             </li>
           </ul>
         </div>

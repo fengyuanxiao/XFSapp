@@ -172,7 +172,7 @@ class TaskStateChilds extends Component {
           多关键词操作任务
         </header>
         <div>
-          <WingBlank>
+          <WingBlank style={{ margin: 0 }}>
             {/* 目标商品详情介绍 */}
             <div className="task-plan" style={{ margin:0 }}>
               {/* <div className="plan-box" style={{ marginTop: "2rem" }}>
@@ -184,7 +184,7 @@ class TaskStateChilds extends Component {
                 </p>
                 <div className="taskDetail-header-button">
                   <div style={{ width: '30%' }}>
-                    <img src={goodspic} alt="商品图" style={{ width:"90px",height:"90px" }} />
+                    <img src={goodspic} alt="商品图" style={{ width: '100%', paddingRight: '10px' }} />
                   </div>
                   <div style={{ width: '70%' }}>
                     <p style={{ fontWeight:'bold' }}>{goodsname}</p>
@@ -250,7 +250,7 @@ class TaskStateChilds extends Component {
               </div>
               <div>
                 {
-                  this.props.location.state.length ?
+                  this.props.location.state ?
                     this.props.location.state.map((item, index) => {
                       return(
                         <img style={{ maxWidth:'100%' }} key={index} src={item} alt="要求图"/>
@@ -282,7 +282,7 @@ class TaskStateChilds extends Component {
               <Icon type="edit" theme="outlined" />
               <span>任务步骤</span>
             </div>
-            <div className="task-plan buzhou" style={{ paddingBottom: "3.1rem" }}>
+            <div className="task-plan buzhou" style={{ marginBottom: 0 }}>
               <div className="buzou-title"><span>第一步 货比三家</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
               <p>.请确认使用{user_taobao}（{platformname}账号）登入{tasktype_itemname}APP</p>
               <p>.第一个关键词<span className="charsets">（{charset_one}）</span>搜索 找到对应的主宝贝店外截图</p>
