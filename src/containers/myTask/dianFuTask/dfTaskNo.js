@@ -31,7 +31,7 @@ class DfTaskNo extends Component {
     })
     .then( res => {
       let resData = res.data.data;
-      console.log(resData.task_list);
+      // console.log(resData.task_list);
       this.setState({
         datasShow: true,                              //为true 显示任务列表
         task_lists: resData.task_list,                //任务列表数据
@@ -95,7 +95,7 @@ class DfTaskNo extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
       })
       .catch( error => {
         console.log(error);
@@ -209,7 +209,7 @@ class DfTaskNo extends Component {
                               <span>垫资{item.need_principal}元</span>
                               <span>{item.refundtext}</span>
                             </p>
-                            <p className="taskss">请在{item.limittime}前操作</p>
+                            {/* <p className="taskss">请在{item.limittime}前操作</p> */}
                           </div>
                         </div>
                       </div>
@@ -253,7 +253,7 @@ class DfTaskNo extends Component {
                               <span>垫资{item.need_principal}元</span>
                               <span>{item.refundtext}</span>
                             </p>
-                            <p className="taskss">请在{item.limittime}前操作</p>
+                            {/* <p className="taskss">请在{item.limittime}前操作</p> */}
                           </div>
                         </div>
                       </div>
@@ -323,7 +323,15 @@ class DfTaskNo extends Component {
                                   <span>垫资{item.need_principal}元</span>
                                   <span>{item.refundtext}</span>
                                 </p>
-                                <p className="taskss">请在{item.limittime}前操作</p>
+                                {/* {
+                                  item.order_status ?
+                                    ""
+                                  :
+                                  <p className="taskss">请在{item.limittime}前操作</p>
+                                } */}
+                                {
+                                  item.order_status ===0 ? <p className="taskss">请在{item.limittime}前操作</p> : (item.order_status ===1 ? <p className="taskss">商家48小时内完成</p> : (item.order_status ===3 ? <p className="taskss">务必等待签收后再评价</p> : ""))
+                                }
                               </div>
                             </div>
                           }

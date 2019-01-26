@@ -28,6 +28,7 @@ class Correct_jingdongs extends Component {
       twovisible: false,
       threevisible: false
     }
+    // console.log(props);
   }
 
   componentWillMount () {
@@ -37,27 +38,32 @@ class Correct_jingdongs extends Component {
   componentDidMount () {
     // 修改绑定买号返回已填写过的值
     let this_ = this;
-    axios.post(global.constants.website+'/api/index/updateall_bind',
-    {
-      id: this.props.location.state.data,   //由父页面传过来的绑定平台id
-    },
-    {
-      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-    })
-    .then(function (response) {   //调用接口成功执行
-      let responses = response.data.data;
-      this_.props.form.setFieldsValue({
-        Account: responses.nickname,                //账号名称
-        GoodsName: responses.receiver,              //收货人
-        address: responses.receiver_address,        //收货人详细地址
-        GoodsPhone: responses.receiver_mobile,      //收货人手机号
-        // provinces: responses.provinces,          //省市区组合
-        // images: responses.images,                //图片集合
+    if ( this.props.location.state === undefined ) {
+      message.warning('买号待审核中！');
+      this_.props.history.push("/myCenter")
+    } else {
+      axios.post(global.constants.website+'/api/index/updateall_bind',
+      {
+        id: this.props.location.state.data,   //由父页面传过来的绑定平台id
+      },
+      {
+        headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
-    })
-    .catch(function (error) {   //调用接口失败执行
-      console.log(error);
-    });
+      .then(function (response) {   //调用接口成功执行
+        let responses = response.data.data;
+        this_.props.form.setFieldsValue({
+          Account: responses.nickname,                //账号名称
+          GoodsName: responses.receiver,              //收货人
+          address: responses.receiver_address,        //收货人详细地址
+          GoodsPhone: responses.receiver_mobile,      //收货人手机号
+          // provinces: responses.provinces,          //省市区组合
+          // images: responses.images,                //图片集合
+        })
+      })
+      .catch(function (error) {   //调用接口失败执行
+        console.log(error);
+      });
+    }
   }
 
   // 省市区联动回调
