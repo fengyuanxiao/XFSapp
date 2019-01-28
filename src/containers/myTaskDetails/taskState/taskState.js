@@ -7,7 +7,7 @@ import '../../../component/apis';
 class TaskState extends Component {
   constructor(props, context) {
     super(props, context);
-    console.log(props);
+    // console.log(props);
     this.state = {
       visible: false,
       collapsed: false,

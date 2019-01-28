@@ -21,6 +21,25 @@ class certifications extends Component {
     }
   }
 
+  componentDidMount() {
+    let this_ = this;
+    axios.get(global.constants.website+'/api/index/realnamechange',
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then(function (response) {   //调用接口成功执行
+      let responses = response.data.data;
+      // console.log(responses);
+      this_.props.form.setFieldsValue({
+        cardid_name: responses.cardid_name,
+        cardid: responses.cardid,
+      })
+    })
+    .catch(function (error) {   //调用接口失败执行
+      console.log(error);
+    });
+  }
+
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne = (files, type, index) => {
     // console.log(files, type, index);
@@ -37,15 +56,15 @@ class certifications extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err === true && _this.length >= 2) {
       // console.log(values);
-        if ( !cards.test(values.cardno) ) {                                   //判断是否是正确的身份证号码
+        if ( !cards.test(values.cardid) ) {                                   //判断是否是正确的身份证号码
           message.error("请输入正确的身份证号！")
         } else {
           this_.setState({ animating: true })                                 //数据提交中显示的login.....
           let imgs = [values.images[0].url, values.images[1].url];            //保存图片集合
           axios.post(global.constants.website+'/api/index/realnamecommit', {
             images: imgs,                                                     //用户身份证正反两面截图
-            realName: values.realName,                                        //真实姓名
-            cardno: values.cardno,                                            //身份证号
+            realName: values.cardid_name,                                        //真实姓名
+            cardno: values.cardid,                                            //身份证号
           },
           {
             headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
@@ -87,7 +106,7 @@ class certifications extends Component {
               <FormItem
                 label="姓名"
               >
-                {getFieldDecorator('realName', {
+                {getFieldDecorator('cardid_name', {
                   rules: [{ required: true, message: '请输入姓名!' }],
                 })(
                   <Input className="buy-input" placeholder="请输入姓名" type="text" />
@@ -96,7 +115,7 @@ class certifications extends Component {
               <FormItem
                 label="身份证号"
               >
-                {getFieldDecorator('cardno', {
+                {getFieldDecorator('cardid', {
                   rules: [{ required: true, message: '请输入身份证号!' }],
                 })(
                   <Input className="buy-input" type="text" placeholder="请输入身份证号" maxLength="18" />

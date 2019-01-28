@@ -27,27 +27,32 @@ class QuestionsTask extends Component {
 
   componentWillMount() {
     let this_ = this;
-    axios.post(global.constants.website+'/api/task/asktaskOne',
-    {
-      task_id: this_.props.location.state.data,
-    },
-    {
-      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-    })
-    .then(function (response) {
-      let data_ = response.data.data;
-      this_.setState({
-        id: data_.id,                       //任务ID
-        goodsname: data_.goodsname,         //商品名称
-        goodspic: data_.goodspic,           //商品图片
-        questype: data_.questype,           //问题类型
-        quescontent: data_.quescontent,     //问题内容
+    if ( this.props.location.state === undefined ) {
+      message.warning('任务待商家审核中！');
+      this_.props.history.push("/taskHallPage")
+    } else {
+      axios.post(global.constants.website+'/api/task/asktaskOne',
+      {
+        task_id: this_.props.location.state.data,
+      },
+      {
+        headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
-      // console.log(data_);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        let data_ = response.data.data;
+        this_.setState({
+          id: data_.id,                       //任务ID
+          goodsname: data_.goodsname,         //商品名称
+          goodspic: data_.goodspic,           //商品图片
+          questype: data_.questype,           //问题类型
+          quescontent: data_.quescontent,     //问题内容
+        })
+        // console.log(data_);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }
 
   // 点击查看示例图按钮  显示

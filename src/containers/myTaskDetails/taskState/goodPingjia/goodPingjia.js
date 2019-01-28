@@ -23,28 +23,35 @@ class GoodPingJia extends Component {
       animating: false,
       files: data,
     }
-    // console.log(props);
+    console.log(props);
   }
 
   componentWillMount() {
-    axios.post(global.constants.website+'/api/task/receivetask', {
-      order_id: this.props.location.state,
-    },{
-      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-    })
-    .then( res=> {
-      let datas = res.data.data;
-      // console.log(datas);
-      this.setState({
-        order_id: datas.order_id,               //order_id
-        platformname: datas.platformname,       //平台类型描述
-        keywords_pic: datas.keywords_pic,       //文字要求图片
-        pic_content: datas.pic_content,         //图片要求图片
+    let this_ = this;
+    if ( this.props.location.state === undefined ) {
+      message.warning('任务完成好评截图上传！');
+      this_.props.history.push("/myTask")
+    } else {
+      axios.post(global.constants.website+'/api/task/receivetask', {
+        order_id: this.props.location.state,
+      },{
+        headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
-    })
-    .catch(error => {
-      console.log(error);
-    })
+      .then( res=> {
+        let datas = res.data.data;
+        console.log(datas);
+        this.setState({
+          order_id: datas.order_id,               //order_id
+          platformname: datas.platformname,       //平台类型描述
+          keywords_pic: datas.keywords_pic,       //文字要求图片
+          pic_content: datas.pic_content,         //图片要求图片
+          keyword_types: datas.keyword_types,     //判断是否显示文字图片
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
   }
 
   // 上传聊天截图 支付宝账单截图
@@ -90,7 +97,7 @@ class GoodPingJia extends Component {
   }
 
   render() {
-    const { files,platformname,animating } = this.state;
+    const { files,platformname,animating,keyword_types,keywords_pic,pic_content } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -104,9 +111,23 @@ class GoodPingJia extends Component {
               <p>第一步 去{platformname}评价并截图</p>
               <div className="goodPingJia-box-child">
                 <p>文字要求(在{platformname}评价里必须按以下文字要求评价)</p>
-                <p style={{ backgroundColor: '#fff',textAlign: 'center' }}>自行发挥相关评价十五字以上</p>
+                {
+                  keyword_types > 1 ?
+                    <img style={{ maxWidth: '100%' }} src={keywords_pic[0]} alt="tu"/>
+                  :
+                  <p style={{ backgroundColor: '#fff',textAlign: 'center' }}>自行发挥相关评价十五字以上</p>
+                }
                 <p>图片要求(在{platformname}评价里必须上传以下图片)</p>
-                <p style={{ backgroundColor: '#fff' }}>无需图片</p>
+                {
+                  keyword_types > 2 ?
+                    pic_content.map((item, index) => {
+                      return(
+                        <img key={index} style={{ maxWidth: '100%' }} src={item} alt="tu"/>
+                      )
+                    })
+                  :
+                  <p style={{ backgroundColor: '#fff' }}>无需图片</p>
+                }
               </div>
               <p>第二步 上传评价及物流截图</p>
               <ImagePicker
@@ -119,7 +140,7 @@ class GoodPingJia extends Component {
               />
               <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>物流图</span>和<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>好评图</span></p>
             </div>
-            <Button type="primary" className="login-form-button" onClick={this.uploadShouHuo}>
+            <Button type="primary" className="login-form-button" style={{ margin: '2rem 0 1rem 0' }} onClick={this.uploadShouHuo}>
               确认评价
             </Button>
             <div className="toast-example">

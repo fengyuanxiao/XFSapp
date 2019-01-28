@@ -120,7 +120,7 @@ class AddPingJia extends Component {
                     additional_pic ?
                       additional_pic.map((item, index) => {
                         return(
-                          <img key={index} style={{ maxWidth: '100%' }} src={item} alt="文字图片"/>
+                          <img key={index} style={{ maxWidth: '100%', paddingTop: '0.5rem' }} src={item} alt="文字图片"/>
                         )
                       })
                     :
@@ -137,7 +137,7 @@ class AddPingJia extends Component {
                 selectable={files.length < 1}
                 accept="image/gif,image/jpeg,image/jpg,image/png"
               />
-              <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>物流图</span>和<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>好评图</span></p>
+              <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>追评截图</span></p>
             </div>
             <Button type="primary" className="login-form-button" onClick={this.uploadShouHuo}>
               确认评价

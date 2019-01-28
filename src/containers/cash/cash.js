@@ -34,7 +34,7 @@ class CashPage extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
     .then( res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       let datas = res.data.data;
       this.setState({
         cashBJ: datas.money_account,                      //本金
@@ -162,37 +162,70 @@ class CashPage extends Component {
   }
   // 佣金提现按钮
   yJTiXianBtn = (e) => {
-    if ( this.state.inputYJ === "" || Number(this.state.inputYJ) > Number(this.state.cashYJ) || Number(this.state.inputYJ) < 10 ) {
-      message.error('请输入正确金额！');
-    } else {
-      this.setState({
-        visibleBJ: true,
-      });
-      // message.success('提现成功，2-24小时内到账！');
+    let this_ = this;
+    let stateData = this.state;
+    if ( stateData.bank_status === 1 && stateData.realname_status === 1 ) {
+      if ( stateData.inputYJ === "" || Number(stateData.inputYJ) > Number(stateData.cashYJ) || Number(stateData.inputYJ) < 10 ) {
+        message.error('请输入正确金额！');
+      } else {
+        this.setState({
+          visibleBJ: true,
+        });
+        // message.success('提现成功，2-24小时内到账！');
+      }
+    } else if ( stateData.bank_status === 2 ) {
+      message.warning('银行卡在审核中！');
+    } else if ( stateData.bank_status === 3 ) {
+      message.warning('银行卡审核未通过！');
+      this_.props.history.push("/bank");
+    } else if ( stateData.bank_status === 0 ) {
+      message.warning('请先绑定银行卡！');
+      this_.props.history.push("/bank");
+    } else if ( stateData.realname_status === 0 ) {
+      message.warning('请先绑定身份证！');
+      this_.props.history.push("/certification");
+    } else if ( stateData.realname_status === 2 ) {
+      message.warning('身份证在审核中！');
+      this_.props.history.push("/certification");
+    } else if ( stateData.realname_status === 3 ) {
+      message.warning('实名绑定未通过！');
+      this_.props.history.push("/certification");
     }
     // console.log(this.state.inputYJ);
   }
 
 
-
-  // 本金input输入提现金额
-  // benJin = (e) => {
-  //   this.setState({
-  //     inputBJ: e.target.value
-  //   })
-  // }
   // 本金提现按钮
   bJTiXianBtn = () => {
     let this_ = this;
+    let stateData = this.state;
     // console.log(this.state.cashBJ);
-    if ( this.state.cashBJ === "0.00" ) {
-      message.error('没有本金可提现！');
-    } else {
-      this_.setState({
-        visibleBJ: true,
-      });
-      // message.success('提现成功，2-24小时内到账！');
-      console.log(this.state.inputBJ);
+    if ( stateData.bank_status === 1 && stateData.realname_status === 1 ) {
+      if ( this.state.cashBJ === "0.00" ) {
+        message.error('没有本金可提现！');
+      } else {
+        this_.setState({
+          visibleBJ: true,
+        });
+        // message.success('提现成功，2-24小时内到账！');
+      }
+    } else if ( stateData.bank_status === 2 ) {
+      message.warning('银行卡在审核中！');
+    } else if ( stateData.bank_status === 3 ) {
+      message.warning('银行卡审核未通过！');
+      this_.props.history.push("/bank");
+    } else if ( stateData.bank_status === 0 ) {
+      message.warning('请先绑定银行卡！');
+      this_.props.history.push("/bank");
+    } else if ( stateData.realname_status === 0 ) {
+      message.warning('请先绑定身份证！');
+      this_.props.history.push("/certification");
+    } else if ( stateData.realname_status === 2 ) {
+      message.warning('身份证在审核中！');
+      this_.props.history.push("/certification");
+    } else if ( stateData.realname_status === 3 ) {
+      message.warning('实名绑定未通过！');
+      this_.props.history.push("/certification");
     }
   }
   //立即提现按钮回调

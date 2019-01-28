@@ -101,22 +101,26 @@ class Banks extends Component {
     }
   }
 
-  // 生命周期函数   最先执行函数
-  componentWillMount() {
-    // 获取省市区接口
-    // axios.get('/api/user/getPrvoinveAreaList?parent_id=')
-    // .then(response => {
-    //   console.log(response.data.data);
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    // })
-    // console.log(cityData_new);
-    // console.log("我最先执行");
-  }
   // 生命周期函数   componentWillMount执行完成后执行此处
   componentDidMount() {
-    // console.log(321);
+    let this_ = this;
+    axios.get(global.constants.website+'/api/index/realnamechange',
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then(function (response) {   //调用接口成功执行
+      let responses = response.data.data;
+      // console.log(responses);
+      this_.props.form.setFieldsValue({
+        realName: responses.bank_realname,          //用户所绑定的银行卡持有人名字
+        ZhiHangName: responses.bank_branch,         //用户所绑定的银行卡支行名称
+        BankCode: responses.bank_card_NO,           //用户所绑定的银行卡号
+        bankTel: responses.bank_mobile,             //用户所绑定的银行卡预留的手机号
+      })
+    })
+    .catch(function (error) {   //调用接口失败执行
+      console.log(error);
+    });
   }
 
   // 显示/隐藏浮层的回调
