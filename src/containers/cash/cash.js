@@ -44,6 +44,7 @@ class CashPage extends Component {
         bank_card_NO: datas.bank_card_NO,                 //银行卡卡号末尾四位数
         bank_status: datas.bank_status,                   //银行卡绑定状态 0未绑定 1已审核 2 审核中 3未通过
         realname_status:datas.realname_status,           //实名认证状态 0未绑定 1已审核 2 审核中 3未通过
+        is_black: datas.is_black,                         //1表示用户被冻结
       });
     })
     .catch(error => {
@@ -186,10 +187,11 @@ class CashPage extends Component {
       this_.props.history.push("/certification");
     } else if ( stateData.realname_status === 2 ) {
       message.warning('身份证在审核中！');
-      this_.props.history.push("/certification");
     } else if ( stateData.realname_status === 3 ) {
       message.warning('实名绑定未通过！');
       this_.props.history.push("/certification");
+    } else if ( stateData.is_black === 1 ) {
+      message.warning('该账号被冻结！');
     }
     // console.log(this.state.inputYJ);
   }
@@ -222,10 +224,11 @@ class CashPage extends Component {
       this_.props.history.push("/certification");
     } else if ( stateData.realname_status === 2 ) {
       message.warning('身份证在审核中！');
-      this_.props.history.push("/certification");
     } else if ( stateData.realname_status === 3 ) {
       message.warning('实名绑定未通过！');
       this_.props.history.push("/certification");
+    } else if ( stateData.is_black === 1 ) {
+      message.warning('该账号被冻结！');
     }
   }
   //立即提现按钮回调

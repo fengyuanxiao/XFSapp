@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Button, message } from 'antd';
 import axios from 'axios';
+// import lrz from 'lrz';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 import { Link } from 'react-router-dom';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
@@ -10,6 +11,8 @@ import './goodPingjia.css';
 import '../../../../component/apis';
 
 const data = [];
+// const imgdata = [];
+// files01: imgdata,
 
 //消息提示距离顶部的位置
 message.config({
@@ -93,8 +96,27 @@ class GoodPingJia extends Component {
       //此处执行ajax请求
       message.error('请上传还未上传的图片');
     }
-
   }
+
+  // onImageChange01 = (files01, type, index) => {
+  //       console.log(files01, type, index);
+  //       if(type==='add'){
+  //           lrz(files01[0].url, {quality:0.1})
+  //               .then((rst)=>{
+  //                   // 处理成功会执行
+  //                   console.log('压缩成功')
+  //                   console.log(rst.base64);
+  //                   this.setState({
+  //                       imagesrc01:rst.base64.split(',')[1],
+  //                   })
+  //               })
+  //       }else{
+  //           this.setState({imagesrc01:''})
+  //       }
+  //       this.setState({
+  //           files01,
+  //       });
+  //   }
 
   render() {
     const { files,platformname,animating,keyword_types,keywords_pic,pic_content } = this.state;
@@ -139,6 +161,13 @@ class GoodPingJia extends Component {
                 accept="image/gif,image/jpeg,image/jpg,image/png"
               />
               <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>物流图</span>和<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>好评图</span></p>
+              {/* <ImagePicker
+                files={files01}
+                onChange={this.onImageChange01}
+                onImageClick={(index, fs) => console.log(index, fs)}
+                selectable={files01.length < 1}
+                multiple={this.state.multiple}
+              /> */}
             </div>
             <Button type="primary" className="login-form-button" style={{ margin: '2rem 0 1rem 0' }} onClick={this.uploadShouHuo}>
               确认评价
