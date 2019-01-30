@@ -165,7 +165,7 @@ class CashPage extends Component {
   yJTiXianBtn = (e) => {
     let this_ = this;
     let stateData = this.state;
-    if ( stateData.bank_status === 1 && stateData.realname_status === 1 ) {
+    if ( stateData.bank_status === 1 && stateData.realname_status === 1 && stateData.is_black === 0 ) {
       if ( stateData.inputYJ === "" || Number(stateData.inputYJ) > Number(stateData.cashYJ) || Number(stateData.inputYJ) < 10 ) {
         message.error('请输入正确金额！');
       } else {
@@ -202,7 +202,7 @@ class CashPage extends Component {
     let this_ = this;
     let stateData = this.state;
     // console.log(this.state.cashBJ);
-    if ( stateData.bank_status === 1 && stateData.realname_status === 1 ) {
+    if ( stateData.bank_status === 1 && stateData.realname_status === 1 && stateData.is_black === 0 ) {
       if ( this.state.cashBJ === "0.00" ) {
         message.error('没有本金可提现！');
       } else {

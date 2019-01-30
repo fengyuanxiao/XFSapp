@@ -26,7 +26,8 @@ class Correct_jingdongs extends Component {
       files: data,
       onevisible: false,
       twovisible: false,
-      threevisible: false
+      threevisible: false,
+      fourvisible: false,
     }
     // console.log(props);
   }
@@ -94,6 +95,11 @@ class Correct_jingdongs extends Component {
       threevisible: true,
     })
   }
+  showFourhiliTu = () => {
+    this.setState({
+      fourvisible: true,
+    })
+  }
   // 隐藏示例图
   handleOk = (e) => {
     // console.log(e);
@@ -101,6 +107,7 @@ class Correct_jingdongs extends Component {
       onevisible: false,
       twovisible: false,
       threevisible: false,
+      fourvisible: false,
     });
   }
   handleCancel = (e) => {
@@ -109,6 +116,7 @@ class Correct_jingdongs extends Component {
       onevisible: false,
       twovisible: false,
       threevisible: false,
+      fourvisible: false,
     });
   }
 
@@ -127,8 +135,8 @@ class Correct_jingdongs extends Component {
           this_.setState({ animating: true })            //数据提交中显示的login.....
           // console.log(values);
           // 图片集合存入imgs 传给后端
-          let imgs = [values.images[0].url, values.images[1].url, values.images[2].url];
-          // console.log(imgs);
+          let imgs = [values.images[0].url, values.images[1].url, values.images[2].url, values.images[3].url];
+          console.log(imgs);
           //以上数据都正确 在此 ajax交互
           axios.post(global.constants.website+'/api/index/updatejd_bind',
           {
@@ -222,17 +230,17 @@ class Correct_jingdongs extends Component {
                 )}
               </FormItem>
               <FormItem
-                label="上传个人中心、京东账户设置和实名认证截图"
+                label="上传个人中心、京东账户设置和实名认证和plus会员截图"
               >
                 {getFieldDecorator('images', {
                   rules: [{ required: true, message: '请上传必要截图截图!' }],
                 })(
                   <ImagePicker
-                    length={3}
+                    length={4}
                     files={files}
                     onChange={this.onUploadOne}
                     onImageClick={(index, fs) => console.log(index, fs)}
-                    selectable={files.length < 3}
+                    selectable={files.length < 4}
                     accept="image/gif,image/jpeg,image/jpg,image/png"
                   />
                 )}
@@ -242,6 +250,7 @@ class Correct_jingdongs extends Component {
                 <p style={{ fontSize:"0.7rem" }} onClick={this.showOneShiliTu}>查看示例图>></p>
                 <p style={{ fontSize:"0.7rem" }} onClick={this.showTwoShiliTu}>查看示例图>></p>
                 <p style={{ fontSize:"0.7rem" }} onClick={this.showThreehiliTu}>查看示例图>></p>
+                <p style={{ fontSize:"0.7rem" }} onClick={this.showFourhiliTu}>查看示例图>></p>
               </div>
 
               <Button className="btn-buy" type="primary" htmlType="submit">
@@ -290,6 +299,17 @@ class Correct_jingdongs extends Component {
           cancelText={"关闭"}
         >
           <img className="shilitu" src={require('../../../../img/jd3.png')} alt="我的支付宝" />
+        </Modal>
+        {/* PLUS会员截图 */}
+        <Modal
+          visible={this.state.fourvisible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          maskClosable={true}
+          okText={"知道了"}
+          cancelText={"关闭"}
+        >
+          <img className="shilitu" src={require('../../../../img/plus.png')} alt="我的支付宝" />
         </Modal>
       </div>
     )

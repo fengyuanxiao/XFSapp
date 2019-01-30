@@ -26,7 +26,8 @@ class BindJingdongs extends Component {
       files: data,
       onevisible: false,
       twovisible: false,
-      threevisible: false
+      threevisible: false,
+      fourvisible: false,
     }
   }
   // 省市区联动回调
@@ -57,6 +58,11 @@ class BindJingdongs extends Component {
       threevisible: true,
     })
   }
+  showFourhiliTu = () => {
+    this.setState({
+      fourvisible: true,
+    })
+  }
   // 隐藏示例图
   handleOk = (e) => {
     // console.log(e);
@@ -64,6 +70,7 @@ class BindJingdongs extends Component {
       onevisible: false,
       twovisible: false,
       threevisible: false,
+      fourvisible: false,
     });
   }
   handleCancel = (e) => {
@@ -72,6 +79,7 @@ class BindJingdongs extends Component {
       onevisible: false,
       twovisible: false,
       threevisible: false,
+      fourvisible: false,
     });
   }
 
@@ -90,9 +98,10 @@ class BindJingdongs extends Component {
           this_.setState({ animating: true })            //数据提交中显示的login.....
           // console.log(values);
           // 图片集合存入imgs 传给后端
-          let imgs = [values.images[0].url, values.images[1].url, values.images[2].url];
+          let imgs = [values.images[0].url, values.images[1].url, values.images[2].url, values.images[3].url];
           // console.log(imgs);
           //以上数据都正确 在此 ajax交互
+          // console.log(values.Account,values.GoodsName,values.address,values.provinces,);
           axios.post(global.constants.website+'/api/index/jd_bind',
           {
             Account: values.Account,                  //绑定帐号昵称
@@ -107,6 +116,7 @@ class BindJingdongs extends Component {
           })
           .then(function (response) {   //调用接口成功执行
             let data_ = response.data;
+            console.log(data_);
             if ( data_.status ) {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.success(data_.msg);
@@ -184,17 +194,17 @@ class BindJingdongs extends Component {
                 )}
               </FormItem>
               <FormItem
-                label="上传 个人中心截图、京东账户设置 和 实名认证截图"
+                label="上传个人中心、账户设置、实名认证和plus会员"
               >
                 {getFieldDecorator('images', {
-                  rules: [{ required: true, message: '请上传淘宝和支付宝截图!' }],
+                  rules: [{ required: true, message: '请上传必要截图!' }],
                 })(
                   <ImagePicker
-                    length={3}
+                    length={4}
                     files={files}
                     onChange={this.onUploadOne}
                     onImageClick={(index, fs) => console.log(index, fs)}
-                    selectable={files.length < 3}
+                    selectable={files.length < 4}
                     accept="image/gif,image/jpeg,image/jpg,image/png"
                   />
                 )}
@@ -204,6 +214,7 @@ class BindJingdongs extends Component {
                 <p style={{ fontSize:"0.7rem" }} onClick={this.showOneShiliTu}>查看示例图>></p>
                 <p style={{ fontSize:"0.7rem" }} onClick={this.showTwoShiliTu}>查看示例图>></p>
                 <p style={{ fontSize:"0.7rem" }} onClick={this.showThreehiliTu}>查看示例图>></p>
+                <p style={{ fontSize:"0.7rem" }} onClick={this.showFourhiliTu}>查看示例图>></p>
               </div>
 
               <Button className="btn-buy" type="primary" htmlType="submit">
@@ -252,6 +263,17 @@ class BindJingdongs extends Component {
           cancelText={"关闭"}
         >
           <img className="shilitu" src={require('../../../../img/jd3.png')} alt="我的支付宝" />
+        </Modal>
+        {/* PLUS会员截图 */}
+        <Modal
+          visible={this.state.fourvisible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          maskClosable={true}
+          okText={"知道了"}
+          cancelText={"关闭"}
+        >
+          <img className="shilitu" src={require('../../../../img/plus.png')} alt="我的支付宝" />
         </Modal>
       </div>
     )
