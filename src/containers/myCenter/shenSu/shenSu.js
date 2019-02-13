@@ -28,7 +28,7 @@ class ShenSu extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
     })
     .then( res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       this.setState({
         datasState: true,
         shenSuList: res.data.data,

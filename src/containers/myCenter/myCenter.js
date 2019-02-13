@@ -21,7 +21,7 @@ class MyCenterPage extends Component {
     axios.get(global.constants.website+'/api/index/index',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       let data_s = response.data.data;
-      console.log(data_s);
+      // console.log(data_s);
       if ( response.data.status === "_0001" ) {
           message.success(response.data.msg, successSkip => {
           this_.props.history.push("/");
@@ -59,7 +59,7 @@ class MyCenterPage extends Component {
     })
     .then(response => {
       let data_s = response.data;
-      console.log(data_s);
+      // console.log(data_s);
       if ( data_s.status ) {
         this.setState({
           total_commission: states.total_commission + Number(states.money_account),

@@ -21,7 +21,7 @@ class TuiJian extends Component {
     })
     .then( res => {
       let datas = res.data.data;
-      console.log(datas);
+      // console.log(datas);
       this.setState({
         YQcode: datas.code,
         money: datas.total_prize,

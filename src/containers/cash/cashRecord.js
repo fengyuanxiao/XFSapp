@@ -27,7 +27,7 @@ class cashRecord extends Component {
     axios.get(global.constants.website+'/api/index/applycashlist',{headers: {AppAuthorization: localStorage.getItem("token")}})
     .then( res => {
       let datas = res.data.data;
-      console.log(datas);
+      // console.log(datas);
       this.setState({
         datasState: true,
         datasLists: datas,                      //本金提现列表

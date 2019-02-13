@@ -28,7 +28,7 @@ class CashPage extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })
     .then( res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       let datas = res.data.data;
       this.setState({
         cashBJ: datas.money_account,                      //本金
