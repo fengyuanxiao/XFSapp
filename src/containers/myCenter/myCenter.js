@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Badge,message } from 'antd';
+import { Icon, Badge,message,Button } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';    //ajax
 
@@ -11,7 +11,7 @@ class MyCenterPage extends Component {
   constructor() {
     super();
     this.state = {
-
+      allMoney: 0,      //可提现总金额
     }
   }
 
@@ -20,19 +20,19 @@ class MyCenterPage extends Component {
     let this_ = this;
     axios.get(global.constants.website+'/api/index/index',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
-      // console.log(response.data);
       let data_s = response.data.data;
+      console.log(data_s);
       if ( response.data.status === "_0001" ) {
           message.success(response.data.msg, successSkip => {
           this_.props.history.push("/");
         })
       } else {
         this.setState({
-          complain_count: data_s.complain_count,            //	申诉记录数
-          total_commission: data_s.total_commission,        //  累计佣金收益值
-          money_account: data_s.money_account,              //  本金总计值
-          commission_account: data_s.commission_account,    //  佣金总计值
-          tbbind_count: data_s.tbbind_count,                //  是否有绑定买号
+          complain_count: data_s.complain_count,                    //	申诉记录数
+          total_commission: Number(data_s.total_commission),        //  可提现总金额
+          money_account: data_s.money_account,                      //  本金总计值
+          commission_account: data_s.commission_account,            //  佣金总计值
+          tbbind_count: data_s.tbbind_count,                        //  是否有绑定买号
         })
       }
     })
@@ -47,6 +47,63 @@ class MyCenterPage extends Component {
     };
   }
 
+  // 本金转到提现金额
+  benMoney = () => {
+    let states = this.state;
+    axios.post(global.constants.website+'/api/index/moneywithdraw', {
+      type: 1,                            //1代表本金转入
+      money: Number(states.money_account),        //转入金额
+    },
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
+    })
+    .then(response => {
+      let data_s = response.data;
+      console.log(data_s);
+      if ( data_s.status ) {
+        this.setState({
+          total_commission: states.total_commission + Number(states.money_account),
+          money_account: 0,
+        })
+      } else {
+        message.warning('暂时没有金额转入。');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+  // 佣金转到提现金额
+  yongMoney = () => {
+    let states = this.state;
+    if ( states.commission_account < 10 ) {
+      message.warning('佣金金额高于10元即可转入到提现金额');
+    } else {
+      axios.post(global.constants.website+'/api/index/moneywithdraw', {
+        type: 2,                                    //1代表本金转入
+        money: Number(states.commission_account),        //转入金额
+      },
+      {
+        headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
+      })
+      .then(response => {
+        let data_s = response.data;
+        console.log(data_s);
+        if ( data_s.status ) {
+          this.setState({
+            total_commission: states.total_commission + Number(states.commission_account),
+            commission_account: 0,
+          })
+        } else {
+          message.warning('暂时没有金额转入。');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  }
+
   // , tbbind_count
   render() {
     const { complain_count, total_commission, money_account, commission_account } = this.state;
@@ -54,16 +111,18 @@ class MyCenterPage extends Component {
       <div>
         {/* top */}
         <div className="myCenter-top">
-          <p>累计佣金收益</p>
+          <p>可提现总余额</p>
           <p>{ total_commission }元</p>
           <div className="myCenter-top-button">
             <div>
               <p>{ money_account }元</p>
-              <p>本金总计</p>
+              <p>本金余额</p>
+              <Button onClick={ this.benMoney }>转入到提现</Button>
             </div>
             <div>
               <p>{ commission_account }元</p>
-              <p>佣金收益</p>
+              <p>佣金余额</p>
+              <Button onClick={ this.yongMoney }>转入到提现</Button>
             </div>
           </div>
         </div>

@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
+import lrz from 'lrz';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 import '../../../../component/apis';
 
 const FormItem = Form.Item;
-const data = [];
+const imgdata = [];         //图片数组1
+const imgdata1 = [];        //图片数组2
 // 身份证正则
 const cards = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
 
@@ -17,7 +19,8 @@ class certifications extends Component {
     super();
     this.state = {
       animating: false,
-      files: data,
+      files01: imgdata,       //图片数组1
+      files02: imgdata1,      //图片数组2
     }
   }
 
@@ -41,26 +44,59 @@ class certifications extends Component {
   }
 
   // 上传我的淘宝 支付宝示例图回调
-  onUploadOne = (files, type, index) => {
-    // console.log(files, type, index);
+  onUploadOne1 = (files01, type, index) => {
+    // console.log(files01, type, index);
+    if(type==='add'){
+      lrz(files01[0].url, {quality:0.1})
+        .then((rst)=>{
+            // 处理成功会执行
+            // console.log(rst)
+            // console.log(rst.base64);
+            this.setState({
+              tu1: rst.base64
+            })
+          })
+    }else{
+      this.setState({imagesrc01:''})
+    }
     this.setState({
-      files,
+      files01,
+    });
+  }
+  // 上传我的淘宝 支付宝示例图回调
+  onUploadOne2 = (files02, type, index) => {
+    // console.log(files02, type, index);
+    if(type==='add'){
+      lrz(files02[0].url, {quality:0.1})
+        .then((rst)=>{
+            // 处理成功会执行
+            // console.log(rst)
+            // console.log(rst.base64);
+            this.setState({
+              tu2: rst.base64
+            })
+          })
+    }else{
+      this.setState({imagesrc01:''})
+    }
+    this.setState({
+      files02,
     });
   }
 
   // 提交表单按钮、ajax提交数据
   handleSubmit = (e) => {
-    let this_ = this;
     e.preventDefault();
-    let _this = this.state.files;
+    let this_ = this;
+    let imgs = [this.state.tu1, this.state.tu2];    //保存图片集合
     this.props.form.validateFields((err, values) => {
-      if (!err === true && _this.length >= 2) {
+      if ( !err === true && imgs[0] !== undefined && imgs[1] !== undefined ) {
       // console.log(values);
         if ( !cards.test(values.cardid) ) {                                   //判断是否是正确的身份证号码
           message.error("请输入正确的身份证号！")
         } else {
           this_.setState({ animating: true })                                 //数据提交中显示的login.....
-          let imgs = [values.images[0].url, values.images[1].url];            //保存图片集合
+          // let imgs = [values.images[0].url, values.images[1].url];            //保存图片集合
           axios.post(global.constants.website+'/api/index/realnamecommit', {
             images: imgs,                                                     //用户身份证正反两面截图
             realName: values.cardid_name,                                        //真实姓名
@@ -93,7 +129,7 @@ class certifications extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { files, animating } = this.state;
+    const { files01, files02, animating } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -122,17 +158,33 @@ class certifications extends Component {
                 )}
               </FormItem>
               <FormItem
-                label="上传身份证正面图和反面图"
+                label="上传身份证正面图"
               >
-                {getFieldDecorator('images', {
+                {getFieldDecorator('images1', {
                   rules: [{ required: true, message: '请上传身份证正面图和反面图!' }],
                 })(
                   <ImagePicker
-                    length={2}
-                    files={files}
-                    onChange={this.onUploadOne}
+                    length={1}
+                    files={files01}
+                    onChange={this.onUploadOne1}
                     onImageClick={(index, fs) => console.log(index, fs)}
-                    selectable={files.length < 2}
+                    selectable={files01.length < 1}
+                    accept="image/gif,image/jpeg,image/jpg,image/png"
+                  />
+                )}
+              </FormItem>
+              <FormItem
+                label="上传身份证反面图"
+              >
+                {getFieldDecorator('images2', {
+                  rules: [{ required: true, message: '请上传身份证正面图和反面图!' }],
+                })(
+                  <ImagePicker
+                    length={1}
+                    files={files02}
+                    onChange={this.onUploadOne2}
+                    onImageClick={(index, fs) => console.log(index, fs)}
+                    selectable={files02.length < 1}
                     accept="image/gif,image/jpeg,image/jpg,image/png"
                   />
                 )}

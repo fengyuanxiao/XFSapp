@@ -113,7 +113,7 @@ class TaskList extends Component {
   render() {
     const { is_bind,task_lists, datasState, money_account, commission_account } = this.state;
     return (
-      <div style={{ paddingTop: '3.3rem' }}>
+      <div>
         <PullToRefresh
           damping={80}
           style={{

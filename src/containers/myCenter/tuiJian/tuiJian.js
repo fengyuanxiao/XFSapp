@@ -21,11 +21,14 @@ class TuiJian extends Component {
     })
     .then( res => {
       let datas = res.data.data;
+      console.log(datas);
       this.setState({
         YQcode: datas.code,
         money: datas.total_prize,
         use_num: datas.use_num,
         active_num: datas.active_num,
+        second_use_num: datas.second_use_num,
+        second_active_num: datas.second_active_num,
       })
       // console.log(res.data.data);
     })
@@ -47,7 +50,7 @@ class TuiJian extends Component {
   }
 
   render() {
-    const { active_num, YQcode, money, use_num } = this.state;
+    const { second_use_num,second_active_num,active_num, YQcode, money, use_num } = this.state;
     return(
       <div style={{ backgroundColor: '#fb2' }}>
         <header className="tabTitle">
@@ -71,12 +74,20 @@ class TuiJian extends Component {
               <span>{ money }金</span>
             </li>
             <li>
-              <span>我邀请的用户</span>
+              <span>二级用户数</span>
               <span>{ use_num }个</span>
             </li>
             <li>
-              <span>已激活的用户</span>
+              <span>二级用户中激活的用户数</span>
               <span>{ active_num }个</span>
+            </li>
+            <li>
+              <span>三级用户数</span>
+              <span>{ second_use_num }个</span>
+            </li>
+            <li>
+              <span>三级用户中激活的人数</span>
+              <span>{ second_active_num }个</span>
             </li>
           </ul>
         </div>

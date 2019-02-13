@@ -1,6 +1,6 @@
 .myCenter-top {
   width: 100%;
-  height: 15rem;
+  height: 16rem;
   background-color: #007aff;
   text-align: center;
   color: #fff;
@@ -19,10 +19,10 @@
   position: absolute;
   bottom: 0;
   background-color: #0156B1;
-  height: 4rem;
+  height: 6rem;
   width: 100%;
   display: flex;
-  padding-top: 0.7rem;
+  padding-top: 0.3rem;
 }
 .myCenter-top-button > div {
   width: 50%;
@@ -31,6 +31,16 @@
   display: flex;
   justify-content:center;
 }
+button {
+  margin-top: 0.5rem;
+}
+/* button {
+  color: #fff;
+  margin-top: 0.4rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff6235;
+} */
 /* 提现账单 */
 .myCenter-tixian {
   width: 100%;

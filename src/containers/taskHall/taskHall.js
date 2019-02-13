@@ -27,7 +27,7 @@ class TaskHallPage extends Component {
 
     return(
       <div>
-        <header className="tabTitle">任务大厅</header>
+        <header className="tabTitle" style={{ position: 'inherit' }}>任务大厅</header>
         {/* 任务列表 toke={ this.props.location.state.token }  */}
         <TaskList history ={this.props.history} />
         {/* tabs */}

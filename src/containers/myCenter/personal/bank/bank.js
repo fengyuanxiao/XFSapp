@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { Icon, Form, Input, Button, Cascader, message  } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import lrz from 'lrz';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
@@ -141,8 +142,21 @@ class Banks extends Component {
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne = (files, type, index) => {
     // console.log(files, type, index);
+    if(type==='add'){
+      lrz(files[0].url, {quality:0.1})
+        .then((rst)=>{
+            // 处理成功会执行
+            // console.log(rst)
+            // console.log(rst.base64);
+            this.setState({
+              tu1: rst.base64
+            })
+          })
+    }else{
+        this.setState({imagesrc01:''})
+    }
     this.setState({
-      files,
+        files,
     });
   }
 
@@ -151,15 +165,16 @@ class Banks extends Component {
     e.preventDefault();
     let this_ = this;
     let _this = this.state.files
+    let imgs = [this.state.tu1];    //保存图片集合
     this.props.form.validateFields((err, values) => {
       if ( !err === true && _this.length >= 1 ) {
-        console.log(values);    //用户将要提交的所有数据
+        // console.log(values);    //用户将要提交的所有数据
         // 信息完成后 点击提交按钮调用ajax
         if ( !phoneNum.test(values.bankTel) ) {
           message.error("请输入正确的手机号码！")
         } else {
           this_.setState({ animating: true })            //数据提交中显示的login.....
-          let imgs = [values.images[0].url];            //保存图片集合
+          // let imgs = [values.images[0].url];            //保存图片集合
           axios.post(global.constants.website+'/api/index/bankcardcommit', {
             Bank: values.Bank,
             realName: values.realName,
@@ -252,7 +267,7 @@ class Banks extends Component {
                 )}
               </FormItem>
               <FormItem
-                label="上传 银行卡正面截图"
+                label="上传 银行卡正面图片"
               >
                 {getFieldDecorator('images', {
                   rules: [{ required: true, message: '请上传银行卡正面截图!' }],
