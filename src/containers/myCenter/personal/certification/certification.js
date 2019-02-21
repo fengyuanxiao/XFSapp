@@ -190,7 +190,7 @@ class certifications extends Component {
                 )}
               </FormItem>
               <div style={{ color:"red", paddingBottom: '0.8rem' }}>
-                温馨提示：绑定的身份证名字须和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，小浣熊将保证信息安全不泄漏，不用于其他用途。
+                温馨提示：绑定的身份证名字须和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，小跳蛙将保证信息安全不泄漏，不用于其他用途。
               </div>
               <Button type="primary" htmlType="submit" className="accountBtn">提交</Button>
               <div className="toast-example">

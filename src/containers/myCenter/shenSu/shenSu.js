@@ -73,7 +73,7 @@ class ShenSu extends Component {
           申诉列表
         </header>
         <WhiteSpace style={{ paddingTop: '3rem' }} />
-        <Tabs onTabClick={ this.onTabClick } tabs={tabs} initialPage={0} animated={false} useOnPan={false}>
+        <Tabs onTabClick={ this.onTabClick } tabs={tabs} initialPage={0} animated={true} useOnPan={false}>
           {/* 我发起的申诉 */}
           {
             datasState ?
@@ -121,7 +121,7 @@ class ShenSu extends Component {
                   )
                 })
               :
-              <div>没有申诉内容！</div>
+              <div style={{ padding: '0.5rem 0.7rem', }}>没有申诉内容！</div>
             :
             <div className="loading">
               <img src={require("../../../img/loading.gif")} alt="loading"/>
@@ -135,25 +135,48 @@ class ShenSu extends Component {
               shenSuList.length ?
                 shenSuList.map((item, index) => {
                   return(
+                    item.company_status ?
+                      <div key={item.order_id} className="bodyBox">
+                        <div className="childOne">
+                          <div>
+                            <span>{item.complain_desc}</span>
+                          </div>
+                          {
+                            item.user_order_status ?
+                              <div>
+                                <span>{item.undo_time}</span>
+                                <span>{item.order_status_text}</span>
+                                <span>原因：{item.undo_desc}</span>
+                              </div>
+                            :
+                            ""
+                          }
+                        </div>
+                        <div className="childTwo">{item.status}</div>
+                      </div>
+                    :
                     <div onClick={ ()=>this.routerToWenda(item.order_id)} key={item.order_id} className="bodyBox">
                       <div className="childOne">
-                        <div className="childOne_a">
+                        <div>
                           <span>{item.complain_desc}</span>
-                          <span>{item.undo_time}</span>
                         </div>
-                        <div className="childOne_as">
-                          <span>{item.order_status_text}</span>
-                          <span>原因：{item.undo_desc}</span>
-                        </div>
-                        {/* <div>{item.order_status_text}</div>
-                        <div>原因：{item.undo_desc}</div> */}
+                        {
+                          item.user_order_status ?
+                            <div>
+                              <span>{item.undo_time}</span>
+                              <span>{item.order_status_text}</span>
+                              <span>原因：{item.undo_desc}</span>
+                            </div>
+                          :
+                          ""
+                        }
                       </div>
                       <div className="childTwo">{item.status}</div>
                     </div>
                   )
                 })
               :
-              <div>没有申诉内容！</div>
+              <div style={{ padding: '0.5rem 0.7rem', }}>没有申诉内容！</div>
             :
             <div className="loading">
               <img src={require("../../../img/loading.gif")} alt="loading"/>

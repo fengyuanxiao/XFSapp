@@ -68,14 +68,15 @@ class AppealTaskDetails extends Component {
   // 申请取消任务的 确认按钮
   onConfirm = () => {
     let dataState = this.state;
+      console.log(dataState.itme_key);
     let this_ = this;
     if ( dataState.itme_key === null ) {
       message.error("请选择原因再确认")
     } else {
-      axios.post(global.constants.website+'/api/task/cancleTask', {
+      axios.post(global.constants.website+'/api/task/backoutTaskApply', {
         order_id: dataState.order_id,           //订单ID
         backout_type: dataState.itme_key,       //撤销类型
-        backout_cause: dataState.itme_key === 1? "拍错店铺或者商品" : ( dataState.itme_key === 2? "用户串号" : (dataState.itme_key === 3? "用户已申请退款" : (dataState.itme_key === 4? "未拍下或未付款" : (dataState.itme_key === 5? "问题任务" : "用户操作不符合要求" )) ))
+        backout_cause: dataState.itme_key === "1" ? "拍错店铺或者商品" : ( dataState.itme_key === "2" ? "用户串号" : (dataState.itme_key === "3" ? "用户已申请退款" : (dataState.itme_key === "5" ? "未拍下或未付款" : (dataState.itme_key === "6" ? "问题任务" : "用户操作不符合要求" )) ))
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })

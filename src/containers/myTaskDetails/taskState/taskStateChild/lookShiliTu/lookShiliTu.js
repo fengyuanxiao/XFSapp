@@ -29,7 +29,7 @@ class LookShiliTus extends Component {
       threevisible: false,
       files: data,
     }
-    // console.log(props);
+    console.log(props);
   }
 
   // 货比三家示例图
@@ -146,11 +146,11 @@ class LookShiliTus extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { files, animating } = this.state;
-    const { chatpic,is_muti_keyword,shop_name, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
+    const { itemnum, itemprice,chatpic,is_muti_keyword,shop_name, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
     return(
       <div>
         {/* 第一步货比三家 */}
-        <div className="task-plan buzhou">
+        <div className="task-plan buzhou" style={{ marginBottom: '0' }}>
           <WingBlank>
             <div className="buzou-title"><span>第一步 货比三家</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
             <p>.请确认使用{user_taobao}（{platformname}账号）登入{tasktype_itemname}APP</p>
@@ -228,7 +228,7 @@ class LookShiliTus extends Component {
             />
             <p className="jietuFont">注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>（{pic_desc}）</span></p>
             <div className="buzou-title"><span style={{ color:'#63bb95' }}>第四步 订单信息核对</span></div>
-            <p>应垫付金额:100元(请按实际垫付金额填写，实际相差超50元请取消任务)</p>
+            <p>应垫付金额:{itemprice*itemnum}元(请按实际垫付金额填写，实际相差超50元请取消任务)</p>
             {
               platform === 1 ?
                 <p style={{ color: 'red', fontWeight:'bold', marginBottom:'1rem' }}>商户订单号可在支付宝账单详情中复制</p>

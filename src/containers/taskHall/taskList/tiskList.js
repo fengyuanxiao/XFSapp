@@ -97,10 +97,7 @@ class TaskList extends Component {
       let data_ = response.data;
       // console.log(data_);
       if ( data_.status ) {
-        message.success("恭喜您，抢到啦！", successSkip => {
-          this_.props.history.push({pathname: "/questionsTask", state: {data: item}});
-          // this_.props.history.push("/questionsTask");
-        })
+        this_.props.history.push({pathname: "/questionsTask", state: {data: item}});
       } else {
         message.warning(data_.msg);       //没有绑定买号提醒
       }

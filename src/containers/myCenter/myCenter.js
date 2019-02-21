@@ -51,7 +51,7 @@ class MyCenterPage extends Component {
   benMoney = () => {
     let states = this.state;
     axios.post(global.constants.website+'/api/index/moneywithdraw', {
-      type: 1,                            //1代表本金转入
+      type: 1,                                    //1代表本金转入
       money: Number(states.money_account),        //转入金额
     },
     {
@@ -115,14 +115,14 @@ class MyCenterPage extends Component {
           <p>{ total_commission }元</p>
           <div className="myCenter-top-button">
             <div>
-              <p>{ money_account }元</p>
-              <p>本金余额</p>
-              <Button onClick={ this.benMoney }>转入到提现</Button>
+              {/* <p>{ money_account }元</p> */}
+              <p>本金余额 <span className="moneySize">{ money_account }元</span></p>
+              <Button style={{ lineHeight: '16px' }} onClick={ this.benMoney }>转入到提现</Button>
             </div>
             <div>
-              <p>{ commission_account }元</p>
-              <p>佣金余额</p>
-              <Button onClick={ this.yongMoney }>转入到提现</Button>
+              {/* <p>{ commission_account }元</p> */}
+              <p>佣金余额 <span className="moneySize">{ commission_account }元</span></p>
+              <Button style={{ lineHeight: '16px' }} onClick={ this.yongMoney }>转入到提现</Button>
             </div>
           </div>
         </div>

@@ -293,7 +293,7 @@ class Banks extends Component {
               </FormItem>
               {/* 查看截图上传示例图 */}
               <div className="look-shilitu" style={{ padding:0, fontSize: '0.8rem' }}>
-                温馨提示：柜台登记的手机号码、姓名、卡号、必须一样；姓名必须与绑定的身份证名字和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，小浣熊将保证信息安全不泄漏，不用于其他用途。
+                温馨提示：柜台登记的手机号码、姓名、卡号、必须一样；姓名必须与绑定的身份证名字和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，小跳蛙将保证信息安全不泄漏，不用于其他用途。
               </div>
 
               <Button className="btn-buy" type="primary" htmlType="submit">

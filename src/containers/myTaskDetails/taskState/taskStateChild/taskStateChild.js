@@ -26,7 +26,7 @@ class TaskStateChild extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
-      // console.log(responses);   //任务详情数据，完成的任务进度
+      console.log(responses);   //任务详情数据，完成的任务进度
       this.setState({
         datas: true,
 
@@ -184,12 +184,12 @@ class TaskStateChild extends Component {
           <span>注意事项</span>
         </div>
         <div className="task-plan detailss" style={{ marginBottom:0 }}>
-          <p>小浣熊中接手任务的账号和淘宝/天猫上实际下单的账号必须一致，下单不可代付，如果发现直接封号</p>
+          <p>小跳蛙中接手任务的账号和淘宝/天猫上实际下单的账号必须一致，下单不可代付，如果发现直接封号</p>
           <p>要求至少和商家客服有4个问题互动，不得一次性复制4个问题给客服，如果客服不在线，等待时间超过10分钟可以留言“先下单了，如果有什么问题可以电话联系”然后直接下单</p>
-          <p>严禁和卖家旺旺聊天提“刷单”“信誉”“小浣熊任务”等敏感词</p>
-          <p>淘宝/天猫上实际下单的地址必须和小浣熊接任务的淘宝账号绑定的地址一致，如收货信息有变更请先更改信息后再接任务</p>
-          <p>小浣熊所有订单不允许使用淘宝客,返利红包 积分等优惠方式下单，出现将会从本金里面扣除返利佣金，两次以上永久封号</p>
-          <p>不允许使用信用卡，花呗等任何信用类方式付款，不允许使用集分宝，淘金币，天猫积分等积分抵扣付款金额，否则将会从本金扣除购物金额的1%的手续费或与积分对应的金额，小浣熊的任务不参与好评返现，如果商家在任务中有要求使用店铺优惠券的可按商家要求领取抵扣的优惠券，返款只返实际支付的金额</p>
+          <p>严禁和卖家旺旺聊天提“刷单”“信誉”“小跳蛙任务”等敏感词</p>
+          <p>淘宝/天猫上实际下单的地址必须和小跳蛙接任务的淘宝账号绑定的地址一致，如收货信息有变更请先更改信息后再接任务</p>
+          <p>小跳蛙所有订单不允许使用淘宝客,返利红包 积分等优惠方式下单，出现将会从本金里面扣除返利佣金，两次以上永久封号</p>
+          <p>不允许使用信用卡，花呗等任何信用类方式付款，不允许使用集分宝，淘金币，天猫积分等积分抵扣付款金额，否则将会从本金扣除购物金额的1%的手续费或与积分对应的金额，小跳蛙的任务不参与好评返现，如果商家在任务中有要求使用店铺优惠券的可按商家要求领取抵扣的优惠券，返款只返实际支付的金额</p>
           <p>一定要等到快递真实签收后才能确认收货并按照任务的评价要求给予5分好评</p>
         </div>
         {/* 任务步骤 */}
@@ -198,7 +198,7 @@ class TaskStateChild extends Component {
           <span>任务步骤</span>
         </div>
         {/* <LookShiliTu shop_name={shop_name} /> */}
-        { datas ? <LookShiliTu chatpic={chatpic} user_taobao={user_taobao} platformname={platformname} tasktype_itemname={tasktype_itemname} platform={platform} goodsname={goodsname} shop_name={shop_name} pic_desc={pic_desc} pic_uploads_num={pic_uploads_num} history={this.props.history} is_muti_keyword={is_muti_keyword} order_id={order_id} /> : "" }
+        { datas ? <LookShiliTu itemprice={itemprice} itemnum={itemnum} chatpic={chatpic} user_taobao={user_taobao} platformname={platformname} tasktype_itemname={tasktype_itemname} platform={platform} goodsname={goodsname} shop_name={shop_name} pic_desc={pic_desc} pic_uploads_num={pic_uploads_num} history={this.props.history} is_muti_keyword={is_muti_keyword} order_id={order_id} /> : "" }
       </div>
     )
   }

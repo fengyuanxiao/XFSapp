@@ -34,7 +34,7 @@ class AppealTask extends Component {
       tousu: null,        //投诉类型
       contentInput: null,  //投诉说明
     }
-    console.log(props);
+    // console.log(props);
   }
 
   componentWillMount() {

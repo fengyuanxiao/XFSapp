@@ -61,7 +61,7 @@ class TongZhi extends Component {
                     )
                   })
                 :
-                <div>没有公告！</div>
+                <div style={{ padding: '0 0.7rem' }}>没有公告！</div>
               }
             </ul>
           :

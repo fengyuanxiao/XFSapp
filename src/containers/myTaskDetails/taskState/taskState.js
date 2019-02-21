@@ -73,7 +73,7 @@ class TaskState extends Component {
       axios.post(global.constants.website+'/api/task/cancleTask', {
         order_id: dataProps.order_id,           //订单ID
         backout_type: dataState.itme_key,       //撤销类型
-        backout_cause: dataState.itme_key === 1? "商品找不到" : ( dataState.itme_key === 2? "用户主动撤销，不想做了" : (dataState.itme_key === 3? "达不到商家备注要求" : "问题任务") )
+        backout_cause: dataState.itme_key === "1" ? "商品找不到" : ( dataState.itme_key === "2" ? "用户主动撤销，不想做了" : (dataState.itme_key === "3" ? "达不到商家备注要求" : "问题任务") )
       },{
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
@@ -123,15 +123,6 @@ class TaskState extends Component {
           <button className="tasktn" onClick={this.showDrawer}>取消任务</button>
           {/* <button className="tasktns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button> */}
           {/* 多关键词shop_around_time 为 1 的时候标明多关键词，要跳到传四张图片的多关键词页面，否则就跳到要传支付宝账单图片页面 */}
-          {/* {
-            shop_around_time ?
-              order_status ?
-            ""
-              :
-              <button className="stateBtns"><Link to={{ pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>
-            :
-            <button className="stateBtns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>
-          } */}
           {
             order_status ?
               ""

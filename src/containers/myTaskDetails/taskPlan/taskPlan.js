@@ -46,7 +46,24 @@ class TaskPlan extends Component {
       <div className="task-plan">
         <div className="plan">
           <Progress className="plan-child" type="circle" percent={ order_status === 0? 25 : (order_status === 1? 50 : (order_status ===3? 75 : (order_status ===5? 95 : 100) )) } width={80} />
-          <p>下一步：请点击操作任务按钮操作</p>
+          {
+            order_status === 0 ?
+              <p>下一步：操作任务</p>
+            :
+            ( order_status === 1 ?
+              <p>返款中：平台規定商家48小時內还款</p>
+            :
+            ( order_status === 3 ?
+              <p>下一步：去收货好评</p>
+            :
+            ( order_status === 5 ?
+              <p>下一步：去追评</p>
+            :
+            <p>获得佣金</p>
+            )
+            )
+            )
+          }
         </div>
         <div className="plan-box">
           <p className="title"><b className="plan-title">接受任务</b><span>{addtime}</span></p>

@@ -11,7 +11,6 @@ class TuiJian extends Component {
   constructor() {
     super();
     this.state= {
-      placeholder: "http://m.xhx2018.com/user/user/download"
     }
   }
 
@@ -29,6 +28,7 @@ class TuiJian extends Component {
         active_num: datas.active_num,
         second_use_num: datas.second_use_num,
         second_active_num: datas.second_active_num,
+        placeholder: datas.share_link,                     //下载链接
       })
       // console.log(res.data.data);
     })
