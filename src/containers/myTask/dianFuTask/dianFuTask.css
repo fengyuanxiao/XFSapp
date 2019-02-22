@@ -20,6 +20,14 @@
   border-bottom: 1px solid #d7d7d7;
   color: #000;
 }
+.right-top-child {
+  display: flex;
+  align-items: center;
+}
+.right-top-childImg {
+  width: 25px;
+  padding-right: 5px;
+}
 .right-center {
   display: flex;
   justify-content: space-between;

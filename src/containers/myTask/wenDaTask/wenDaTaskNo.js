@@ -128,8 +128,8 @@ class WenDaTaskNo extends Component {
                       <div className="right">
                         {/* top */}
                         <div className="right-top">
-                          <span style={{ display: 'flex' }}>
-                            <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
+                          <span className="right-top-child">
+                            <img className="right-top-childImg" src={item.taskitem_pic} alt="平台图标"/>
                             {item.user_taobao}
                           </span>
                           <span>
@@ -161,8 +161,8 @@ class WenDaTaskNo extends Component {
                       <div className="right">
                         {/* top */}
                         <div className="right-top">
-                          <span style={{ display: 'flex' }}>
-                            <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
+                          <span className="right-top-child">
+                            <img className="right-top-childImg" src={item.taskitem_pic} alt="平台图标"/>
                             {item.user_taobao}
                           </span>
                           <span>
@@ -195,8 +195,8 @@ class WenDaTaskNo extends Component {
                       <div className="right">
                         {/* top */}
                         <div className="right-top">
-                          <span style={{ display: 'flex' }}>
-                            <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
+                          <span className="right-top-child">
+                            <img className="right-top-childImg" src={item.taskitem_pic} alt="平台图标"/>
                             {item.user_taobao}
                           </span>
                           <span>
@@ -238,8 +238,8 @@ class WenDaTaskNo extends Component {
                         <div className="right">
                           {/* top */}
                           <div className="right-top">
-                            <span style={{ display: 'flex' }}>
-                              <img style={{ paddingRight: '5px' }} src={item.taskitem_pic} alt="平台图标"/>
+                            <span className="right-top-child">
+                              <img className="right-top-childImg" src={item.taskitem_pic} alt="平台图标"/>
                               {item.user_taobao}
                             </span>
                             <span>
