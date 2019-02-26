@@ -50,6 +50,24 @@
   border-radius: 7px;
   margin-bottom: 1rem;
 }
+.shouyi > div {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
+  width: 50%;
+  margin: 0 auto;
+}
+.shouyi > div > i {
+  padding-right: 0.3rem;
+}
+.contents > p > i {
+  padding-right: 0.5rem;
+}
+.ant-popover-content {
+  width: 90%;
+  margin: 0 auto;
+}
 .links-list > ul {
   background-color: #fff;
 }

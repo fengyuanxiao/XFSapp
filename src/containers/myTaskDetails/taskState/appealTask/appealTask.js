@@ -83,7 +83,7 @@ class AppealTask extends Component {
     let this_ = this;
     let _this = this.state;
     let photos = this.state.files;        //图片集合
-    if ( _this.files.length < 2 || _this.tousu == null || _this.contentInput == null ) {
+    if ( _this.tousu == null || _this.contentInput == null ) {
       message.error('请完善必要部分');
     }else {
       this_.setState({ animating: true })            //数据提交中显示的login.....
@@ -145,7 +145,7 @@ class AppealTask extends Component {
               />
             </div>
             <Button type="primary" className="login-form-button" onClick={this.uploadShouHuo}>
-              确认评价
+              确认申诉
             </Button>
             <div className="toast-example">
               <ActivityIndicator

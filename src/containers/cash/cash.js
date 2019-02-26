@@ -247,8 +247,9 @@ class CashPage extends Component {
           <Button onClick={ this.bJTiXianBtn } style={{ width: '80%', margin: '0 auto', display: 'block', marginBottom: '1rem' }} type="primary">立即提现</Button>
           <div className="cash-footer">
             <p>1.银行卡提现每天只能一次</p>
-            <p>2.提现满500奖励1元，满1000奖励2元，以此类推！</p>
-            <p>3.财务处理返款时间</p>
+            <p>2.为提高财务打款效率，提现金额不满500扣一元手续费</p>
+            <p>3.提现满500奖励1元，满1000奖励2元，以此类推！</p>
+            <p>4.财务处理返款时间</p>
             <p>&nbsp;&nbsp;a.12:00(处理昨日18:00-今日12:00间的提现申请)</p>
             <p>&nbsp;&nbsp;b.18:00(处理今日12:00-今日18:00间的提现申请)</p>
             <p>实际到账时间以银行处理时间为准</p>

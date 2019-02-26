@@ -1,16 +1,26 @@
 import React,{ Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Input, message } from 'antd';
+import { Icon, Input, message, Popover } from 'antd';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';             //点击按钮拷贝
 
 import './tuijian.css';
 import '../../../component/apis';
 
+const text = <span>邀请奖励说明</span>;
+const content = (
+  <div className="contents">
+    <p><Icon type="check-circle" theme="twoTone" />一级好友：通过你的推广链接注册的用户。</p>
+    <p><Icon type="check-circle" theme="twoTone" />二级好友：你的好友邀请注册的用户。</p>
+    <p><Icon type="check-circle" theme="twoTone" />好友没完成一笔任务，一级好友<span style={{ color: '#2897ff', fontWeight: 'bold' }}>奖励你该任务佣金的10%，二级好友奖励5%。</span>此奖永久有效。</p>
+  </div>
+);
+
 class TuiJian extends Component {
   constructor() {
     super();
     this.state= {
+      visible: false,
     }
   }
 
@@ -49,6 +59,16 @@ class TuiJian extends Component {
     message.success('复制成功，如果失败，请手动复制。');
   }
 
+  // 邀请收益说明
+  hide = () => {
+    this.setState({
+      visible: false,
+    });
+  }
+  handleVisibleChange = (visible) => {
+    this.setState({ visible });
+  }
+
   render() {
     const { second_use_num,second_active_num,active_num, YQcode, money, use_num } = this.state;
     return(
@@ -68,25 +88,39 @@ class TuiJian extends Component {
           </div>
           <Input disabled={true} style={{ width: '100%', fontSize: '1rem' }} placeholder={ this.state.placeholder } />
           <button onClick={ this.cloneBtn } className="download-btn">点击复制APP下载链接</button>
+          <Popover
+            content={content}
+            title={text}
+            trigger="click"
+            visible={this.state.visible}
+            onVisibleChange={this.handleVisibleChange}
+          >
+            <div className="shouyi">
+              <div>
+                <Icon type="question-circle" theme="twoTone" />
+                <p>邀请奖励说明</p>
+              </div>
+            </div>
+          </Popover>
           <ul>
             <li>
               <span>累计奖励</span>
               <span>{ money }金</span>
             </li>
             <li>
-              <span>二级用户数</span>
+              <span>一级好友数</span>
               <span>{ use_num }个</span>
             </li>
             <li>
-              <span>二级用户中激活的用户数</span>
+              <span>一级好友中激活的人数</span>
               <span>{ active_num }个</span>
             </li>
             <li>
-              <span>三级用户数</span>
+              <span>二级好友数</span>
               <span>{ second_use_num }个</span>
             </li>
             <li>
-              <span>三级用户中激活的人数</span>
+              <span>二级好友中激活的人数</span>
               <span>{ second_active_num }个</span>
             </li>
           </ul>

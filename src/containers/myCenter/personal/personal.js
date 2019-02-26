@@ -87,17 +87,17 @@ class Personal extends Component {
               </div>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link className="myCenter-A" to="/txPassword">
               <div>
-                <Icon type="credit-card" />
-                <span>修改提现密码</span>
+            <Icon type="credit-card" />
+            <span>修改提现密码</span>
               </div>
               <div>
-                <Icon type="right" />
+            <Icon type="right" />
               </div>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link className="myCenter-A" to="/xgQQ">
               <div>
