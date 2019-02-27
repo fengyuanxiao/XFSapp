@@ -25,8 +25,16 @@ class BindTaobaos extends Component {
       animating: false,
       files: data,
       onevisible: false,
-      twovisible: false
+      twovisible: false,
     }
+  }
+
+  // 获取淘宝订单号，存入并到提交按钮获取长度判断
+  maxlength = (val) => {
+    // console.log(val.target.value);
+    this.setState({
+      maxlengths: val.target.value,
+    })
   }
 
   // 省市区联动回调
@@ -72,9 +80,10 @@ class BindTaobaos extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let this_ = this;
+    let states = this.state;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && _this.length >= 2 ) {
+      if ( !err === true && states.maxlengths.length === 18 && _this.length >= 2 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
@@ -116,7 +125,11 @@ class BindTaobaos extends Component {
           });
         }
       }else {
-        message.error('请完善信息');
+        if ( states.maxlengths.length < 18 ) {
+          message.error('淘宝订单号有误');
+        } else {
+          message.error('请完善信息');
+        }
       }
     });
   }
@@ -149,7 +162,7 @@ class BindTaobaos extends Component {
                 {getFieldDecorator('tb_order_sign', {
                   rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
                 })(
-                  <Input className="buy-input" maxLength="18" placeholder="淘宝订单号" />
+                  <Input onChange={ this.maxlength } className="buy-input" maxLength="18" placeholder="淘宝订单号" />
                 )}
               </FormItem>
               <FormItem

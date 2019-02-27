@@ -64,7 +64,7 @@ class Personal extends Component {
           <div className="return"><Link to="/myCenter"><Icon type="left" theme="outlined" />返回</Link></div>
           个人信息
         </header>
-        <ul style={{ marginBottom: '3.7rem', paddingTop:'3rem' }}>
+        <ul className="lists" style={{ marginBottom: '3.7rem', paddingTop:'3rem' }}>
           <li>
             <Link className="myCenter-A" to="/account">
               <div>

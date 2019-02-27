@@ -29,8 +29,12 @@ class Correct_taobaos extends Component {
     }
   }
 
-  componentWillMount () {
-
+  // 获取淘宝订单号，存入并到提交按钮获取长度判断
+  maxlength = (val) => {
+    // console.log(val.target.value);
+    this.setState({
+      tb_order_sign: val.target.value,
+    })
   }
 
   componentDidMount () {
@@ -58,6 +62,9 @@ class Correct_taobaos extends Component {
           // provinces: responses.provinces,          //省市区组合
           AlipayName: responses.alipay_name,          //支付宝姓名
           // images: responses.images,
+        })
+        this_.setState({
+          tb_order_sign: responses.tb_order_sign
         })
       })
       .catch(function (error) {   //调用接口失败执行
@@ -109,10 +116,11 @@ class Correct_taobaos extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let this_ = this;
+    let states = this.state;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      // console.log(values);
-      if ( !err === true && _this.length >= 2 ) {
+      // console.log(values.tb_order_sign);
+      if ( !err === true && states.tb_order_sign.length === 18 && _this.length >= 2 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
@@ -154,7 +162,11 @@ class Correct_taobaos extends Component {
           });
         }
       }else {
-        message.error('请完善信息');
+        if ( states.tb_order_sign.length < 18 ) {
+          message.error('淘宝订单号有误');
+        } else {
+          message.error('请完善信息');
+        }
       }
     });
   }
@@ -187,7 +199,7 @@ class Correct_taobaos extends Component {
                 {getFieldDecorator('tb_order_sign', {
                   rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
                 })(
-                  <Input className="buy-input" maxLength="18" placeholder="淘宝订单号" />
+                  <Input onChange={ this.maxlength } className="buy-input" maxLength="18" placeholder="淘宝订单号" />
                 )}
               </FormItem>
               <FormItem

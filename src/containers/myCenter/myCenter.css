@@ -51,6 +51,7 @@ button {
   width: 100%;
   display: flex;
   padding: 1rem 0;
+  border-bottom: 1px solid #ccc;
 }
 .myCenter-tixian > div {
   width: 50%;
@@ -61,6 +62,13 @@ button {
 }
 .myCenter-tixian > div > a {
   color: #333;
+}
+.lists {
+  padding-bottom: 3.8rem;
+}
+.lists > li {
+  margin: 0 0.3rem;
+  border-bottom: 1px solid #ccc;
 }
 /* 个人中心列表 */
 .myCenter-A {

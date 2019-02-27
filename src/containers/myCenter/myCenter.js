@@ -144,7 +144,7 @@ class MyCenterPage extends Component {
           </div>
         </div>
         {/* 个人中心列表 */}
-        <ul style={{ marginBottom: '3.7rem' }}>
+        <ul className="lists">
           <li>
             <Link className="myCenter-A" to="/buyAdmin">
               <div>

@@ -15,10 +15,10 @@ class AllCenter extends Component {
         <div style={{ paddingTop: '3.7rem' }}>
           <Collapse accordion>
             <Panel header="微信客服" key="1">
-              <p>问题咨询加微信 haofl90919；身份证审核加微信 xhx888444</p>
+              <p>问题咨询加微信 xiaomeng666444；</p>
             </Panel>
             <Panel header="QQ客服" key="2">
-              <p>问题咨询加 QQ2190943565或1537258145；身份证审核加 QQ3594984625</p>
+              <p>问题咨询加 QQ3527307663；</p>
             </Panel>
           </Collapse>
           <p style={{ padding: '0.4rem 0.5rem' , fontSize: '1.1rem' }}>常见问题</p>
