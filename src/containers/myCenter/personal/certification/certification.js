@@ -21,6 +21,8 @@ class certifications extends Component {
       animating: false,
       files01: imgdata,       //图片数组1
       files02: imgdata1,      //图片数组2
+      num: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
+      num1: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
     }
   }
 
@@ -32,10 +34,18 @@ class certifications extends Component {
     })
     .then(function (response) {   //调用接口成功执行
       let responses = response.data.data;
+      let cardid_img = [responses.cardid_img];        //存储后台放回过来的图片路径
+      let cardid_img2 = [responses.cardid_img2];      //存储后台放回过来的图片路径
       // console.log(responses);
       this_.props.form.setFieldsValue({
         cardid_name: responses.cardid_name,
         cardid: responses.cardid,
+      })
+      this_.setState({
+        files01: cardid_img,                             //让后端返回过来的图片 在页面做展示
+        files02: cardid_img2,                             //让后端返回过来的图片 在页面做展示
+        url1: responses.cardid_img.url,                 //存储返回的图片
+        url2: responses.cardid_img2.url,                 //存储返回的图片
       })
     })
     .catch(function (error) {   //调用接口失败执行
@@ -47,7 +57,7 @@ class certifications extends Component {
   onUploadOne1 = (files01, type, index) => {
     // console.log(files01, type, index);
     if(type==='add'){
-      lrz(files01[0].url, {quality:0.1})
+      lrz(files01[0].url, {quality:0.5})
         .then((rst)=>{
             // 处理成功会执行
             // console.log(rst)
@@ -61,13 +71,14 @@ class certifications extends Component {
     }
     this.setState({
       files01,
+      num: 1,                  //如果买手上传新图触发 将改为true
     });
   }
   // 上传我的淘宝 支付宝示例图回调
   onUploadOne2 = (files02, type, index) => {
     // console.log(files02, type, index);
     if(type==='add'){
-      lrz(files02[0].url, {quality:0.1})
+      lrz(files02[0].url, {quality:0.5})
         .then((rst)=>{
             // 处理成功会执行
             // console.log(rst)
@@ -81,6 +92,7 @@ class certifications extends Component {
     }
     this.setState({
       files02,
+      num1: 1,                  //如果买手上传新图触发 将改为true
     });
   }
 
@@ -88,17 +100,28 @@ class certifications extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let this_ = this;
-    let imgs = [this.state.tu1, this.state.tu2];    //保存图片集合
+    let states = this.state;
+    if ( states.num === 1 && states.num1 === 1 ) {          // num和num1为true 标明用户有新上传图片，
+      var imgs1 = [states.tu1, states.tu2];                 //有新上传图片保存压缩图到数组
+    } else if ( states.num1 ) {                             //num1 为srue 说明用户只上传了身份证反面图片
+      var img2 = [states.url1, states.tu2]                  //后台放回过来的身份证正面图不换 只换反面新传的图片
+    } else if ( states.num ) {                              //num 为srue 说明用户只上传了身份证正面图片
+      var img1 = [states.tu1, states.url2]                  //后台放回过来的身份证反面图不换 只换正面新传的图片
+    } else {
+      var fImgs = [states.url1, states.url2];                //储存后台放回需要反显得图片
+      var imgs = [states.tu1, states.tu2];                   //保存新上传的图片集合
+      imgs = fImgs;                                          //
+    }
+    // console.log(imgs);
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && imgs[0] !== undefined && imgs[1] !== undefined ) {
-      // console.log(values);
+      if ( !err === true ) {
         if ( !cards.test(values.cardid) ) {                                   //判断是否是正确的身份证号码
           message.error("请输入正确的身份证号！")
         } else {
           this_.setState({ animating: true })                                 //数据提交中显示的login.....
           // let imgs = [values.images[0].url, values.images[1].url];            //保存图片集合
           axios.post(global.constants.website+'/api/index/realnamecommit', {
-            images: imgs,                                                     //用户身份证正反两面截图
+            images: states.num === 1 && states.num1 === 1 ? imgs1 : ( states.num1 === 1 ? img2 : ( states.num === 1 ? img1 : imgs ) ),        //图片集合                                                     //用户身份证正反两面截图
             realName: values.cardid_name,                                        //真实姓名
             cardno: values.cardid,                                            //身份证号
           },
@@ -161,15 +184,15 @@ class certifications extends Component {
                 label="上传身份证正面图"
               >
                 {getFieldDecorator('images1', {
-                  rules: [{ required: true, message: '请上传身份证正面图和反面图!' }],
+                  rules: [{ required: false, message: '请上传身份证正面图和反面图!' }],
                 })(
                   <ImagePicker
                     length={1}
                     files={files01}
+                    multiple={false}
                     onChange={this.onUploadOne1}
                     onImageClick={(index, fs) => console.log(index, fs)}
                     selectable={files01.length < 1}
-                    accept="image/gif,image/jpeg,image/jpg,image/png"
                   />
                 )}
               </FormItem>
@@ -177,7 +200,7 @@ class certifications extends Component {
                 label="上传身份证反面图"
               >
                 {getFieldDecorator('images2', {
-                  rules: [{ required: true, message: '请上传身份证正面图和反面图!' }],
+                  rules: [{ required: false, message: '请上传身份证正面图和反面图!' }],
                 })(
                   <ImagePicker
                     length={1}
@@ -185,7 +208,6 @@ class certifications extends Component {
                     onChange={this.onUploadOne2}
                     onImageClick={(index, fs) => console.log(index, fs)}
                     selectable={files02.length < 1}
-                    accept="image/gif,image/jpeg,image/jpg,image/png"
                   />
                 )}
               </FormItem>

@@ -108,7 +108,7 @@ class LookShiliTus extends Component {
     // console.log(this.props.pic_uploads_num);
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && imgs.length >= this.props.pic_uploads_num ) {
+      if ( !err === true && imgs.length === this.props.pic_uploads_num ) {
         if ( !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber) ) {
           message.error("请输入正确的订单号！")
         } else {
@@ -138,7 +138,11 @@ class LookShiliTus extends Component {
           })
         }
       }else {
-        message.error('请完善信息');
+        if ( imgs.length > this.props.pic_uploads_num ) {
+          message.error('只能上传'+ this.props.pic_uploads_num + '张必要图片');
+        } else {
+          message.error('请完善信息');
+        }
       }
     });
   }
@@ -221,10 +225,10 @@ class LookShiliTus extends Component {
             <ImagePicker
               length={pic_uploads_num}
               files={files}
+              multiple={false}
               onChange={this.onChange}
               onImageClick={(index, fs) => console.log(index, fs)}
               selectable={files.length < pic_uploads_num}
-              accept="image/gif,image/jpeg,image/jpg,image/png"
             />
             <p className="jietuFont">注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>（{pic_desc}）</span></p>
             <div className="buzou-title"><span style={{ color:'#63bb95' }}>第四步 订单信息核对</span></div>

@@ -82,7 +82,11 @@ class AddPingJia extends Component {
       })
     }else {
       //此处执行ajax请求
-      message.error('请上传还未上传的图片');
+      if ( photos.length > 1 ) {
+        message.error('只能上传1张必要图片');
+      } else {
+        message.error('请上传还未上传的图片');
+      }
     }
 
   }
@@ -132,10 +136,10 @@ class AddPingJia extends Component {
               <ImagePicker
                 length={1}
                 files={files}
+                multiple={false}
                 onChange={this.onChange}
                 onImageClick={(index, fs) => console.log(index, fs)}
                 selectable={files.length < 1}
-                accept="image/gif,image/jpeg,image/jpg,image/png"
               />
               <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>追评截图</span></p>
             </div>

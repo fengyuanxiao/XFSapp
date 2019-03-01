@@ -11,6 +11,8 @@ const text = <span>邀请奖励说明</span>;
 const content = (
   <div className="contents">
     <p><Icon type="check-circle" theme="twoTone" />一级好友：通过你的推广链接注册的用户。</p>
+    <p><Icon type="check-circle" theme="twoTone" />一级好友完成首单任务你可获得1-3元奖励。</p>
+    <p><Icon type="check-circle" theme="twoTone" />一级好友绑定淘宝帐号成功你和好友都可获得0.3-88元奖励。</p>
     <p><Icon type="check-circle" theme="twoTone" />二级好友：你的好友邀请注册的用户。</p>
     <p><Icon type="check-circle" theme="twoTone" />好友每完成一笔任务，一级好友<span style={{ color: '#2897ff', fontWeight: 'bold' }}>奖励你该任务佣金的10%，二级好友奖励5%。</span>此奖永久有效。</p>
   </div>

@@ -99,6 +99,7 @@ class Banks extends Component {
     this.state = {
       animating: false,
       files: data,
+      num: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
     }
   }
 
@@ -111,12 +112,17 @@ class Banks extends Component {
     })
     .then(function (response) {   //调用接口成功执行
       let responses = response.data.data;
-      // console.log(responses);
+      let cardid_img = [responses.bank_img];        //存储后台放回过来的图片路径
+      // console.log(cardid_img);
       this_.props.form.setFieldsValue({
         realName: responses.bank_realname,          //用户所绑定的银行卡持有人名字
         ZhiHangName: responses.bank_branch,         //用户所绑定的银行卡支行名称
         BankCode: responses.bank_card_NO,           //用户所绑定的银行卡号
         bankTel: responses.bank_mobile,             //用户所绑定的银行卡预留的手机号
+      })
+      this_.setState({
+        files: cardid_img,                             //让后端返回过来的图片 在页面做展示
+        url1: responses.bank_img.url,                    //存储返回的图片
       })
     })
     .catch(function (error) {   //调用接口失败执行
@@ -143,13 +149,14 @@ class Banks extends Component {
   onUploadOne = (files, type, index) => {
     // console.log(files, type, index);
     if(type==='add'){
-      lrz(files[0].url, {quality:0.1})
+      lrz(files[0].url, {quality:0.5})
         .then((rst)=>{
             // 处理成功会执行
             // console.log(rst)
             // console.log(rst.base64);
             this.setState({
-              tu1: rst.base64
+              tu1: rst.base64,
+              num: 1,                  //如果买手上传新图触发 将改为true
             })
           })
     }else{
@@ -164,10 +171,12 @@ class Banks extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let this_ = this;
+    let states = this.state;
     let _this = this.state.files
     let imgs = [this.state.tu1];    //保存图片集合
+    let fImgs = [states.url1];     //储存后台放回需要反显得图片
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && _this.length >= 1 ) {
+      if ( !err === true && _this.length === 1 ) {
         // console.log(values);    //用户将要提交的所有数据
         // 信息完成后 点击提交按钮调用ajax
         if ( !phoneNum.test(values.bankTel) ) {
@@ -182,7 +191,7 @@ class Banks extends Component {
             ZhiHangName: values.ZhiHangName,
             BankCode: values.BankCode,
             bankTel: values.bankTel,
-            images: imgs,
+            images: states.num ? imgs : fImgs,
           },
           {
             headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
@@ -204,7 +213,11 @@ class Banks extends Component {
           });
         }
       }else {
-        message.error('请完善信息');
+        if ( _this.length > 1 ) {
+          message.error('只能上传1张必要图片');
+         } else {
+           message.error('请完善信息');
+         }
       }
     });
   }
@@ -270,15 +283,15 @@ class Banks extends Component {
                 label="上传 银行卡正面图片"
               >
                 {getFieldDecorator('images', {
-                  rules: [{ required: true, message: '请上传银行卡正面截图!' }],
+                  rules: [{ required: false, message: '请上传银行卡正面截图!' }],
                 })(
                   <ImagePicker
                     length={1}
                     files={files}
+                    multiple={false}
                     onChange={this.onUploadOne}
                     onImageClick={(index, fs) => console.log(index, fs)}
                     selectable={files.length < 1}
-                    accept="image/gif,image/jpeg,image/jpg,image/png"
                   />
                 )}
               </FormItem>

@@ -241,8 +241,8 @@ class ForgetPasswords extends Component {
                 <Col span={8}>
                   {
                     this.state.getCodesState
-                      ? <Button onClick={this.setCode}>{ this.state.TestGetCode }</Button>
-                      : <Button disabled="disabled">{this.state.codeNum}秒</Button>
+                      ? <Button style={{ marginTop: '0' }} onClick={this.setCode}>{ this.state.TestGetCode }</Button>
+                      : <Button style={{ marginTop: '0' }} disabled="disabled">{this.state.codeNum}秒</Button>
                   }
                 </Col>
               </Row>

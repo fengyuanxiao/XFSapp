@@ -17,6 +17,13 @@ const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89]
 message.config({
   top: 300,
 });
+const sexs = [{
+  value: '0',
+  label: '男',
+},{
+  value: '1',
+  label: '女',
+}]
 
 class BindTaobaos extends Component {
   constructor() {
@@ -83,7 +90,7 @@ class BindTaobaos extends Component {
     let states = this.state;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && states.maxlengths.length === 18 && _this.length >= 2 ) {
+      if ( !err === true && states.maxlengths.length === 18 && _this.length === 2 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
@@ -104,6 +111,7 @@ class BindTaobaos extends Component {
             provinces: values.provinces,              //省市区组合
             AlipayName: values.AlipayName,            //支付宝姓名
             images: imgs,                             //图片集合
+            sex: values.sex[0],                          //性别
           },
           {
             headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -127,6 +135,8 @@ class BindTaobaos extends Component {
       }else {
         if ( states.maxlengths.length < 18 ) {
           message.error('淘宝订单号有误');
+        } else if ( _this.length > 2 ) {
+          message.error('只能上传2张必要图片');
         } else {
           message.error('请完善信息');
         }
@@ -172,6 +182,16 @@ class BindTaobaos extends Component {
                   rules: [{ required: true, message: '请输入收货人姓名!' }],
                 })(
                   <Input className="buy-input" placeholder="姓名" />
+                )}
+              </FormItem>
+              <FormItem
+                label="姓别："
+              >
+                {getFieldDecorator('sex', {
+                  rules: [{ required: true, message: '请输入姓别!' }],
+                })(
+                  // <Input className="buy-input" placeholder="性别" />
+                    <Cascader options={sexs} onChange={this.onChange} placeholder="性别" />
                 )}
               </FormItem>
               <FormItem label="所在地区：">
@@ -221,13 +241,13 @@ class BindTaobaos extends Component {
                     onChange={this.onUploadOne}
                     onImageClick={(index, fs) => console.log(index, fs)}
                     selectable={files.length < 2}
-                    accept="image/gif,image/jpeg,image/jpg,image/png"
+                    multiple={false}
                   />
                 )}
               </FormItem>
               {/* 查看截图上传示例图 */}
               <div className="look-shilitu">
-                <p onClick={this.showOneShiliTu}>查看淘例图>></p>
+                <p onClick={this.showOneShiliTu}>查看示例图>></p>
                 <p onClick={this.showTwoShiliTu}>查看示例图>></p>
               </div>
 

@@ -83,8 +83,12 @@ class AppealTask extends Component {
     let this_ = this;
     let _this = this.state;
     let photos = this.state.files;        //图片集合
-    if ( _this.tousu == null || _this.contentInput == null ) {
-      message.error('请完善必要部分');
+    if ( _this.tousu == null || _this.contentInput == null || photos.length > 2 ) {
+      if ( photos.length > 2 ) {
+        message.error('只能上传2张必要图片');
+      } else {
+        message.error('请完善必要部分');
+      }
     }else {
       this_.setState({ animating: true })            //数据提交中显示的login.....
       let imgs = [photos[0].url, photos[1].url];    //转换图片的格式
@@ -138,10 +142,10 @@ class AppealTask extends Component {
               <ImagePicker
                 length={2}
                 files={files}
+                multiple={false}
                 onChange={this.uploadImg}
                 onImageClick={(index, fs) => console.log(index, fs)}
                 selectable={files.length < 2}
-                accept="image/gif,image/jpeg,image/jpg,image/png"
               />
             </div>
             <Button type="primary" className="login-form-button" onClick={this.uploadShouHuo}>

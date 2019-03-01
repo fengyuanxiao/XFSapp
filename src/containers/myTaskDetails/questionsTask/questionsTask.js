@@ -101,8 +101,12 @@ class QuestionsTask extends Component {
     let _this = this.state;
     let this_ = this;
     if ( _this.questype === 1 ) {
-      if ( _this.value === null || _this.files.length < 1 ) {
-        message.error("请完善必要信息")
+      if ( _this.value === null || _this.files.length !== 1 ) {
+        if ( _this.files.length !== 1 ) {
+          message.error("只能上传1张必要图片")
+        } else {
+          message.error("请完善必要信息")
+        }
       } else {
         this_.setState({ animating: true })            //数据提交中显示的login.....
         let infoPhoto = _this.files[0].url;
@@ -210,10 +214,10 @@ class QuestionsTask extends Component {
               <ImagePicker
                 length={1}
                 files={files}
+                multiple={false}
                 onChange={this.onUploadOne}
                 onImageClick={(index, fs) => console.log(index, fs)}
                 selectable={files.length < 1}
-                accept="image/gif,image/jpeg,image/jpg,image/png"
               />
             </div>
             <Button onClick={ this.submitBtn } className="btn-buy" type="primary">点击提交商家审核</Button>

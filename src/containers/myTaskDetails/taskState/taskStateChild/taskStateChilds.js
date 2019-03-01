@@ -159,7 +159,11 @@ class TaskStateChilds extends Component {
         console.log(error);
       })
     } else {
-      message.error("请上传图片！")
+      if ( thisState.files.length > 4 ) {
+        message.error("只能上传4张必要图片")
+      } else {
+        message.error("请上传图片！")
+      }
     }
   }
 
@@ -295,10 +299,10 @@ class TaskStateChilds extends Component {
               <ImagePicker
                 length={4}
                 files={files}
+                multiple={false}
                 onChange={this.onChange}
                 onImageClick={(index, fs) => console.log(index, fs)}
                 selectable={files.length < 4}
-                accept="image/gif,image/jpeg,image/jpg,image/png"
               />
               <h3 style={{ color:'#c15958', marginTop:'1.5rem' }}>核对商家店铺名是否正确</h3>
               <div className="shop-title">

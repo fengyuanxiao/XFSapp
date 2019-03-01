@@ -18,7 +18,7 @@ class AllCenter extends Component {
               <p>问题咨询加微信 xiaomeng666444；</p>
             </Panel>
             <Panel header="QQ客服" key="2">
-              <p>问题咨询加 QQ3527307663；</p>
+              <p>问题咨询加 QQ3527307663或3219647714；</p>
             </Panel>
           </Collapse>
           <p style={{ padding: '0.4rem 0.5rem' , fontSize: '1.1rem' }}>常见问题</p>

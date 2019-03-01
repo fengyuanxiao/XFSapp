@@ -181,7 +181,6 @@ class GoodPingJia extends Component {
                 onChange={this.onChange}
                 onImageClick={(index, fs) => console.log(index, fs)}
                 selectable={files.length < 2}
-                accept="image/gif,image/jpeg,image/jpg,image/png"
               /> */}
               <ImagePicker
                 length={1}
@@ -189,7 +188,7 @@ class GoodPingJia extends Component {
                 onChange={this.onImageChange01}
                 onImageClick={(index, fs) => console.log(index, fs)}
                 selectable={files01.length < 1}
-                multiple={this.state.multiple}
+                multiple={false}
               />
               <ImagePicker
                 length={1}
@@ -197,7 +196,7 @@ class GoodPingJia extends Component {
                 onChange={this.onImageChange02}
                 onImageClick={(index, fs) => console.log(index, fs)}
                 selectable={files02.length < 1}
-                multiple={this.state.multiple}
+                multiple={false}
               />
               <p>注：请上传<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>物流图</span>和<span style={{ fontWeight:'bold',fontSize:'1rem',color:'red' }}>好评图</span></p>
 
