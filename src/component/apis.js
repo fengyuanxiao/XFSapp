@@ -4,6 +4,6 @@
 // }
 
 global.constants = {
-    website:"https://www.xiaotiaowa8.com",
-    // website:"https://budan.php12.cn",
+    // website:"https://www.xiaotiaowa8.com",
+    website:"https://budan.php12.cn",
 };

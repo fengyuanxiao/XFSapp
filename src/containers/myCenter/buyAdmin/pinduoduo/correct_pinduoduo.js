@@ -53,13 +53,13 @@ class Correct_pinduoduos extends Component {
       .then(function (response) {   //调用接口成功执行
         let responses = response.data.data;
         let datas = [responses.url1,responses.url2];        //存储后台放回过来的图片路径
-        console.log(responses);
+        // console.log(responses);
         this_.props.form.setFieldsValue({
           Account: responses.nickname,                //账号名称
           GoodsName: responses.receiver,              //收货人
           address: responses.receiver_address,        //收货人详细地址
           GoodsPhone: responses.receiver_mobile,      //收货人手机号
-          sex: responses.sex === "0" ? "男" : "女",   //性别
+          sex: responses.sex,   //性别
           // provinces: responses.provinces,          //省市区组合
           // images: responses.images,
         })
@@ -153,7 +153,7 @@ class Correct_pinduoduos extends Component {
             provinces: values.provinces,              //省市区组合
             AlipayName: values.AlipayName,            //支付宝姓名
             images: states.num ? imgs : fImgs,        //图片集合
-            sex: values.sex === "男" ? 0 : 1,         //性别
+            sex: values.sex === "男" ? 1 : 2,         //性别
             id: this_.props.location.state.data       //id
           },
           {

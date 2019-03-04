@@ -163,7 +163,7 @@ class Correct_taobaos extends Component {
             provinces: values.provinces,              //省市区组合
             AlipayName: values.AlipayName,            //支付宝姓名
             images: states.num ? imgs : fImgs,        //图片集合
-            sex: values.sex === "男" ? 0 : 1,         //性别
+            sex: values.sex === "男" ? 1 : 2,         //性别
             id: this_.props.location.state.data       //id
           },
           {

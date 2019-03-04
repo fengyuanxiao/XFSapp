@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Form, Input, Button, Cascader, Modal, message  } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import lrz from 'lrz';
 import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
@@ -14,16 +15,18 @@ const data = [];
 const FormItem = Form.Item;
 const options = city_new.data.RECORDS;    //展示用户选择的省市区
 const sexs = [{
-  value: '0',
+  value: '1',
   label: '男',
 },{
-  value: '1',
+  value: '2',
   label: '女',
 }]
 const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
 message.config({
   top: 300,
 });
+let base64s = [];
+let newArrs = [];
 
 class BindJingdongs extends Component {
   constructor() {
@@ -42,8 +45,33 @@ class BindJingdongs extends Component {
     // console.log(value);
   }
   // 上传我的淘宝 支付宝示例图回调
+  // onUploadOne = (files, type, index) => {
+  //   // console.log(files, type, index);
+  //   this.setState({
+  //     files,
+  //   });
+  // }
+
   onUploadOne = (files, type, index) => {
     // console.log(files, type, index);
+    // 循环没有压缩之前的base图片
+    if ( type === "add" ) {
+      for (var i = 0; i < files.length; i++) {
+        base64s[i] = (function (num) {
+          // return files[num].url
+          // return出压缩图片
+          return (
+            lrz(files[num].url, {quality:0.2})
+              .then((rst)=>{
+                return rst                  //返回压缩之后的图片对象
+              })
+          )
+        })(i);
+      }
+    } else {
+      base64s.splice(index,1);      //如果类型不是 add 则删除数组中索引对应的图片base码
+    }
+    // console.log(base64s);
     this.setState({
       files,
     });
@@ -94,6 +122,13 @@ class BindJingdongs extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let this_ = this;
+    // 循环拿出已经压缩好的每一项base码
+    for (var i = 0; i < base64s.length; i++) {
+       newArrs[i] = {
+           url: base64s[i]._value.base64,
+       };
+    }
+    // console.log(newArrs);       //base64压缩图的集合
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
       // console.log(values);
@@ -105,7 +140,7 @@ class BindJingdongs extends Component {
           this_.setState({ animating: true })            //数据提交中显示的login.....
           // console.log(values);
           // 图片集合存入imgs 传给后端
-          let imgs = [values.images[0].url, values.images[1].url, values.images[2].url, values.images[3].url];
+          let imgs = [newArrs[0].url, newArrs[1].url, newArrs[2].url, newArrs[3].url];
           // console.log(imgs);
           //以上数据都正确 在此 ajax交互
           // console.log(values.Account,values.GoodsName,values.address,values.provinces,);
@@ -117,7 +152,7 @@ class BindJingdongs extends Component {
             GoodsPhone: values.GoodsPhone,            //收货人手机号
             provinces: values.provinces,              //省市区组合
             images: imgs,                             //图片集合
-            sex: values.sex,                          //性别
+            sex: values.sex[0],                          //性别
           },
           {
             headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

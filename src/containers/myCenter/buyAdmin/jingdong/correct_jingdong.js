@@ -61,7 +61,7 @@ class Correct_jingdongs extends Component {
           GoodsName: responses.receiver,              //收货人
           address: responses.receiver_address,        //收货人详细地址
           GoodsPhone: responses.receiver_mobile,      //收货人手机号
-          sex: responses.sex === "0" ? "男" : "女",   //性别
+          sex: responses.sex,   //性别
           // provinces: responses.provinces,          //省市区组合
           // images: responses.images,                //图片集合
         })
@@ -168,7 +168,7 @@ class Correct_jingdongs extends Component {
             address: values.address,                  //收货人地址
             GoodsPhone: values.GoodsPhone,            //收货人手机号
             provinces: values.provinces,              //省市区组合
-            sex: values.sex === "男" ? 0 : 1,         //性别
+            sex: values.sex === "男" ? 1 : 2,         //性别
             images: states.num ? imgs : fImgs,        //图片集合
             id: this_.props.location.state.data       //id
           },
@@ -207,7 +207,7 @@ class Correct_jingdongs extends Component {
       <div>
         <header className="tabTitle">
           <div className="return"><Link to="/buyAdmin"><Icon type="left" theme="outlined" />返回</Link></div>
-          绑定淘宝买号
+          绑定京东买号
         </header>
         <div className="buyAdmin-box">
           <WingBlank>

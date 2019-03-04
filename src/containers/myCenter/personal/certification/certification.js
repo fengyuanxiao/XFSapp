@@ -36,15 +36,16 @@ class certifications extends Component {
       let responses = response.data.data;
       let cardid_img = [responses.cardid_img];        //存储后台放回过来的图片路径
       let cardid_img2 = [responses.cardid_img2];      //存储后台放回过来的图片路径
-      // console.log(responses);
+      // console.log(cardid_img);
+      // console.log(cardid_img2);
       this_.props.form.setFieldsValue({
         cardid_name: responses.cardid_name,
         cardid: responses.cardid,
       })
       this_.setState({
         files01: cardid_img,                             //让后端返回过来的图片 在页面做展示
-        files02: cardid_img2,                             //让后端返回过来的图片 在页面做展示
-        url1: responses.cardid_img.url,                 //存储返回的图片
+        files02: cardid_img2,                            //让后端返回过来的图片 在页面做展示
+        url1: responses.cardid_img.url,                  //存储返回的图片
         url2: responses.cardid_img2.url,                 //存储返回的图片
       })
     })
@@ -114,6 +115,7 @@ class certifications extends Component {
     }
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
+      // console.log(values);
       if ( !err === true ) {
         if ( !cards.test(values.cardid) ) {                                   //判断是否是正确的身份证号码
           message.error("请输入正确的身份证号！")

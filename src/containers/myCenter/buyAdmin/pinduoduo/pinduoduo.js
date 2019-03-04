@@ -5,6 +5,7 @@ import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 import axios from 'axios';
+import lrz from 'lrz';
 
 import '../buyAdmin.css';
 import '../../../../component/apis';
@@ -18,12 +19,14 @@ message.config({
   top: 300,
 });
 const sexs = [{
-  value: '0',
+  value: '1',
   label: '男',
 },{
-  value: '1',
+  value: '2',
   label: '女',
-}]
+}];
+let base64s = [];
+let newArrs = [];
 
 class BindPinduoduos extends Component {
   constructor() {
@@ -40,8 +43,32 @@ class BindPinduoduos extends Component {
     // console.log(value);
   }
   // 上传我的淘宝 支付宝示例图回调
+  // onUploadOne = (files, type, index) => {
+  //   // console.log(files, type, index);
+  //   this.setState({
+  //     files,
+  //   });
+  // }
   onUploadOne = (files, type, index) => {
     // console.log(files, type, index);
+    // 循环没有压缩之前的base图片
+    if ( type === "add" ) {
+      for (var i = 0; i < files.length; i++) {
+        base64s[i] = (function (num) {
+          // return files[num].url
+          // return出压缩图片
+          return (
+            lrz(files[num].url, {quality:0.2})
+              .then((rst)=>{
+                return rst                  //返回压缩之后的图片对象
+              })
+          )
+        })(i);
+      }
+    } else {
+      base64s.splice(index,1);      //如果类型不是 add 则删除数组中索引对应的图片base码
+    }
+    // console.log(base64s);
     this.setState({
       files,
     });
@@ -78,6 +105,13 @@ class BindPinduoduos extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let this_ = this;
+    // 循环拿出已经压缩好的每一项base码
+    for (var i = 0; i < base64s.length; i++) {
+       newArrs[i] = {
+           url: base64s[i]._value.base64,
+       };
+    }
+    // console.log(newArrs);       //base64压缩图的集合
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
       // console.log(values);
@@ -88,7 +122,7 @@ class BindPinduoduos extends Component {
         } else {
           this_.setState({ animating: true })            //数据提交中显示的login.....
           // 图片集合存入imgs 传给后端
-          let imgs = [values.images[0].url, values.images[1].url]
+          let imgs = [newArrs[0].url, newArrs[1].url];
           // console.log(imgs);
           //以上数据都正确 在此 ajax交互
           axios.post(global.constants.website+'/api/index/pdd_bind',
@@ -101,7 +135,7 @@ class BindPinduoduos extends Component {
             provinces: values.provinces,              //省市区组合
             AlipayName: values.AlipayName,            //支付宝姓名
             images: imgs,                             //图片集合
-            sex: values.sex,                          //性别
+            sex: values.sex[0],                       //性别
           },
           {
             headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
