@@ -115,7 +115,7 @@ class certifications extends Component {
     }
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
-      // console.log(values);
+      console.log(values);
       if ( !err === true ) {
         if ( !cards.test(values.cardid) ) {                                   //判断是否是正确的身份证号码
           message.error("请输入正确的身份证号！")
