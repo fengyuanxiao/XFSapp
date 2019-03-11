@@ -45,6 +45,7 @@ class TaskStateChilds extends Component {
         itemnum: responses.itemnum,                             //下单商品数件
         itemprice: responses.itemprice,                         //单件商品成交价格
         platform: responses.platform,                           //指哪个平台
+        platformname: responses.platformname,                   //淘宝
         charset_one: responses.charset_one,                     //关键词1
         charset_two: responses.charset_two,                     //关键词2
         tasktype_name: responses.tasktype_name,                 //任务类型名称
@@ -227,12 +228,17 @@ class TaskStateChilds extends Component {
               <p className="task-plan-list"><span>排序位置</span><span>约{position}人收货/付款</span></p>
               <p className="task-plan-list"><span>所在地</span><span>{goods_address? goods_address: "全国"}</span></p>
               <p className="task-plan-list"><span>价格区间</span><span>{maxprice? minprice+"—"+maxprice : "无需筛选价格"}</span></p>
-              <p className="task-plan-list"><span>支付方式</span><span>
+              <p className="task-plan-list"><span>支付方式</span><span>{
+                paychannel ?
+                  "允许："
+                :
+                ""
+              }
                 {
                   paychannel ?
                     paychannel.map((item,index) => {
                       return(
-                        item
+                        <span key={index}>{item},</span>
                       )
                     })
                   :
@@ -248,7 +254,7 @@ class TaskStateChilds extends Component {
               <span>商家要求</span>
             </div>
             <div className="plan-box task-plan" style={{ marginBottom:0 }}>
-              <div className="task-plan-list">
+              <div style={{ fontSize: '1rem' }}>
                 <span style={{ color:'red' }}>商家要求：</span>
                 {/* <span style={{ width: '70%',textAlign:'initial'}}>{this.props.location}</span> */}
               </div>

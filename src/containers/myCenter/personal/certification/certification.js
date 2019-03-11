@@ -22,7 +22,7 @@ class certifications extends Component {
       files01: imgdata,       //图片数组1
       files02: imgdata1,      //图片数组2
       num: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
-      num1: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
+      num1: 0,                //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
     }
   }
 

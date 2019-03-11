@@ -96,8 +96,8 @@ class TaskState extends Component {
   }
 
   render() {
-    //存父组件传来的数据
-    const { order_status, tasktype_pic, ordertatusText, order_message, remark_pic, is_muti_keyword,shop_around_time } = this.props;
+    //存父组件传来的数据 order_message
+    const { order_status, tasktype_pic, ordertatusText, remark_pic, is_muti_keyword,shop_around_time } = this.props;
     const { cuttime } = this.state;
     // console.log(remark_pic);
     return(
@@ -118,7 +118,7 @@ class TaskState extends Component {
             })
           }
         </div>
-        <p>订单要求：{order_message}</p>
+        {/* <p>订单要求：{order_message}</p> */}
         <div className="start-task-btn">
           <button className="tasktn" onClick={this.showDrawer}>取消任务</button>
           {/* <button className="tasktns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button> */}

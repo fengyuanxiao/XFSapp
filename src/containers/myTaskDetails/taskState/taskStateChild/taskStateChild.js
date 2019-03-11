@@ -26,7 +26,7 @@ class TaskStateChild extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
-      console.log(responses);   //任务详情数据，完成的任务进度
+      // console.log(responses);   //任务详情数据，完成的任务进度
       this.setState({
         datas: true,
 
@@ -51,6 +51,7 @@ class TaskStateChild extends Component {
         remark: responses.taskInfo.remark,                      //商家留言
         chatpic: responses.chatpic,                             //为1需要聊天
         sku_set: responses.sku_set,                             //sku
+        platformname: responses.platformname,                   //淘宝
         paychannel: responses.taskInfo.paychannel,              //支付方式
         order_id: responses.order_id,                           //订单ID
         is_muti_keyword: responses.is_muti_keyword,             //为 1 的话 标明多关键词，那必须上传三张截图
@@ -140,12 +141,17 @@ class TaskStateChild extends Component {
           <p className="task-plan-list"><span>排序位置</span><span>约{position}人收货/付款</span></p>
           <p className="task-plan-list"><span>所在地</span><span>{goods_address? goods_address: "全国"}</span></p>
           <p className="task-plan-list"><span>价格区间</span><span>{maxprice? minprice+"—"+maxprice : "无需筛选价格"}</span></p>
-          <p className="task-plan-list"><span>支付方式</span><span>
+          <p className="task-plan-list"><span>支付方式</span><span>{
+            paychannel ?
+              "允许："
+            :
+            ""
+          }
             {
               paychannel ?
                 paychannel.map((item,index) => {
                   return(
-                    item
+                    <span key={index}>{item},</span>
                   )
                 })
               :
@@ -161,7 +167,7 @@ class TaskStateChild extends Component {
           <span>商家要求</span>
         </div>
         <div className="plan-box task-plan" style={{ marginBottom:0 }}>
-          <div className="task-plan-list">
+          <div style={{ fontSize: '1.2rem' }}>
             <span style={{ color:'red' }}>商家要求：</span>
             {/* <span style={{ width: '70%',textAlign:'initial'}}>{this.props.location}</span> */}
           </div>
