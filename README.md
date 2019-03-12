@@ -1,11 +1,12 @@
-## react开源项目  
+## 使用react开发的一个平台
 
-链接暂未开通：https://fengyuanxiao.github.io/xhxproject.github.io/
+##  技术栈
 
-**Cnpm install 项目依赖的过程中出现Package require os(darwin) not compatible with your platform(win32)的警告问题**
+* react(react,react-router-dom)暂未用到redux
+* axios请求数据
+* antd-mobile组件包
 
-运行一下命令：cnpm rebuild node-sass   然后：cnpm install
+##  项目链接
+https://fengyuanxiao.github.io/xhxproject.github.io/build/index.html
 
-以上cnpm可以写成npm，cnpm只是使用了淘宝镜像，这样安装会快一些。
-
-**react框架开发的一个项目，所有功能已完善，接口待调整...**
+##  项目展示截图
