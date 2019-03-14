@@ -28,8 +28,9 @@ class LookShiliTus extends Component {
       twovisible: false,
       threevisible: false,
       files: data,
+      oks: false,                         //是否核对过店铺
     }
-    console.log(props);
+    // console.log(props);
   }
 
   // 货比三家示例图
@@ -58,6 +59,9 @@ class LookShiliTus extends Component {
     // console.log("核对商家店铺名是否正确");
     if ( inshop_name === getshop_name ) {
       message.success("店铺名称正确！")
+      this.setState({
+        oks: true,
+      })
     } else {
       message.error("店铺名称错误！")
     }
@@ -108,40 +112,44 @@ class LookShiliTus extends Component {
     // console.log(this.props.pic_uploads_num);
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && imgs.length === this.props.pic_uploads_num ) {
-        if ( !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber) ) {
-          message.error("请输入正确的订单号！")
-        } else {
-          this_.setState({ animating: true })            //数据提交中显示的login.....
-          // 此处执行ajax请求
-          axios.post(global.constants.website+'/api/task/operateTaskCommit', {
-            taobao_ordersn: values.orderNumber,   //用户下单的订单号
-            order_id: order_id,                   //订单ID
-            need_principal: values.money,         //实际返款金额
-            chat_pay_content: imgs,               //聊天、支付或者下单详情截图
-          },{
-            headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-          })
-          .then( res => {
-            // console.log(res.data.data);
-            if ( res.data.status ) {
-              this_.setState({ animating: false })          //数据提交成功关闭login.....
-              this_.props.history.push("/myTaskDetails");
-              message.success(res.data.msg);
-            } else {
-              this_.setState({ animating: false })          //数据提交成功关闭login.....
-              message.error(res.data.msg)
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          })
-        }
-      }else {
-        if ( imgs.length > this.props.pic_uploads_num ) {
-          message.error('只能上传'+ this.props.pic_uploads_num + '张必要图片');
-        } else {
-          message.error('请完善信息');
+      if ( this.state.oks === false ) {
+        message.error("请先验证码店铺！")
+      } else {
+        if ( !err === true && imgs.length === this.props.pic_uploads_num ) {
+          if ( !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber) ) {
+            message.error("请输入正确的订单号！")
+          } else {
+            this_.setState({ animating: true })            //数据提交中显示的login.....
+            // 此处执行ajax请求
+            axios.post(global.constants.website+'/api/task/operateTaskCommit', {
+              taobao_ordersn: values.orderNumber,   //用户下单的订单号
+              order_id: order_id,                   //订单ID
+              need_principal: values.money,         //实际返款金额
+              chat_pay_content: imgs,               //聊天、支付或者下单详情截图
+            },{
+              headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+            })
+            .then( res => {
+              // console.log(res.data.data);
+              if ( res.data.status ) {
+                this_.setState({ animating: false })          //数据提交成功关闭login.....
+                this_.props.history.push("/myTaskDetails");
+                message.success(res.data.msg);
+              } else {
+                this_.setState({ animating: false })          //数据提交成功关闭login.....
+                message.error(res.data.msg)
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            })
+          }
+        }else {
+          if ( imgs.length > this.props.pic_uploads_num ) {
+            message.error('只能上传'+ this.props.pic_uploads_num + '张必要图片');
+          } else {
+            message.error('请完善信息');
+          }
         }
       }
     });
@@ -150,7 +158,7 @@ class LookShiliTus extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { files, animating } = this.state;
-    const { itemnum, itemprice,chatpic,is_muti_keyword,shop_name, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
+    const { itemnum, itemprice,chatpic,is_muti_keyword,shop_namess, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
     return(
       <div>
         {/* 第一步货比三家 */}
@@ -162,7 +170,7 @@ class LookShiliTus extends Component {
             <p>.按任务要求先浏览任意三家同类产品1-3分钟</p>
             <h3 style={{ color:'#c15958', marginTop:'1rem' }}>核对商家店铺名是否正确</h3>
             <div className="shop-title">
-              <span>1</span><span>商家店铺名称:{shop_name}</span>
+              <span>1</span><span>商家店铺名称:{shop_namess}</span>
             </div>
             <div className="shop-title">
               <span>2</span>

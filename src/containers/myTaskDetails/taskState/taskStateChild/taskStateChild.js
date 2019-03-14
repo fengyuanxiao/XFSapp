@@ -66,7 +66,7 @@ class TaskStateChild extends Component {
         let newShopName = `${shop_name.substring(0,3)}*****`;
         let newGoodsname = `${goodsname.substring(0,4)}*********`;
         this.setState({
-          shop_name: newShopName,
+          shop_namess: newShopName,
           goodsname: newGoodsname,
         })
       }
@@ -77,7 +77,7 @@ class TaskStateChild extends Component {
   }
 
   render() {
-    const { charset_two,charset_one,remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_name, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { shop_name,charset_two,charset_one,remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_namess, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -204,7 +204,7 @@ class TaskStateChild extends Component {
           <span>任务步骤</span>
         </div>
         {/* <LookShiliTu shop_name={shop_name} /> */}
-        { datas ? <LookShiliTu itemprice={itemprice} itemnum={itemnum} chatpic={chatpic} user_taobao={user_taobao} platformname={platformname} tasktype_itemname={tasktype_itemname} platform={platform} goodsname={goodsname} shop_name={shop_name} pic_desc={pic_desc} pic_uploads_num={pic_uploads_num} history={this.props.history} is_muti_keyword={is_muti_keyword} order_id={order_id} /> : "" }
+        { datas ? <LookShiliTu shop_name={shop_name} itemprice={itemprice} itemnum={itemnum} chatpic={chatpic} user_taobao={user_taobao} platformname={platformname} tasktype_itemname={tasktype_itemname} platform={platform} goodsname={goodsname} shop_namess={shop_namess} pic_desc={pic_desc} pic_uploads_num={pic_uploads_num} history={this.props.history} is_muti_keyword={is_muti_keyword} order_id={order_id} /> : "" }
       </div>
     )
   }

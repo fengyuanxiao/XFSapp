@@ -19,7 +19,8 @@ class TaskStateChilds extends Component {
       onevisible: false,
       files: data,
       datas: false,
-      remark_pic: "此商家没有额外要求"
+      remark_pic: "此商家没有额外要求",
+      oks: false,                         //是否核对过店铺
     }
   }
 
@@ -75,7 +76,7 @@ class TaskStateChilds extends Component {
         let newShopName = `${shop_name.substring(0,3)}*****`;
         let newGoodsname = `${goodsname.substring(0,4)}*********`;
         this.setState({
-          shop_name: newShopName,
+          shop_nameaa: newShopName,
           goodsname: newGoodsname,
         })
       }
@@ -114,11 +115,14 @@ class TaskStateChilds extends Component {
 
   // 核对商家店铺名是否正确
   heDuiName = () => {
-    let inshop_name = this.state.inshop_name;
-    let getshop_name = this.state.shop_name;
+    let inshop_name = this.state.shop_name;
+    let getshop_name = this.state.inshop_name;
     // console.log("核对商家店铺名是否正确");
-    if ( inshop_name === getshop_name ) {
+    if ( inshop_name !== undefined && inshop_name === getshop_name ) {
       message.success("店铺名称正确！")
+      this.setState({
+        oks: true,
+      })
     } else {
       message.error("店铺名称错误！")
     }
@@ -135,41 +139,45 @@ class TaskStateChilds extends Component {
   submitCharset = () => {
     let thisState = this.state;
     let this_ = this;
-    if ( thisState.files.length === 4 ) {
-      this_.setState({ animating: true })            //数据提交中显示的login.....
-      let imgs = [thisState.files[0].url, thisState.files[1].url, thisState.files[2].url, thisState.files[3].url];
-      // console.log(imgs);
-      axios.post(global.constants.website+'/api/task/mutikeyword', {
-        order_id: thisState.order_id,
-        shop_around_content: imgs,
-      },{
-        headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-      })
-      .then( res => {
-        console.log(res.data);
-        if ( res.data.status ) {
-          this_.setState({ animating: false })          //数据提交成功关闭login.....
-          message.success(res.data.msg)
-          this_.props.history.push("/myTask")
-        } else {
-          this_.setState({ animating: false })          //数据提交成功关闭login.....
-          message.error(res.data.msg)
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    if ( this.state.oks === false ) {
+      message.error("请先验证码店铺！")
     } else {
-      if ( thisState.files.length > 4 ) {
-        message.error("只能上传4张必要图片")
+      if ( thisState.files.length === 4 ) {
+        this_.setState({ animating: true })            //数据提交中显示的login.....
+        let imgs = [thisState.files[0].url, thisState.files[1].url, thisState.files[2].url, thisState.files[3].url];
+        // console.log(imgs);
+        axios.post(global.constants.website+'/api/task/mutikeyword', {
+          order_id: thisState.order_id,
+          shop_around_content: imgs,
+        },{
+          headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+        })
+        .then( res => {
+          // console.log(res.data);
+          if ( res.data.status ) {
+            this_.setState({ animating: false })          //数据提交成功关闭login.....
+            message.success(res.data.msg)
+            this_.props.history.push("/myTask")
+          } else {
+            this_.setState({ animating: false })          //数据提交成功关闭login.....
+            message.error(res.data.msg)
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        })
       } else {
-        message.error("请上传图片！")
+        if ( thisState.files.length > 4 ) {
+          message.error("只能上传4张必要图片")
+        } else {
+          message.error("请上传图片！")
+        }
       }
     }
   }
 
   render() {
-    const { remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_name, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -312,7 +320,7 @@ class TaskStateChilds extends Component {
               />
               <h3 style={{ color:'#c15958', marginTop:'1.5rem' }}>核对商家店铺名是否正确</h3>
               <div className="shop-title">
-                <span>1</span><span>商家店铺名称：{shop_name}</span>
+                <span>1</span><span>商家店铺名称：{shop_nameaa}</span>
               </div>
               <div className="shop-title">
                 <span>2</span>

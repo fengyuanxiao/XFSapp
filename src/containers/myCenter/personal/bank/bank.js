@@ -253,7 +253,7 @@ class Banks extends Component {
                   <Cascader options={bankData} onChange={this.bankButton} placeholder="请选择银行" />
                 )}
               </FormItem>
-              <FormItem label="开户行：">
+              <FormItem label="开户行地址：">
                 {/* <Cascader options={options} onChange={this.onChange} placeholder="Please select" /> */}
                 {getFieldDecorator('provinces', {
                   rules: [{ required: true, message: '请选择开户行!' }],
