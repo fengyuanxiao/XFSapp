@@ -74,7 +74,7 @@ class TuiJian extends Component {
   render() {
     const { second_use_num,second_active_num,active_num, YQcode, money, use_num } = this.state;
     return(
-      <div style={{ backgroundColor: '#fb2' }}>
+      <div style={{ backgroundColor: '#f24d49' }}>
         <header className="tabTitle">
           <div className="return"><Link to="/myCenter"><Icon type="left" theme="outlined" />返回</Link></div>
           邀请有奖
@@ -82,7 +82,7 @@ class TuiJian extends Component {
         <img className="top-img" src={ require("../../../img/headerImg.png") } alt="topImg" />
         <div className="links-list">
           <div className="links-list-top">
-            <img src={ require("../../../img/a2.png") } alt="aa" />
+            <img src={ require("../../../img/a21.png") } alt="aa" />
           </div>
           <div className="zhuanshuCode">
             你的专属邀请码：<span>{ YQcode }</span>

@@ -21,6 +21,7 @@ class TaskStateChilds extends Component {
       datas: false,
       remark_pic: "此商家没有额外要求",
       oks: false,                         //是否核对过店铺
+      remarks: false,                       //判断商家是否有要求
     }
   }
 
@@ -58,7 +59,6 @@ class TaskStateChilds extends Component {
         goods_address: responses.taskInfo.goods_address,        //商品所在地
         maxprice: responses.taskInfo.maxprice,                  //最高价格
         minprice: responses.taskInfo.minprice,                  //最低价格
-        remark: responses.taskInfo.remark,                      //商家留言
         chatpic: responses.chatpic,                             //为1需要聊天
         sku_set: responses.sku_set,                             //sku
         paychannel: responses.taskInfo.paychannel,              //支付方式
@@ -66,8 +66,17 @@ class TaskStateChilds extends Component {
         is_muti_keyword: responses.is_muti_keyword,             //为 1 的话 标明多关键词，那必须上传三张截图
         pic_uploads_num: responses.pic_uploads_num,             //需要上传的图片张数
         pic_desc: responses.pic_desc,                           //上传图片的描述
-        // remark_pic: responses.remark_pic,                  //商家要求
-      });
+        order_message: responses.order_message,                 //订单留言
+        remark: responses.taskInfo.remark,                      //商家要求文字
+        remark_pic: responses.taskInfo.remark_pic,              //商家要求图片
+      })
+      if ( responses.taskInfo.remark_pic === "" && responses.taskInfo.remark === "" ) {
+
+      } else {
+        this.setState({
+          remarks: true,
+        })
+      }
       // console.log(this.state.sku_set);
       // 处理显示店铺全名
       let shop_name = this.state.shop_name;
@@ -82,7 +91,11 @@ class TaskStateChilds extends Component {
       }
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
+      if ( error.response.status ) {
+        message.warning('服务器开小差啦！！！', 2)
+        .then(this.props.history.push('/myTaskDetails'), 2)
+      }
     })
   }
 
@@ -177,7 +190,7 @@ class TaskStateChilds extends Component {
   }
 
   render() {
-    const { remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { remark_pic,remarks,order_message,remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -253,7 +266,7 @@ class TaskStateChilds extends Component {
                   ""
                 }
               </span></p>
-              <p className="task-plan-list"><span>订单留言</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{remark ? remark : ""}</span></p>
+              <p className="task-plan-list"><span>订单留言</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{order_message ? order_message : ""}</span></p>
               <p className="task-plan-list-Child"><span>(查看订单留言)</span><span className="fontsi">注：如内容过长请左右拖动查看</span></p>
             </div>
             {/* 商家要求 */}
@@ -267,15 +280,18 @@ class TaskStateChilds extends Component {
                 {/* <span style={{ width: '70%',textAlign:'initial'}}>{this.props.location}</span> */}
               </div>
               <div>
-                {
-                  this.props.location.state ?
-                    this.props.location.state.map((item, index) => {
+                <p style={{ fontSize: '1rem', color: '#0156B1' }}>{remark}</p>
+                { remarks ?
+                  remark_pic !== "" ?
+                    remark_pic.map((item, index) => {
                       return(
                         <img style={{ maxWidth:'100%' }} key={index} src={item} alt="要求图"/>
                       )
                     })
                   :
-                  <p>此商家没有额外要求</p>
+                  ""
+                :
+                <p style={{ fontSize: '1rem', color: '#0156B1' }}>商家没有额外要求</p>
                 }
               </div>
             </div>

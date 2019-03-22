@@ -363,7 +363,7 @@ class RegisterPages extends Component {
         </Form>
 
         {/* 注册成功红包弹窗 */}
-        <Modal className={ openhonbao ? "shake" : "" } visible={hongbao} footer={null} onCancel={this.handleCancel}>
+        <Modal className={ openhonbao ? "shake" : "" } closable={false} visible={hongbao} footer={null} onCancel={this.handleCancel}>
           <img onClick={ this.openBtn } alt="红包" style={{ width: '100%' }} src={Hongbao} />
         </Modal>
 

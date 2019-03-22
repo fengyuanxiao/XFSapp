@@ -255,13 +255,24 @@ class LookShiliTus extends Component {
                   <Input type="Number" placeholder="请输入实际付款金额" className="jineInput" />
                 )}
               </FormItem>
-              <FormItem>
-                {getFieldDecorator('orderNumber', {
-                  rules: [{ required: true, message: '请输入支付宝商户订单号!' }],
-                })(
-                  <Input placeholder="请输入支付宝商户订单号" className="jineInput" />
-                )}
-              </FormItem>
+              {
+                platformname === "淘宝" ?
+                  <FormItem>
+                    {getFieldDecorator('orderNumber', {
+                      rules: [{ required: true, message: '请输入支付宝商户订单号!' }],
+                    })(
+                      <Input placeholder="请输入支付宝商户订单号" className="jineInput" />
+                    )}
+                  </FormItem>
+                :
+                <FormItem>
+                  {getFieldDecorator('orderNumber', {
+                    rules: [{ required: true, message: '请输入订单号!' }],
+                  })(
+                    <Input placeholder="请输入订单号" className="jineInput" />
+                  )}
+                </FormItem>
+              }
               <FormItem>
                 <Button type="primary" htmlType="submit" className="login-form-button">
                   提交任务

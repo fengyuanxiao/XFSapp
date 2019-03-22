@@ -1,6 +1,7 @@
 .top-img {
   display: block;
   width: 100%;
+  padding-top: 2.7rem;
   padding-bottom: 1.8rem;
 }
 .links-list {
@@ -30,7 +31,7 @@
   margin-bottom: 0.7rem;
 }
 .zhuanshuCode > button {
-  background-color: #c12a3d;
+  background-color: #f24d49;
   color: #fff;
   border: none;
   padding: 6px 12px;
@@ -38,7 +39,7 @@
 }
 .download-btn {
   font-weight: bold;
-  background-color: #c12a3d;
+  background-color: #f24d49;
   box-shadow: 0 2px 10px rgba(0,0,0,0.5);
   border-color: #a89292;
   font-size: 1.3rem;

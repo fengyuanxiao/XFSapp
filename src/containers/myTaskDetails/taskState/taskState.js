@@ -97,7 +97,7 @@ class TaskState extends Component {
 
   render() {
     //存父组件传来的数据 order_message
-    const { order_status, tasktype_pic, ordertatusText, remark_pic, is_muti_keyword,shop_around_time } = this.props;
+    const { remark, order_status, tasktype_pic, ordertatusText, remark_pic, is_muti_keyword,shop_around_time } = this.props;
     const { cuttime } = this.state;
     // console.log(remark_pic);
     return(
@@ -107,15 +107,19 @@ class TaskState extends Component {
         <span style={{ color: 'red' }}> { order_status ? "" : <span>提交倒计时：<b>{cuttime}</b>(未在截止时间之前提交将扣1元手续费)</span> }</span>
         <p>商家要求：</p>
         <div>
+          <p style={{ fontSize: '1rem', color: '#0156B1' }}>{remark}</p>
           {
-            remark_pic === "" ?
+            remark_pic === "" && remark === "" ?
               <p>此商家没有额外要求</p>
             :
-            remark_pic.map((item, index) => {
-              return(
-                <img style={{ maxWidth: '100%', marginBottom:'0.3rem' }} key={index} src={item} alt="要求图"/>
-              )
-            })
+            remark_pic !== "" ?
+              remark_pic.map((item, index) => {
+                return(
+                  <img style={{ maxWidth: '100%', marginBottom:'0.3rem' }} key={index} src={item} alt="要求图"/>
+                )
+              })
+            :
+            ""
           }
         </div>
         {/* <p>订单要求：{order_message}</p> */}
