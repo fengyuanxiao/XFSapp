@@ -55,8 +55,8 @@
   border: none;
   background-color: #ff6235;
   border-radius: 5px;
-  padding: 0.5rem 0.7rem;
   color: #fff;
+  margin-top: 0;
 }
 .listRight > .button > a {
   display: block;

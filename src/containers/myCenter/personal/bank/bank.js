@@ -283,7 +283,7 @@ class Banks extends Component {
                 label="上传 银行卡正面图片"
               >
                 {getFieldDecorator('images', {
-                  rules: [{ required: false, message: '请上传银行卡正面截图!' }],
+                  rules: [{ required: localStorage.getItem("bank_status") === "0" ? true : false, message: '请上传银行卡正面截图!' }],
                 })(
                   <ImagePicker
                     length={1}

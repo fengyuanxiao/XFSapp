@@ -37,7 +37,9 @@ class Personal extends Component {
   Certification = () => {
     let states = this.state;
     if ( states.realname_status === 0 || states.realname_status === 3 ) {
+      localStorage.setItem("realname_status", states.realname_status);            //将账号保存到本地
       this.props.history.push("/certification")
+      // this.props.history.push({pathname: '/certification', state: {realname_status: states.realname_status}});
     } else if ( states.realname_status === 2 ) {
       message.warning("身份证审核中，请添加客服中心指定的微信或QQ号 加快进度审核！");
     } else {
@@ -49,6 +51,7 @@ class Personal extends Component {
   bindBank = () => {
     let states = this.state;
     if ( states.bank_status === 0 || states.bank_status === 3 ) {
+      localStorage.setItem("bank_status", states.bank_status);            //将账号保存到本地
       this.props.history.push("/bank")
     } else if ( states.bank_status === 2 ) {
       message.warning("银行卡审核中，请确认是否已实名认证！");

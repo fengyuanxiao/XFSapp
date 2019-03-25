@@ -36,7 +36,7 @@ class certifications extends Component {
       let responses = response.data.data;
       let cardid_img = [responses.cardid_img];        //存储后台放回过来的图片路径
       let cardid_img2 = [responses.cardid_img2];      //存储后台放回过来的图片路径
-      // console.log(cardid_img);
+      console.log(responses);
       // console.log(cardid_img2);
       this_.props.form.setFieldsValue({
         cardid_name: responses.cardid_name,
@@ -115,7 +115,6 @@ class certifications extends Component {
     }
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
-      console.log(values);
       if ( !err === true ) {
         if ( !cards.test(values.cardid) ) {                                   //判断是否是正确的身份证号码
           message.error("请输入正确的身份证号！")
@@ -154,7 +153,7 @@ class certifications extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { files01, files02, animating } = this.state;
+    const { files01, files02, animating,uploadImgs } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -186,7 +185,7 @@ class certifications extends Component {
                 label="上传身份证正面图"
               >
                 {getFieldDecorator('images1', {
-                  rules: [{ required: false, message: '请上传身份证正面图和反面图!' }],
+                  rules: [{ required: localStorage.getItem("realname_status") === "0" ? true : false , message: '请上传身份证正面图和反面图!' }],
                 })(
                   <ImagePicker
                     length={1}
@@ -202,7 +201,7 @@ class certifications extends Component {
                 label="上传身份证反面图"
               >
                 {getFieldDecorator('images2', {
-                  rules: [{ required: false, message: '请上传身份证正面图和反面图!' }],
+                  rules: [{ required: localStorage.getItem("realname_status") === "0" ? true : false , message: '请上传身份证正面图和反面图!' }],
                 })(
                   <ImagePicker
                     length={1}

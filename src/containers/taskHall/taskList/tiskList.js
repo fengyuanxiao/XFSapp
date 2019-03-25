@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import { message } from 'antd';
+import { message, Button } from 'antd';
 import PullToRefresh from 'antd-mobile/lib/pull-to-refresh';
 import axios from 'axios';    //ajax
 
@@ -22,6 +22,7 @@ class TaskList extends Component {
         down: true,
         height: document.documentElement.clientHeight,
         datasState: false,      //进入任务大厅调用ajax 请求延时状态
+        buttonState: false,
       }
   }
 
@@ -52,10 +53,20 @@ class TaskList extends Component {
       console.log(error);
     });
   }
+  // 处理内存泄露
+  componentWillUnmount = () => {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
 
   //垫付任务抢任务按钮 进入对应的任务详情页面
   routerTo (item) {
     let this_ = this;
+    // 按钮状态被点击后进入失效状态
+    this_.setState({
+      buttonState: true,
+    })
     axios.post(global.constants.website+'/api/task/grabTask',
     {
       task_id: item,
@@ -73,6 +84,10 @@ class TaskList extends Component {
       // 保存order_id到本地
       localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
       this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
+      // 按钮状态被点击后数据返回成功再次进入可点击状态
+      this_.setState({
+        buttonState: false,
+      })
     } else {
       message.warning(data_.msg);       //没有绑定买号提醒
     }
@@ -86,6 +101,10 @@ class TaskList extends Component {
   // 问答任务抢任务按钮
   routerToWenda (item) {
     let this_ = this;
+    // 按钮状态被点击后进入失效状态
+    this_.setState({
+      buttonState: true,
+    })
     axios.post(global.constants.website+'/api/task/grabquestask',
     {
       task_id: item,
@@ -98,6 +117,10 @@ class TaskList extends Component {
       // console.log(data_);
       if ( data_.status ) {
         this_.props.history.push({pathname: "/questionsTask", state: {data: item}});
+        // 按钮状态被点击后数据返回成功再次进入可点击状态
+        this_.setState({
+          buttonState: false,
+        })
       } else {
         message.warning(data_.msg);       //没有绑定买号提醒
       }
@@ -108,7 +131,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { is_bind,task_lists, datasState, money_account, commission_account } = this.state;
+    const { is_bind,task_lists, datasState, money_account, commission_account, buttonState } = this.state;
     return (
       <div>
         <PullToRefresh
@@ -181,10 +204,10 @@ class TaskList extends Component {
                           </div>
                           <div className="listRight">
                             {
-                              item.subtotal_commission?
-                                <button className="button" onClick={ ()=>this.routerToWenda(item.task_id) }>查看任务</button>
+                              item.subtotal_commission ?
+                                <Button disabled={buttonState ? "disabled" : ""} className="button" onClick={ ()=>this.routerToWenda(item.task_id) }>查看任务</Button>
                               :
-                              <button className="button" onClick={ ()=>this.routerTo(item.task_id) }>抢此任务</button>
+                              <Button disabled={buttonState ? "disabled" : ""} className="button" onClick={ ()=>this.routerTo(item.task_id) }>抢此任务</Button>
                             }
                             {/* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */}
                             {/* <button onClick={ ()=>this.routerTo(item) }>抢此任务</button> */}
