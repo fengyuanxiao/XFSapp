@@ -153,7 +153,7 @@ class certifications extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { files01, files02, animating,uploadImgs } = this.state;
+    const { files01, files02, animating } = this.state;
     return(
       <div>
         <header className="tabTitle">

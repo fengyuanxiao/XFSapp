@@ -83,6 +83,13 @@ class AppealTask extends Component {
     let this_ = this;
     let _this = this.state;
     let photos = this.state.files;        //图片集合
+    // 图片集合存入imgs 传给后端
+      let imgs = [];
+      if ( photos ) {                   //num为true 说明买手有新图片上传 并走新图去循环去base图路径
+        for (var i = 0; i < photos.length; i++) {
+          imgs.push(photos[i].url)
+        }
+      }
     if ( _this.tousu == null || _this.contentInput == null || photos.length > 2 ) {
       if ( photos.length > 2 ) {
         message.error('只能上传2张必要图片');
@@ -91,7 +98,7 @@ class AppealTask extends Component {
       }
     }else {
       this_.setState({ animating: true })            //数据提交中显示的login.....
-      let imgs = [photos[0].url, photos[1].url];    //转换图片的格式
+      // let imgs = [photos[0].url, photos[1].url];    //转换图片的格式
       let numType = _this.tousu[0];
       //此处执行ajax请求
       axios.post(global.constants.website+'/api/task/appealTaskCommit',{
@@ -103,7 +110,7 @@ class AppealTask extends Component {
         headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
       })
       .then( res => {
-        console.log(res);
+        // console.log(res);
         if ( res.data.status ) {
           this_.setState({ animating: false })          //数据提交成功关闭login.....
           message.success(res.data.msg);

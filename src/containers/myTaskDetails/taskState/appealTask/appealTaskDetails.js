@@ -28,6 +28,7 @@ class AppealTaskDetails extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
     .then( res => {
+      // console.log(res);
       let datas = res.data.data;
       this.setState({
         goodspic: datas.goodspic,                   //商品图片
@@ -41,7 +42,7 @@ class AppealTaskDetails extends Component {
         is_self: datas.is_self,                     //为1 显示申诉完结按钮
         complain_consult: datas.complain_consult,   //申诉协商记录，为[]时代表没有协商记录，有值表示有协商记录
       })
-      console.log(res.data);
+      // console.log(res.data);
     })
     .catch( error => {
       console.log(error);
@@ -68,7 +69,7 @@ class AppealTaskDetails extends Component {
   // 申请取消任务的 确认按钮
   onConfirm = () => {
     let dataState = this.state;
-      console.log(dataState.itme_key);
+      // console.log(dataState.itme_key);
     let this_ = this;
     if ( dataState.itme_key === null ) {
       message.error("请选择原因再确认")
