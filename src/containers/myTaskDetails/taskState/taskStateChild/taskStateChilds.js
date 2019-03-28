@@ -22,10 +22,14 @@ class TaskStateChilds extends Component {
       remark_pic: "此商家没有额外要求",
       oks: false,                         //是否核对过店铺
       remarks: false,                       //判断商家是否有要求
+      visible: false,
     }
   }
 
   componentWillMount = () => {
+    this.setState({
+      visible: true,
+    })
     axios.post(global.constants.website+'/api/task/operateTask',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
@@ -109,11 +113,13 @@ class TaskStateChilds extends Component {
   handleOk = (e) => {
     this.setState({
       onevisible: false,
+      visible: false,
     });
   }
   handleCancel = (e) => {
     this.setState({
       onevisible: false,
+      visible: false,
     });
   }
 
@@ -152,7 +158,7 @@ class TaskStateChilds extends Component {
     let thisState = this.state;
     let this_ = this;
     if ( this.state.oks === false ) {
-      message.error("请先验证码店铺！")
+      message.error("请先验证店铺！")
     } else {
       if ( thisState.files.length === 4 ) {
         this_.setState({ animating: true })            //数据提交中显示的login.....
@@ -324,7 +330,7 @@ class TaskStateChilds extends Component {
               <p>.进店浏览2-3分钟后  关注（收藏）店铺退出</p>
               <p>.提交任务后等待审核通过,未审核前下单任务无效 </p>
               <p>.审核通过，客服会通知即可用主关键词搜索进店 浏览  拍下产品 提交任务</p>
-              <p className="charsets">*请上传必要截（关键词{charset_one}搜索截图），（收藏夹截图），（关键词{charset_two}搜索截图），（关注（收藏）店铺截图）4张截图，上传可任意位置。</p>
+              <p className="charsets">*请上传必要截（关键词{charset_one}搜索截图），（收藏夹截图），（关键词{charset_two}搜索截图），（关注（收藏）店铺列表截图）4张截图，上传可任意位置。</p>
               <ImagePicker
                 length={4}
                 files={files}
@@ -369,6 +375,16 @@ class TaskStateChilds extends Component {
           cancelText={"关闭"}
         >
           <img className="shilitu" src={require('../../../../img/guanjianci.png')} alt="货比三家" />
+        </Modal>
+        <Modal
+          title="多关键词任务须知"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          okText={"知道了"}
+          cancelText={"关闭"}
+        >
+          <p>该任务是多关键词任务，需客服审核通过之后才可下单，如直接下单则任务无效。若有疑问请查看示例图或联系平台客服</p>
         </Modal>
       </div>
     )

@@ -14,22 +14,32 @@
   <script type="text/javascript">
   // console.log(Button);
   document.addEventListener('plusready', function(a) {
-          var first = null;
-          plus.key.addEventListener('backbutton', function() {
-                  //首次按键，提示‘再按一次退出应用’
-                  if (!first) {
-                      first = new Date().getTime();
-                      history.go(-1);
-                      plus.nativeUI.toast('再按一次退出应用');
-                      setTimeout(function() {
-                          first = null;
-                      }, 1000);
-                  } else {
-                      if (new Date().getTime() - first < 500) {
-                          plus.runtime.quit();
-                      }
-                  }
-              }, false);
-      });
+    var first = null;
+    plus.key.addEventListener('backbutton', function() {
+            //首次按键，提示‘再按一次退出应用’
+            if (!first) {
+                first = new Date().getTime();
+                history.go(-1);
+                plus.nativeUI.toast('再按一次退出应用');
+                setTimeout(function() {
+                    first = null;
+                }, 1000);
+            } else {
+                if (new Date().getTime() - first < 500) {
+                    plus.runtime.quit();
+                }
+            }
+        }, false);
+    });
+
+    // 统计
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4c7eff31f74db00828abda6a74c101ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+
   </script>
 </html>

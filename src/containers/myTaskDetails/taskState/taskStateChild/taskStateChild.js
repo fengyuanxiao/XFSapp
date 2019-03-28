@@ -28,7 +28,7 @@ class TaskStateChild extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
-      console.log(responses);   //任务详情数据，完成的任务进度
+      // console.log(responses);   //任务详情数据，完成的任务进度
       this.setState({
         datas: true,
 

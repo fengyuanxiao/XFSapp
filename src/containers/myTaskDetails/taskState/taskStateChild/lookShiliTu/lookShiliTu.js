@@ -4,8 +4,9 @@ import ImagePicker from 'antd-mobile/lib/image-picker';
 import axios from 'axios';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
-import '../../../../../component/apis';
+// import '../../../../../component/apis';
 
+// import { pageInputScroll } from '../../../../../component/pageInputScroll';
 // import TaskStateUpload from '../taskStateUpload/taskStateUpload';
 
 const FormItem = Form.Item;
@@ -32,6 +33,10 @@ class LookShiliTus extends Component {
     }
     // console.log(props);
   }
+
+  // componentDidMount(){
+  //      pageInputScroll()
+  //  }
 
   // 货比三家示例图
   showOneShiliTu = () => {
@@ -99,6 +104,11 @@ class LookShiliTus extends Component {
     });
   }
 
+  // niantieBtn = (e) => {
+  //   var target = this;
+  //   console.log(target);
+  // }
+
   // 操作任务页面 实付金额、支付宝商户订单号
   handleSubmit = (e) => {
     e.preventDefault();
@@ -113,7 +123,7 @@ class LookShiliTus extends Component {
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
       if ( this.state.oks === false ) {
-        message.error("请先验证码店铺！")
+        message.error("请先验证店铺！")
       } else {
         if ( !err === true && imgs.length === this.props.pic_uploads_num ) {
           if ( !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber) ) {
@@ -261,7 +271,11 @@ class LookShiliTus extends Component {
                     {getFieldDecorator('orderNumber', {
                       rules: [{ required: true, message: '请输入支付宝商户订单号!' }],
                     })(
-                      <Input placeholder="请输入支付宝商户订单号" className="jineInput" />
+                      <Input placeholder="请输入支付宝商户订单号" className="jineInput animated-router-forward-enter-done" />
+                      // <div style={{ display: 'flex',}}>
+                      //   <Input placeholder="请输入支付宝商户订单号" className="jineInput" />
+                      //   <Button onClick={ this.niantieBtn } style={{ marginTop: 0 }}>黏贴</Button>
+                      // </div>
                     )}
                   </FormItem>
                 :
