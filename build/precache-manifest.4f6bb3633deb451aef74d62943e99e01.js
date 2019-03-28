@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "./static/media/wenda.481fd857.png"
   },
   {
-    "revision": "9290286bfc324f15ddc1",
+    "revision": "6ac3b25d58d369a79825",
     "url": "./static/css/main.0646a2e9.chunk.css"
   },
   {
@@ -60,8 +60,8 @@ self.__precacheManifest = [
     "url": "./static/media/download.b08c45d3.gif"
   },
   {
-    "revision": "9290286bfc324f15ddc1",
-    "url": "./static/js/main.9290286b.chunk.js"
+    "revision": "6ac3b25d58d369a79825",
+    "url": "./static/js/main.6ac3b25d.chunk.js"
   },
   {
     "revision": "711d2fee028b8bd584a0231a1551ade1",
@@ -116,7 +116,7 @@ self.__precacheManifest = [
     "url": "./static/css/1.6cd36ad5.chunk.css"
   },
   {
-    "revision": "f19c9ea4e9d9cde569ef09d33a6533b9",
+    "revision": "370d18461c4b4c12c499d516c3bf7252",
     "url": "./index.html"
   }
 ];
