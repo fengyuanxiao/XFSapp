@@ -28,7 +28,7 @@ class GoodPingJia extends Component {
       files01: imgdata,       //图片数组1
       files02: imgdata1,      //图片数组2
     }
-    console.log(props);
+    // console.log(props);
   }
 
   componentWillMount() {
@@ -44,7 +44,7 @@ class GoodPingJia extends Component {
       })
       .then( res=> {
         let datas = res.data.data;
-        console.log(datas);
+        // console.log(datas);
         this.setState({
           order_id: datas.order_id,               //order_id
           platformname: datas.platformname,       //平台类型描述
