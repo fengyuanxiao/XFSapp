@@ -12,6 +12,26 @@
     <div id="root"></div>
   </body>
   <script type="text/javascript">
+
+  // console.log(Button);
+  document.addEventListener('plusready', function(a) {
+    var first = null;
+    plus.key.addEventListener('backbutton', function() {
+            //首次按键，提示‘再按一次退出应用’
+            if (!first) {
+                first = new Date().getTime();
+                history.go(-1);
+                plus.nativeUI.toast('再按一次退出应用');
+                setTimeout(function() {
+                    first = null;
+                }, 1000);
+            } else {
+                if (new Date().getTime() - first < 500) {
+                    plus.runtime.quit();
+                }
+            }
+        }, false);
+    });
   // console.log(mui);
   // 动态插入 mui
   let r = false;
@@ -22,7 +42,7 @@
     s.onload = s.onreadystatechange = function() {
       if (!r && (!this.readyState || this.readyState === 'complete')) {
         r = true;
-        console.log(mui);
+        // console.log(mui);
         mui.init({
         	gestureConfig: {
         		longtap: true
@@ -33,7 +53,7 @@
         		/**
         		 * 获取目标节点的tagName
         		 */
-        		console.log(event.target.tagName)
+        		// console.log(event.target.tagName)
         		var name = event.target.tagName;
         		name = name.toLowerCase();
         		/**
@@ -84,26 +104,6 @@
     const t = document.getElementsByTagName('script')[0];
     t.parentNode.insertBefore(s, t);
 
-
-  // console.log(Button);
-  document.addEventListener('plusready', function(a) {
-    var first = null;
-    plus.key.addEventListener('backbutton', function() {
-            //首次按键，提示‘再按一次退出应用’
-            if (!first) {
-                first = new Date().getTime();
-                history.go(-1);
-                plus.nativeUI.toast('再按一次退出应用');
-                setTimeout(function() {
-                    first = null;
-                }, 1000);
-            } else {
-                if (new Date().getTime() - first < 500) {
-                    plus.runtime.quit();
-                }
-            }
-        }, false);
-    });
 
     // 统计
     var _hmt = _hmt || [];

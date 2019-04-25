@@ -1,10 +1,10 @@
 {
   "main.css": "./static/css/main.0646a2e9.chunk.css",
-  "main.js": "./static/js/main.b098f322.chunk.js",
-  "main.js.map": "./static/js/main.b098f322.chunk.js.map",
+  "main.js": "./static/js/main.99cb7323.chunk.js",
+  "main.js.map": "./static/js/main.99cb7323.chunk.js.map",
   "static/css/1.6cd36ad5.chunk.css": "./static/css/1.6cd36ad5.chunk.css",
-  "static/js/1.25df9d69.chunk.js": "./static/js/1.25df9d69.chunk.js",
-  "static/js/1.25df9d69.chunk.js.map": "./static/js/1.25df9d69.chunk.js.map",
+  "static/js/1.221edb99.chunk.js": "./static/js/1.221edb99.chunk.js",
+  "static/js/1.221edb99.chunk.js.map": "./static/js/1.221edb99.chunk.js.map",
   "runtime~main.js": "./static/js/runtime~main.4a686d48.js",
   "runtime~main.js.map": "./static/js/runtime~main.4a686d48.js.map",
   "static/media/pinduoduo1.png": "./static/media/pinduoduo1.9e240413.png",
@@ -34,6 +34,6 @@
   "static/css/main.0646a2e9.chunk.css.map": "./static/css/main.0646a2e9.chunk.css.map",
   "static/css/1.6cd36ad5.chunk.css.map": "./static/css/1.6cd36ad5.chunk.css.map",
   "index.html": "./index.html",
-  "precache-manifest.2386ae4ab6c80bdccb98b6ad99133a00.js": "./precache-manifest.2386ae4ab6c80bdccb98b6ad99133a00.js",
+  "precache-manifest.7b1c88b121dd7851bdfe56a4ee10c676.js": "./precache-manifest.7b1c88b121dd7851bdfe56a4ee10c676.js",
   "service-worker.js": "./service-worker.js"
 }

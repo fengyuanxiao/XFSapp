@@ -81,7 +81,7 @@ class MyTaskDetails extends Component {
     return(
       <div>
         <header className="tabTitle">
-          <div className="return"><Link to="/myTask"><Icon type="left" theme="outlined" />返回</Link></div>
+          <div className="return"><Link to="/dfTaskNo"><Icon type="left" theme="outlined" />返回</Link></div>
           我的任务详情
         </header>
         {/* 商品成交价格、件数 */}
