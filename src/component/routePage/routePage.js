@@ -8,6 +8,7 @@ import RegisterPage from '../../containers/login/register/register';            
 import ForgetPassword from '../../containers/login/forgetPassword/forgetPassword';                     //忘记密码
 // 任务大厅
 import TaskHallPage from '../../containers/taskHall/taskHall';                                         //任务大厅
+import ActivityPage from '../../containers/taskHall/activity/activity';               //暂时的活动页面
 import MyTaskPage from '../../containers/myTask/myTask';                                               //我的任务
 import MyCenterPage from '../../containers/myCenter/myCenter';                                         //个人中心
 import CashPage from '../../containers/cash/cash';                                                     //提现页面
@@ -83,6 +84,7 @@ class RouteTabComponent extends Component {
             <Route path="/forgetPassword" component={ForgetPassword}/>
             {/* 任务大厅 */}
             <Route path="/taskHallPage" component={TaskHallPage} />
+            <Route path="/activity" component={ActivityPage} />
             <Route path="/myTask" component={MyTaskPage} />
             <Route path="/myCenter" component={MyCenterPage} />
             <Route path="/cash" component={CashPage} />

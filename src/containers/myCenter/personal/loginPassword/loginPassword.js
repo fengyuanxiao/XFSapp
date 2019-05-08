@@ -65,7 +65,7 @@ class LoginPasswords extends Component {
               {getFieldDecorator('yuanPassword', {
                 rules: [{ required: true, message: '请输入原密码!' }],
               })(
-                <Input className="buy-input" placeholder="请输入原密码" maxLength="11" />
+                <Input className="buy-input" type="password" placeholder="请输入原密码" />
               )}
             </FormItem>
             <FormItem
@@ -74,7 +74,7 @@ class LoginPasswords extends Component {
               {getFieldDecorator('okPassword', {
                 rules: [{ required: true, message: '请输入新密码!' }],
               })(
-                <Input className="buy-input" type="text" placeholder="请输入新密码" />
+                <Input className="buy-input" type="password" placeholder="请输入新密码" />
               )}
             </FormItem>
             <FormItem
@@ -83,7 +83,7 @@ class LoginPasswords extends Component {
               {getFieldDecorator('andOkPassword', {
                 rules: [{ required: true, message: '请再次确认新密码!' }],
               })(
-                <Input className="buy-input" type="text" placeholder="请再次确认新密码" />
+                <Input className="buy-input" type="password" placeholder="请再次确认新密码" />
               )}
             </FormItem>
             <Button type="primary" htmlType="submit" className="accountBtn">提交</Button>

@@ -50,28 +50,31 @@ class MyCenterPage extends Component {
   // 本金转到提现金额
   benMoney = () => {
     let states = this.state;
-    axios.post(global.constants.website+'/api/index/moneywithdraw', {
-      type: 1,                                    //1代表本金转入
-      money: Number(states.money_account),        //转入金额
-    },
-    {
-      headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
-    })
-    .then(response => {
-      let data_s = response.data;
-      // console.log(data_s);
-      if ( data_s.status ) {
-        this.setState({
-          total_commission: states.total_commission + Number(states.money_account),
-          money_account: 0,
-        })
-      } else {
-        message.warning('暂时没有金额转入。');
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    if ( states.money_account < 1 ) {
+      message.warning('本金额高于1元即可转入到提现金额');
+    } else {
+      axios.post(global.constants.website+'/api/index/moneywithdraw', {
+        type: 1,                                    //1代表本金转入
+        money: Number(states.money_account),        //转入金额
+      },
+      {
+        headers: {AppAuthorization: localStorage.getItem("token")}        //post 方法传 token
+      })
+      .then(response => {
+        let data_s = response.data;
+        if ( data_s.status ) {
+          this.setState({
+            total_commission: states.total_commission + Number(states.money_account),
+            money_account: 0,
+          })
+        } else {
+          message.warning('暂时没有金额转入。');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
   }
   // 佣金转到提现金额
   yongMoney = () => {
@@ -95,7 +98,7 @@ class MyCenterPage extends Component {
             commission_account: 0,
           })
         } else {
-          message.warning('暂时没有金额转入。');
+          message.warning(data_s.msg);
         }
       })
       .catch(error => {

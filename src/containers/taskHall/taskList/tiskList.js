@@ -61,8 +61,9 @@ class TaskList extends Component {
   }
 
   //垫付任务抢任务按钮 进入对应的任务详情页面
-  routerTo (item) {
+  routerTo (item, encrypt) {
     let this_ = this;
+    // console.log(item, encrypt);
     // 按钮状态被点击后进入失效状态
     this_.setState({
       buttonState: true,
@@ -70,36 +71,39 @@ class TaskList extends Component {
     axios.post(global.constants.website+'/api/task/grabTask',
     {
       task_id: item,
+      encrypt: encrypt,
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-    }
-  )
-  .then(function (response) {
-    let data_ = response.data;
-    // console.log(data_);
-    if ( data_.status ) {
-      //   message.success("恭喜您，抢到啦！", successSkip => {
-      // })
-      // 保存order_id到本地
-      localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
-      this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
-      // 按钮状态被点击后数据返回成功再次进入可点击状态
-      this_.setState({
-        buttonState: false,
-      })
-    } else {
-      message.warning(data_.msg);       //没有绑定买号提醒
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    })
+    .then(function (response) {
+      let data_ = response.data;
+      // console.log(data_);
+      if ( data_.status ) {
+        //   message.success("恭喜您，抢到啦！", successSkip => {
+        // })
+        // 保存order_id到本地
+        localStorage.setItem("order_id", data_.data.order_id)   //点击抢任务按钮 储存order_id到本地
+        this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
+        // 按钮状态被点击后数据返回成功再次进入可点击状态
+        this_.setState({
+          buttonState: false,
+        })
+      } else {
+        message.warning(data_.msg);       //没有绑定买号提醒
+        this_.setState({
+          buttonState: false,
+        })
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     // this.props.history.push("/myTaskDetails")
   }
 
   // 问答任务抢任务按钮
-  routerToWenda (item) {
+  routerToWenda (item, encrypt) {
     let this_ = this;
     // 按钮状态被点击后进入失效状态
     this_.setState({
@@ -108,6 +112,7 @@ class TaskList extends Component {
     axios.post(global.constants.website+'/api/task/grabquestask',
     {
       task_id: item,
+      encrypt: encrypt,
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -122,6 +127,9 @@ class TaskList extends Component {
           buttonState: false,
         })
       } else {
+        this_.setState({
+          buttonState: false,
+        })
         message.warning(data_.msg);       //没有绑定买号提醒
       }
     })
@@ -167,6 +175,10 @@ class TaskList extends Component {
           </section>
           {/* 提现用户数据冒泡 */}
           <UserCashList />
+          <div style={{ backgroundColor: '#ffe479' }} className="is_bind">
+            {/* <span></span> */}
+            <Link style={{ color: 'red' }} to="/activity">你有一笔奖励金待领取，速领 >></Link>
+          </div>
           {
             is_bind ?
               ""
@@ -205,9 +217,9 @@ class TaskList extends Component {
                           <div className="listRight">
                             {
                               item.subtotal_commission ?
-                                <Button disabled={buttonState ? "disabled" : ""} className="button" onClick={ ()=>this.routerToWenda(item.task_id) }>查看任务</Button>
+                                <Button disabled={buttonState ? "disabled" : ""} className="button" onClick={ ()=>this.routerToWenda(item.task_id, item.encrypt) }>查看任务</Button>
                               :
-                              <Button disabled={buttonState ? "disabled" : ""} className="button" onClick={ ()=>this.routerTo(item.task_id) }>抢此任务</Button>
+                              <Button disabled={buttonState ? "disabled" : ""} className="button" onClick={ ()=>this.routerTo(item.task_id, item.encrypt) }>抢此任务</Button>
                             }
                             {/* <button><Link to={{ pathname: `myTaskDetails/${item.task_id}`, state: item }}>抢此任务</Link></button> */}
                             {/* <button onClick={ ()=>this.routerTo(item) }>抢此任务</button> */}
