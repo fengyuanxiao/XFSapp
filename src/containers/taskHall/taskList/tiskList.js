@@ -184,8 +184,8 @@ class TaskList extends Component {
               ""
             :
             <div className="is_bind">
-              <span>未绑定淘宝账号！ >></span>
-              <Link to="/buyAdmin">前往绑定</Link>
+              <span>未绑定淘宝账号！</span>
+              <Link to="/buyAdmin">前往绑定 >></Link>
             </div>
           }
           {/* 任务列表 */}
