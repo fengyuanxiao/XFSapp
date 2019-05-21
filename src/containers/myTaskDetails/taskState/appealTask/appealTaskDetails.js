@@ -32,7 +32,7 @@ class AppealTaskDetails extends Component {
       let datas = res.data.data;
       this.setState({
         goodspic: datas.goodspic,                   //商品图片
-        seller_qq: datas.seller_qq,                 //商家QQ
+        // seller_qq: datas.seller_qq,                 //商家QQ
         order_id: datas.order_id,                   //订单ID
         complain_type: datas.complain_type,         //申诉类型描述
         complain_desc: datas.complain_desc,         //申诉内容描述
@@ -178,7 +178,7 @@ class AppealTaskDetails extends Component {
   }
 
   render() {
-    const { is_self,complain_status,complain_consult,start_time,images,complain_desc,complain_type,order_id,seller_qq,goodspic } = this.state;
+    const { is_self,complain_status,complain_consult,start_time,images,complain_desc,complain_type,order_id,goodspic } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -195,9 +195,10 @@ class AppealTaskDetails extends Component {
                 <p>订单编号</p>
                 <p>{order_id}</p>
               </li>
-              <li>
+              {/* <li>
                 <p>QQ号码</p>
-                <p>{seller_qq}</p></li>
+                <p>{seller_qq}</p>
+              </li> */}
               <li>
                 <p>其他联系方式申请平台介入提供</p>
               </li>

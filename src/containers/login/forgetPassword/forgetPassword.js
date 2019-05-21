@@ -124,6 +124,10 @@ class ForgetPasswords extends Component {
     }
     // console.log("在此调用获取短信验证码接口");
   }
+  // 点击返回，刷新login页面
+  newBtn = () => {
+    window.location.reload();
+  }
 
   // 提交注册按钮 提交数据
   handleSubmit = (e) => {
@@ -194,7 +198,7 @@ class ForgetPasswords extends Component {
     return(
       <div>
         <header className="tabTitle">
-          <div className="return"><Link to="/"><Icon type="left" theme="outlined" />返回</Link></div>
+          <div onClick={this.newBtn} className="return"><Link to="/"><Icon type="left" theme="outlined" />返回</Link></div>
           忘记密码
         </header>
         <WingBlank>

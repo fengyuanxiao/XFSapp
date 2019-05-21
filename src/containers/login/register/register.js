@@ -132,6 +132,10 @@ class RegisterPages extends Component {
       });
       }
     }
+    // 点击返回，刷新login页面
+    newBtn = () => {
+      window.location.reload();
+    }
 
     // 提交注册按钮 提交数据
     handleSubmit = (e) => {
@@ -245,7 +249,7 @@ class RegisterPages extends Component {
 
       return (<div>
         <header className="tabTitle">
-          <div className="return">
+          <div onClick={this.newBtn} className="return">
             <Link to="/"><Icon type="left" theme="outlined"/>返回</Link>
           </div>
           用户注册
