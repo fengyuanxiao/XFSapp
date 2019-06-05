@@ -44,6 +44,7 @@ class TaskStateChild extends Component {
         keyword_type_name: responses.keyword_type_name,         //"普通五星好评"
         charset_one: responses.charset_one,
         charset_two: responses.charset_two,
+        user_taobao: responses.user_taobao,                     //买手账号名字
         keyword: responses.keyword,                             //搜索关键字
         sortmsg: responses.taskInfo.sortmsg,                    //排序方式
         position: responses.taskInfo.position,                  //排序位置
@@ -101,11 +102,14 @@ class TaskStateChild extends Component {
         </header>
         {/* 目标商品详情介绍 */}
         <div className="task-plan" style={{ margin:0 }}>
-          {/* <div className="plan-box" style={{ marginTop: "2rem" }}>
-            <p className="task-plan-list"><span>{shop_name}</span><Link to="/">如果遇到问题点击联系商家</Link></p>
-          </div> */}
+          <div className="plan-box" style={{ marginTop: "2rem" }}>
+            <p className="task-plan-list"><span>{shop_name}</span>
+              {/* <Link to="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</Link> */}
+              <a href="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</a>
+            </p>
+          </div>
           <section className="taskDetail-header" style={{ padding:0 }}>
-            <p className="taskDetail-header-top" style={{ marginTop: "2rem" }}>
+            <p className="taskDetail-header-top">
               <span>目标商品</span>
             </p>
             <div className="taskDetail-header-button">

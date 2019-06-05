@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon,message } from 'antd';
+import { Icon,message,Modal,Button } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';    //ajax
 
@@ -15,6 +15,7 @@ class MyTaskDetails extends Component {
     super();
     this.state = {
       datas: false,
+      visible: true,
     }
   }
 
@@ -55,6 +56,7 @@ class MyTaskDetails extends Component {
           remark_pic: responses.task_detail.remark_pic,                                   //商家要求图片
           remark: responses.task_detail.remark,                                           //商家要求文字
           order_message: responses.task_detail.order_message,                             //订单留言
+          is_limit_cancle: responses.task_detail.is_limit_cancle,                         //1表示再撤销需要警告提醒，0代表不需要
           order_id: responses.task_detail.order_id,                                       //任务编号
           user_taobao: responses.task_detail.user_taobao,                                 //买号
           chat_pay_content: responses.task_detail.chat_pay_content,                       //聊天下单图片
@@ -76,14 +78,45 @@ class MyTaskDetails extends Component {
     // console.log(123);
   }
 
+  // 买手撤销任务超过三次，显示提醒
+  handleOk = e => {
+    this.setState({
+      visible: false,
+    });
+  };
+  handleCancel = e => {
+    this.setState({
+      visible: false,
+    });
+  };
+  hiddenBtn = () => {
+    this.setState({
+      visible: false,
+    });
+  }
+
   render() {
-    const { remark,platformname,addition_pic,is_addcomments,receive_evaluate_content,taobao_ordersn, shop_around_time, is_muti_keyword, order_status, datas, goodspic, itemprice, itemnum, tasktype_pic, ordertatusText, time, remark_pic, order_message, order_id, user_taobao, chat_pay_content, need_principal, addtime } = this.state;
+    const { is_limit_cancle,remark,platformname,addition_pic,is_addcomments,receive_evaluate_content,taobao_ordersn, shop_around_time, is_muti_keyword, order_status, datas, goodspic, itemprice, itemnum, tasktype_pic, ordertatusText, time, remark_pic, order_message, order_id, user_taobao, chat_pay_content, need_principal, addtime } = this.state;
     return(
       <div>
         <header className="tabTitle">
           <div className="return"><Link to="/dfTaskNo"><Icon type="left" theme="outlined" />返回</Link></div>
           我的任务详情
         </header>
+        {
+          is_limit_cancle ?
+            <Modal
+              title="频繁撤销提示"
+              visible={this.state.visible}
+              onOk={this.handleOk}
+              footer={<Button onClick={this.hiddenBtn}>知道了</Button>}
+              onCancel={this.handleCancel}
+            >
+              <p>亲 请勿频繁撤销任务 撤销次数过多平台将采取一定措施惩罚！</p>
+            </Modal>
+          :
+            ''
+        }
         {/* 商品成交价格、件数 */}
         {/* <DetailsPouduct /> */}
         { datas ? <DetailsPouduct goodspic={goodspic} itemprice={itemprice} itemnum={itemnum} tasktype_pic={tasktype_pic} /> : "" }

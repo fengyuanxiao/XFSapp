@@ -174,10 +174,11 @@ class LookShiliTus extends Component {
         {/* 第一步货比三家 */}
         <div className="task-plan buzhou" style={{ marginBottom: '0' }}>
           <WingBlank>
-            <div className="buzou-title"><span>第一步 货比三家</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
-            <p>.请确认使用{user_taobao}（{platformname}账号）登入{tasktype_itemname}APP</p>
-            <p>.打开{tasktype_itemname}，在搜索框手动输入指定关键词</p>
-            <p>.按任务要求先浏览任意三家同类产品1-3分钟</p>
+            <div className="buzou-title"><span>第一步 货比商品</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
+            <p>.请确认使用 <span style={{ color: 'red' }}>{user_taobao}</span>（{platformname}账号）登入{tasktype_itemname}APP</p>
+            <p>.打开{tasktype_itemname}，在搜索框手动输入指定关键词（禁止复制关键词）</p>
+            <p>.按任务要求先浏览任意2-4家同类产品1-3分钟（或者按商家要求货比）</p>
+            <p>.做单期间全程不要截图，需要提交的图片在按要求完成付款后截取:需要店外截图关键词的，请截图后退出关闭{platformname}APP，一分钟后再重新登入{platformname}APP继续后续操作</p>
             <h3 style={{ color:'#c15958', marginTop:'1rem' }}>核对商家店铺名是否正确</h3>
             <div className="shop-title">
               <span>1</span><span>商家店铺名称:{shop_namess}</span>
@@ -189,21 +190,33 @@ class LookShiliTus extends Component {
             </div>
             {/* 第二步 浏览店铺 */}
             <div className="buzou-title"><span>第二步 浏览店铺</span><span onClick={this.showTwoShiliTu}>点击查看示例</span></div>
-            <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
+
             {
               platform === 5 ?
-                <p>按照商家指定的下单方式进行下单，下单方式请拉到顶部查看拼团类型</p>
-              :
-              (platform === 6 ?
                 <div>
+                  <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
+                  <p>按照商家指定的下单方式进行下单，下单方式请拉到顶部查看拼团类型</p>
+                </div>
+              :
+              platform === 6 ?
+                <div>
+                  <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
                   <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
                   <p>.然后从购物车提交订单</p>
                 </div>
               :
+              platform === 2 ?
+                <div>
+                  <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情2-3分钟</p>
+                  <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
+                  <p>.返回任务商品，直接点击购买（警示：勿从购物车提交订单)</p>
+                </div>
+              :
               <div>
-                <p>.把任务商品加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
-                <p>.返回任务商品，直接点击购买（警示：勿从购物车提交订单）</p>
-              </div>)
+                <p>.找到任务商家对应店铺产品并点击进入，浏览任务商品详情，评价，问大家2-3分钟</p>
+                <p>.把任务商品先收藏宝贝加入购物车，并同时浏览该店铺任意一款商品1分钟</p>
+                <p>.返回任务商品，直接点击购买或按商家要求提交购买付款（警示:请根据商家任务要求下单请勿直接购物车提交订单或者秒拍）</p>
+              </div>
             }
             {/* 第三步 聊天下单支付 */}
             {
@@ -219,7 +232,7 @@ class LookShiliTus extends Component {
                     ""
                   }
                   <p>.需按商家要求选择是否聊天下单支付，或直接提交订单不聊天</p>
-                  <p>.付款完成后，进人支付宝账单详情页面，截图上传</p>
+                  <p>.付款完成后，进入支付宝APP—右下角我的→账单→对应任务账单详情页面，截图上传（警示：支付宝商户订单号是支付宝APP内的，禁止复制淘宝的订单号，禁止淘宝任何截图）</p>
                   {/* <p style={{ color:'red', fontWeight:'bold' }}>.如商家备注无需聊天，聊天图上传支付宝账单替代</p> */}
                   {
                     is_muti_keyword ?

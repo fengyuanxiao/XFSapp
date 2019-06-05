@@ -46,6 +46,7 @@ class TaskList extends Component {
           money_account: datas.money_account,               //本金
           commission_account: datas.commission_account,     //佣金
           is_bind: datas.is_bind,                           //是否绑定淘宝号
+          bind_status: datas.bind_status,                   //是否为被冻结账号提供绑定买号入口，1是的
         })
       }
     })
@@ -139,7 +140,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { is_bind,task_lists, datasState, money_account, commission_account, buttonState } = this.state;
+    const { bind_status, is_bind,task_lists, datasState, money_account, commission_account, buttonState } = this.state;
     return (
       <div>
         <PullToRefresh
@@ -180,6 +181,36 @@ class TaskList extends Component {
             <Link style={{ color: 'red' }} to="/activity">你有一笔奖励金待领取，速领 >></Link>
           </div>
           {
+            bind_status === 6 ?
+              <div className="is_bind">
+                <span>是否已经很久没有任务啦？试试换一个帐号</span>
+                <Link to="/taobao">前往绑定 >></Link>
+              </div>
+            :
+            bind_status === 0 ?
+              <div className="is_bind">
+                <span>未绑定淘宝账号！</span>
+                <Link to="/buyAdmin">前往绑定 >></Link>
+              </div>
+            :
+            bind_status === 3 ?
+              <div className="is_bind">
+                <span>淘宝账号审核未通过 ！</span>
+                <Link to="/buyAdmin">前往修改 >></Link>
+              </div>
+            :
+              ''
+          }
+          {/* {
+            bind_status === 0 || bind_status ===  ?
+              ""
+            :
+            <div className="is_bind">
+              <span>未绑定淘宝账号！</span>
+              <Link to="/buyAdmin">前往绑定 >></Link>
+            </div>
+          } */}
+          {/* {新用户红包状态
             is_bind ?
               ""
             :
@@ -187,7 +218,7 @@ class TaskList extends Component {
               <span>未绑定淘宝账号！</span>
               <Link to="/buyAdmin">前往绑定 >></Link>
             </div>
-          }
+          } */}
           {/* 任务列表 */}
           {
             datasState ?

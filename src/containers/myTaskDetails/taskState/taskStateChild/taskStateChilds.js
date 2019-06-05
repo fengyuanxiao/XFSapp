@@ -195,7 +195,7 @@ class TaskStateChilds extends Component {
   }
 
   render() {
-    const { remark_pic,remarks,order_message,remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { shop_name,remark_pic,remarks,order_message,remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -206,11 +206,14 @@ class TaskStateChilds extends Component {
           <WingBlank style={{ margin: 0 }}>
             {/* 目标商品详情介绍 */}
             <div className="task-plan" style={{ margin:0 }}>
-              {/* <div className="plan-box" style={{ marginTop: "2rem" }}>
-                <p className="task-plan-list"><span>{shop_name}</span><Link to="/">如果遇到问题点击联系商家</Link></p>
-              </div> */}
+              <div className="plan-box" style={{ marginTop: "2rem" }}>
+                <p className="task-plan-list"><span>{shop_name}</span>
+                  {/* <Link to="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</Link> */}
+                  <a href="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</a>
+                </p>
+              </div>
               <section className="taskDetail-header" style={{ padding:0 }}>
-                <p className="taskDetail-header-top" style={{ marginTop: "2rem" }}>
+                <p className="taskDetail-header-top">
                   <span>目标商品</span>
                 </p>
                 <div className="taskDetail-header-button">
