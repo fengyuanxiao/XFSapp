@@ -56,6 +56,8 @@ class TaskStateChilds extends Component {
         tasktype_name: responses.tasktype_name,                 //任务类型名称
         tasktype_itemname: responses.tasktype_itemname,         //任务平台类型
         keyword_type_name: responses.keyword_type_name,         //"普通五星好评"
+        keyword_type: responses.keyword_type,                   //为3优先显示rule
+        rule: responses.rule,                                   //keyword_type为3优先显示rule
         keyword: responses.keyword,                             //搜索关键字
         sortmsg: responses.taskInfo.sortmsg,                    //排序方式
         position: responses.taskInfo.position,                  //排序位置
@@ -195,7 +197,7 @@ class TaskStateChilds extends Component {
   }
 
   render() {
-    const { shop_name,remark_pic,remarks,order_message,remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { rule,keyword_type,shop_name,remark_pic,remarks,order_message,remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -247,7 +249,7 @@ class TaskStateChilds extends Component {
                 datas ?
                   sku_set.map((item, index) => {
                     return(
-                      <p key={index} className="task-plan-list"><span>商品规格：{item.attribute_key}</span><span>{item.attribute_value}</span></p>
+                      <p key={index} className="task-plan-list"><span>商品规格：</span>{ keyword_type === '3'? <span>{rule}</span> : <span><span>{item.attribute_key},</span><span>{item.attribute_value},</span></span> }</p>
                     )
                   })
                 :

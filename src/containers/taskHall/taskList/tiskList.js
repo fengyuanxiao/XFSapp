@@ -231,7 +231,7 @@ class TaskList extends Component {
                           <div className="listLeft">
                             {
                               item.task_type === 2 ?
-                                <p style={{ fontSize: '0.9rem' }}>佣金{item.commission}元 + {item.extra_commission}元额外奖励</p>
+                                <p style={{ fontSize: '0.9rem' }}>佣金{item.commission}元 + {item.extra_commission > 0 ? item.extra_commission:''}元额外奖励</p>
                               :
                               <p>{item.commission}元</p>
                             }

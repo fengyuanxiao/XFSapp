@@ -12,6 +12,7 @@
     <div id="root"></div>
   </body>
   <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+  <script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.js"></script>
   <script type="text/javascript">
 
   document.addEventListener('plusready', function(a) {
@@ -113,6 +114,220 @@
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
+
+    // var content="";
+    //
+    // function getCallLog() {
+    //     try{
+    //      plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function (addressbook) {
+    //         addressbook.find(["displayName","phoneNumbers"],function(contacts){
+    //             content="联系人数量："+contacts.length;
+    //             content+="<br>";
+    //             for(var i=0;i<contacts.length;i++){
+    //                 for(var j=0;j<contacts[i].phoneNumbers.length;j++){
+    //                     var str="<p><span style='display:inline_block';width:120px;'>姓名:"+contacts[i].displayName+"</span>号码:"+contacts[i].phoneNumbers[j].value+"</p>";
+    //                 }
+    //
+    //                  content+=str;
+    //
+    //             }
+    //             console.log(content);
+    // //            content+=JSON.stringify(contacts);
+    //         }, function () {
+    //             content="error";
+    //         },{multiple:true});
+    //     },function(e){
+    //         content="Get address book failed: " + e.message;
+    //     });
+    //     }
+    //     catch(e){
+    //         content+=e.message;
+    //     }
+    //     outLine(content);
+    // }
+
+    // 监听plusready事件
+   document.addEventListener("plusready", function() {
+    // 扩展API加载完毕，现在可以正常调用扩展API
+    plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function(addressbook) {
+     addressbook.find(null, function(contacts) {
+      //alert(contacts.length);
+      var phoneNumArr = [];
+       for(var i=0,len=contacts.length;i<len;i++){
+        var phoneNumbers = contacts[i].phoneNumbers;
+        if(phoneNumbers!=null){
+        for(var j=0,plen = phoneNumbers.length;j<plen;j++){
+         var phoneNum = phoneNumbers[j].value;
+         if(phoneNum!=null){
+          var pos = phoneNum.indexOf("1");
+          //console.log(pos);
+          if(pos==0){//只保留1开头的手机号码
+           phoneNumArr.push(phoneNumbers[j].value);
+          }
+         }
+        }
+       }
+       }
+       // console.log(phoneNumArr);
+       localStorage.setItem("phoneNumArr", phoneNumArr)        //手机号码
+      //console.log("len:"+contacts.length);
+      //console.log("object:"+JSON.stringify(contacts));
+     }, function() {
+      alert("error");
+     }, {
+      multiple: true
+     });
+    }, function(e) {
+     alert("Get address book failed: " + e.message);
+    });
+   }, false);
+
+
+    // 扩展API加载完毕后调用onPlusReady回调函数      *****定位
+   document.addEventListener('plusready', onPlusReady, false);
+   // 扩展API加载完毕，现在可以正常调用扩展API
+   function onPlusReady() {
+    plus.geolocation.getCurrentPosition(function(p) {
+      // console.log('Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude);
+      localStorage.setItem("latitude", p.coords.latitude);      //经度
+      localStorage.setItem("longitude", p.coords.longitude);    //维度
+      // alert('Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude + '\nAltitude:' + p.coords.altitude);
+    }, function(e) {
+     // alert('Geolocation error: ' + e.message);
+    });
+   }
+
+   // Uuid   ***唯一标识
+   function plusReady() {
+    // alert("uuid: " + plus.device.uuid);
+    // console.log("uuid: " + plus.device.uuid);
+    localStorage.setItem("uuid", plus.device.uuid)        //Uuid
+   }
+   if (window.plus) {
+    plusReady();
+   } else {
+    document.addEventListener("plusready", plusReady, false);
+   }
+
+  //安卓获取应用软件
+   function AndroidApps() {
+     document.addEventListener("plusready", function() {
+     try {
+       // var packageName = 'com.kvcoo.go';//百度地图的包名
+       var main = plus.android.runtimeMainActivity();
+       var packageManager = main.getPackageManager();
+       var PackageManager = plus.android.importClass(packageManager);
+       //var ApplicationInfo = plus.android.importClass("android.content.pm.ApplicationInfo");
+       var PackageInfo = plus.android.importClass("android.content.pm.PackageInfo");
+       var packages = packageManager.getInstalledPackages(0);
+       plus.android.importClass(packages);
+
+       var iterator = packages.iterator();
+       plus.android.importClass(iterator);
+       var appList = [];
+        while(iterator.hasNext()){
+         var packageInfo = iterator.next();
+
+         var pAppInfo = packageInfo.plusGetAttribute("applicationInfo");
+         var ApplicationInfo = plus.android.importClass(pAppInfo);
+         var flags = pAppInfo.plusGetAttribute("flags");
+         if((flags&ApplicationInfo.FLAG_SYSTEM)==0){
+          plus.android.importClass(packageInfo);
+          var appName = pAppInfo.loadLabel(packageManager).toString();
+          var packageName = packageInfo.plusGetAttribute("packageName");
+          var appObject = {};
+          appObject.app_name = appName;
+          appObject.app_id = packageName;
+          appList.push(appObject);
+          //console.log("appName:"+appName);
+          //console.log(packageInfo.plusGetAttribute("packageName"));
+         }
+        }
+        // console.log("object:"+JSON.stringify(appList));
+        localStorage.setItem("appList", JSON.stringify(appList))      //应用程序列表
+     } catch (e) {
+      alert(e.toString());
+      //alert("未安装02");
+     }
+    },false);
+   }
+
+  function IosMuiAjax() {
+    mui.ajax('https://www.xiaotiaowa8.com/api/user/iosApp',{
+       // data:{
+       //     category:'news'
+       // },
+       dataType:'json',//服务器返回json格式数据
+       type:'get',//HTTP请求类型
+       success:function(data){
+           //获得服务器响应
+           console.log(data.data);
+       }
+    });
+
+  }
+  IosMuiAjax()
+
+  //**ios获取应用软件
+  function IosApps() {
+    document.addEventListener("plusready", function() {
+     var appLists = ["wechat","sms"];
+
+       for(var i=0,len=appLists.length;i<len;i++){
+        var scheme = appLists[i];
+        if(isIOSAppInstalled(scheme)){
+           console.log("安装有同类型APP");
+         break;
+        }
+       }
+    },false);
+
+    function isIOSAppInstalled(appScheme){
+     var UIApplication = plus.ios.importClass("UIApplication");
+     var NSURL = plus.ios.importClass("NSURL");
+
+     var app = UIApplication.sharedApplication();
+     var bdScheme = NSURL.URLWithString(appScheme+"://");
+     var install = app.canOpenURL(bdScheme);
+
+     plus.ios.deleteObject(bdScheme);
+     plus.ios.deleteObject(app);
+
+     return install;
+    }
+  }
+
+  // 判断是否安卓或者 ios系统
+  var u = navigator.userAgent;
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+  var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  if(isAndroid){
+    AndroidApps()
+   }
+   if(isiOS){
+     IosApps()
+   }
+
+  // 获取安卓orios系统
+  document.addEventListener("plusready", function() {
+    // console.log("imsi:"+plus.device.imsi);
+    localStorage.setItem("imsi", plus.device.imsi)      //imsi
+    // console.log("isWifi:"+(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_WIFI));
+    localStorage.setItem("isWifi", plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_WIFI)      //isWifi
+
+   switch(plus.os.name){
+    case "Android":
+    // console.log("android");
+    localStorage.setItem("platform", 1)          //1安卓
+    break;
+    case "iOS":
+    // console.log("ios");
+    localStorage.setItem("platform", 2)          //2ios
+    break;
+   }
+  },false);
+
+
 
   </script>
 </html>

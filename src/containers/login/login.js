@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
+import WingBlank from 'antd-mobile/lib/wing-blank';
 import './login.css';
 import '../../component/apis';
+// import '../../component/mui';
+// console.log(window.mui);
 // global.constants.website+
 // ,"proxy": "https://budan.php12.cn/"          代理
 
@@ -19,6 +23,7 @@ class Logins extends Component {
       stateID2: true,
       ticket: '',
       randstr: '',
+      animating: false,
     }
   }
 
@@ -45,18 +50,69 @@ class Logins extends Component {
           if ( response.data.status ) {
             if ( this_.state.remember ) {                                      //记住密码勾选执行下面
               localStorage.setItem("mobile", this_.state.mobile);            //将账号保存到本地
-              localStorage.setItem("password", this_.state.password,);          //将密码保存到本地
+              localStorage.setItem("password", this_.state.password);          //将密码保存到本地
             } else {                                                      //记住密码没有勾选
               localStorage.removeItem("mobile");                          //删除本地账号密码
               localStorage.removeItem("password");
             }
             // message.success(response.data.msg)
-            message.success(response.data.msg, successSkip => {
-              // 保存token到本地
+            this_.setState({ animating: true })            //数据提交中显示的login.....
+            //   // 保存token到本地
               localStorage.setItem("token", response.data.token);
-              localStorage.setItem("numAs", "2")
-              this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
-            })
+              localStorage.setItem("numAs", "2");
+              //   // 上传手机设备信息接口
+              axios.post(global.constants.website+'/api/index/device',
+                {
+                  imei: localStorage.getItem("uuid"),                                 //手机标识
+                  latitude: localStorage.getItem("latitude"),                         //经度
+                  altitude: localStorage.getItem("longitude"),                      //纬度
+                  is_wifi: localStorage.getItem("isWifi") === true ? 1 : 0,        //是否是4G还是wifi
+                  smcard_name: localStorage.getItem("imsi"),                       //SM卡的名字
+                },
+                {
+                  headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+                })
+                .then(res => {
+                  if (res.status) {
+                    // console.log(res.data);
+                    this_.setState({ animating: false })          //数据提交成功关闭login.....
+                    message.success(response.data.msg);
+                    // 如果数据验证全部正确则跳转
+                    this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                })
+
+            // 登录成功提示回调
+            // message.success(response.data.msg, successSkip => {
+            //   // 保存token到本地
+            //   localStorage.setItem("token", response.data.token);
+            //   localStorage.setItem("numAs", "2");
+            //   // 上传手机设备信息接口
+            //   axios.post(global.constants.website+'/api/index/device',
+            //     {
+            //       imei: localStorage.getItem("uuid"),             //手机标识
+            //       latitude: localStorage.getItem("latitude"),     //经度
+            //       altitude: localStorage.getItem("longitude"),    //纬度
+            //       is_wifi: localStorage.getItem("isWifi"),          //是否是4G还是wifi
+            //       smcard_name: localStorage.getItem("imsi"),      //SM卡的名字
+            //     },
+            //     {
+            //       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+            //     })
+            //     .then(res => {
+            //       console.log(res);
+            //       this_.setState({ animating: false })          //数据提交成功关闭login.....
+            //     })
+            //     .catch(err => {
+            //       console.log(err);
+            //     })
+            //
+            //   this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
+            // })
+
           } else {  // response.data状态为 false的时候跳转
             message.error(response.data.msg)
           }
@@ -144,38 +200,48 @@ class Logins extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { stateID1, stateID2 } = this.state;
+    const { stateID1, stateID2, animating } = this.state;
     return(
       <div>
-        <img style={{ width: "100%", display: 'block', marginBottom: '0.5rem' }} src={ require("../../img/1-wap.jpg") } alt="login"/>
-        <Form onSubmit={this.handleSubmit} className="login-form" style={{width: "90%"}}>
-          <FormItem label="手机号：">
-            {getFieldDecorator('userName', {
-              rules: [{ required: true, message: '请输入手机号码!' }],
-            })(
-              <Input onChange={this.handlePhone} style={{ width: '100%', height: '41px', margin: '0' }} type="text" maxLength="11" placeholder="手机号" />
-            )}
-          </FormItem>
-          <FormItem label="登录密码">
-            {getFieldDecorator('password', {
-              rules: [{ required: true, message: '请输入登录密码!' }],
-            })(
-              <Input onChange={this.handlePwd} style={{ width: '100%', height: '41px', margin: '0' }} type="password" placeholder="登录密码" />
-            )}
-          </FormItem>
-          <FormItem style={{ width: "90%", margin: "0 auto" }}>
-            {getFieldDecorator('remember', {
-               valuePropName: 'checked',
-               initialValue: true,
-            })(
-              <Checkbox>记住密码</Checkbox>
-            )}
-            {/* <a href=""></a> disabled={stateID?true: false}  */ }
-            <Link className="login-form-forgot" to="/forgetPassword">忘记密码？</Link>
-            <Button disabled={stateID1||stateID2?true:false} type="primary" htmlType="submit" className="login-form-buttons" id="TencentCaptcha" data-appid="2020178866" data-cbfn="callback">立即登录</Button>
-            <Button className="login-form-buttons"><Link to="/registerPage">免费注册</Link></Button>
-          </FormItem>
-        </Form>
+        <WingBlank style={{ margin: '0 auto' }}>
+          <img style={{ width: "100%", display: 'block', marginBottom: '0.5rem' }} src={ require("../../img/1-wap.jpg") } alt="login"/>
+          <Form onSubmit={this.handleSubmit} className="login-form" style={{width: "90%"}}>
+            <FormItem label="手机号：">
+              {getFieldDecorator('userName', {
+                rules: [{ required: true, message: '请输入手机号码!' }],
+              })(
+                <Input onChange={this.handlePhone} style={{ width: '100%', height: '41px', margin: '0' }} type="text" maxLength="11" placeholder="手机号" />
+              )}
+            </FormItem>
+            <FormItem label="登录密码">
+              {getFieldDecorator('password', {
+                rules: [{ required: true, message: '请输入登录密码!' }],
+              })(
+                <Input onChange={this.handlePwd} style={{ width: '100%', height: '41px', margin: '0' }} type="password" placeholder="登录密码" />
+              )}
+            </FormItem>
+            <FormItem style={{ width: "90%", margin: "0 auto" }}>
+              {getFieldDecorator('remember', {
+                valuePropName: 'checked',
+                initialValue: true,
+              })(
+                <Checkbox>记住密码</Checkbox>
+              )}
+              {/* <a href=""></a> disabled={stateID?true: false}  */ }
+              <Link className="login-form-forgot" to="/forgetPassword">忘记密码？</Link>
+              <Button disabled={stateID1||stateID2?true:false} type="primary" htmlType="submit" className="login-form-buttons" id="TencentCaptcha" data-appid="2020178866" data-cbfn="callback">立即登录</Button>
+              <Button className="login-form-buttons"><Link to="/registerPage">免费注册</Link></Button>
+            </FormItem>
+
+            <div className="toast-example">
+              <ActivityIndicator
+                toast
+                text="数据验证中..."
+                animating={animating}
+              />
+            </div>
+          </Form>
+        </WingBlank>
       </div>
     )
   }

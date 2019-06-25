@@ -33,6 +33,7 @@ class BindTaobaos extends Component {
       files: data,
       onevisible: false,
       twovisible: false,
+      visible: false,         //提交成功弹框提示
     }
   }
 
@@ -82,6 +83,10 @@ class BindTaobaos extends Component {
       twovisible: false,
     });
   }
+  hiddenBtn = () => {
+    message.success(this.state.msgs);
+    this.props.history.push("/buyAdmin")
+  }
 
   // 数据提交、ajax交互
   handleSubmit = (e) => {
@@ -120,8 +125,10 @@ class BindTaobaos extends Component {
             let data_ = response.data;
             if ( data_.status ) {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
-              message.success(data_.msg);
-              this_.props.history.push("/buyAdmin")
+              this_.setState({
+                visible: true,
+                msgs: data_.msg,
+              })
             } else {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               message.warning(data_.msg);
@@ -156,6 +163,9 @@ class BindTaobaos extends Component {
         <div className="buyAdmin-box">
           <WingBlank>
             <p className="buyAdmin-title">请务必完成以下信息</p>
+            <p style={{ marginBottom: '15px' }}>
+              资料提交成功后，请在24小时内添加专属客服微信：<span style={{ color: 'red' }}>xiaomeng666444</span> 联系客服审核账号，否则系统将自动审核不通过！新手务必查看截图示例
+            </p>
             <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
               <FormItem
                 label="淘宝旺旺账号："
@@ -286,6 +296,15 @@ class BindTaobaos extends Component {
           cancelText={"关闭"}
         >
           <img className="shilitu" src={require('../../../../img/myzhifubao.png')} alt="我的支付宝" />
+        </Modal>
+
+        <Modal
+          title="恭喜您提交成功"
+          closable={false}
+          visible={this.state.visible}
+          footer={<Button type="primary" onClick={this.hiddenBtn}>知道了</Button>}
+        >
+          <p>请添加专属客服微信：xiaomeng666444 联系客服审核账号！</p>
         </Modal>
       </div>
     )

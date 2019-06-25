@@ -27,6 +27,7 @@ class Correct_taobaos extends Component {
       files: data,
       onevisible: false,
       twovisible: false,
+      visible: false,         //提交成功弹框提示
       num: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
     }
   }
@@ -127,6 +128,10 @@ class Correct_taobaos extends Component {
       twovisible: false,
     });
   }
+  hiddenBtn = () => {
+    message.success(this.state.msgs);
+    this.props.history.push("/buyAdmin")
+  }
 
   // 数据提交、ajax交互
   handleSubmit = (e) => {
@@ -144,7 +149,7 @@ class Correct_taobaos extends Component {
           imgs.push(values.images[i].url)
         }
       }
-      console.log(values);
+      // console.log(values);
       if ( !err === true && states.tb_order_sign.length === 18 && _this.length === 2 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
@@ -173,8 +178,10 @@ class Correct_taobaos extends Component {
             let data_ = response.data;
             if ( data_.status ) {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
-              message.success(data_.msg);
-              this_.props.history.push("/buyAdmin")
+              this_.setState({
+                visible: true,
+                msgs: data_.msg,
+              })
             } else {
               message.warning(data_.msg);
             }
@@ -208,6 +215,9 @@ class Correct_taobaos extends Component {
         <div className="buyAdmin-box">
           <WingBlank>
             <p className="buyAdmin-title">请务必完成以下信息</p>
+            <p style={{ marginBottom: '15px' }}>
+              资料提交成功后，请在24小时内添加专属客服微信：<span style={{ color: 'red' }}>xiaomeng666444</span> 联系客服审核账号，否则系统将自动审核不通过！新手务必查看截图示例
+            </p>
             <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
               <FormItem
                 label="淘宝旺旺账号："
@@ -340,6 +350,15 @@ class Correct_taobaos extends Component {
           cancelText={"关闭"}
         >
           <img className="shilitu" src={require('../../../../img/myzhifubao.png')} alt="我的支付宝" />
+        </Modal>
+
+        <Modal
+          title="恭喜您提交成功"
+          closable={false}
+          visible={this.state.visible}
+          footer={<Button type="primary" onClick={this.hiddenBtn}>知道了</Button>}
+        >
+          <p>请添加专属客服微信：xiaomeng666444 联系客服审核账号！</p>
         </Modal>
       </div>
     )

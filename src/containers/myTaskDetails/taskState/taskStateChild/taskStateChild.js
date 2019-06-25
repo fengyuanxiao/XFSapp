@@ -42,6 +42,8 @@ class TaskStateChild extends Component {
         tasktype_name: responses.tasktype_name,                 //任务类型名称
         tasktype_itemname: responses.tasktype_itemname,         //任务平台类型
         keyword_type_name: responses.keyword_type_name,         //"普通五星好评"
+        keyword_type: responses.keyword_type,                   //为3优先显示rule
+        rule: responses.rule,                                   //keyword_type为3优先显示rule
         charset_one: responses.charset_one,
         charset_two: responses.charset_two,
         user_taobao: responses.user_taobao,                     //买手账号名字
@@ -93,7 +95,7 @@ class TaskStateChild extends Component {
   }
 
   render() {
-    const { remark_pic,remarks,order_message,shop_name,charset_two,charset_one,remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_namess, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { rule,keyword_type,remark_pic,remarks,order_message,shop_name,charset_two,charset_one,remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_namess, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -150,7 +152,8 @@ class TaskStateChild extends Component {
             datas ?
               sku_set.map((item, index) => {
                 return(
-                  <p key={index} className="task-plan-list"><span>商品规格：{item.attribute_key}</span><span>{item.attribute_value}</span></p>
+                  // <p key={index} className="task-plan-list"><span>商品规格：{item.attribute_key}</span><span>{item.attribute_value}</span></p>
+                    <p key={index} className="task-plan-list"><span>商品规格：</span>{ keyword_type === '3'? <span>{rule}</span> : <span><span>{item.attribute_key},</span><span>{item.attribute_value},</span></span> }</p>
                 )
               })
             :
