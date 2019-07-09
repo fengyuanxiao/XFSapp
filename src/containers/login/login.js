@@ -66,8 +66,9 @@ class Logins extends Component {
                   imei: localStorage.getItem("uuid"),                                 //手机标识
                   latitude: localStorage.getItem("latitude"),                         //经度
                   altitude: localStorage.getItem("longitude"),                      //纬度
-                  is_wifi: localStorage.getItem("isWifi") === true ? 1 : 0,        //是否是4G还是wifi
+                  is_wifi: localStorage.getItem("isWifi") === "true" ? 1 : 0,        //是否是4G还是wifi
                   smcard_name: localStorage.getItem("imsi"),                       //SM卡的名字
+                  platform: localStorage.getItem("platform"),                       //1安卓，2IOS
                 },
                 {
                   headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -79,6 +80,9 @@ class Logins extends Component {
                     message.success(response.data.msg);
                     // 如果数据验证全部正确则跳转
                     this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
+                  }else {
+                    this_.setState({ animating: false })          //数据提交成功关闭login.....
+                    console.log(res.data.mgs);
                   }
                 })
                 .catch(err => {

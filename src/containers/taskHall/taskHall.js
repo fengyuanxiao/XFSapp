@@ -109,7 +109,7 @@ class TaskHallPage extends Component {
       // 上传手机已安装引用程序
       axios.post(global.constants.website+'/api/index/apps',
         {
-          app_info: JSON.parse(appList),             //应用程序列表
+          app_info: localStorage.getItem("platform") === "1" ? JSON.parse(appList) : JSON.parse(localStorage.getItem("IOSappLists")),             //应用程序列表
           platform: localStorage.getItem("platform"),             //1安卓 2ios
         },
         {

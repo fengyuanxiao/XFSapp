@@ -115,61 +115,37 @@
       s.parentNode.insertBefore(hm, s);
     })();
 
-    // var content="";
-    //
-    // function getCallLog() {
-    //     try{
-    //      plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function (addressbook) {
-    //         addressbook.find(["displayName","phoneNumbers"],function(contacts){
-    //             content="联系人数量："+contacts.length;
-    //             content+="<br>";
-    //             for(var i=0;i<contacts.length;i++){
-    //                 for(var j=0;j<contacts[i].phoneNumbers.length;j++){
-    //                     var str="<p><span style='display:inline_block';width:120px;'>姓名:"+contacts[i].displayName+"</span>号码:"+contacts[i].phoneNumbers[j].value+"</p>";
-    //                 }
-    //
-    //                  content+=str;
-    //
-    //             }
-    //             console.log(content);
-    // //            content+=JSON.stringify(contacts);
-    //         }, function () {
-    //             content="error";
-    //         },{multiple:true});
-    //     },function(e){
-    //         content="Get address book failed: " + e.message;
-    //     });
-    //     }
-    //     catch(e){
-    //         content+=e.message;
-    //     }
-    //     outLine(content);
-    // }
 
-    // 监听plusready事件
+    //获取通讯录联系人列表
+   // 监听plusready事件
    document.addEventListener("plusready", function() {
     // 扩展API加载完毕，现在可以正常调用扩展API
     plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function(addressbook) {
      addressbook.find(null, function(contacts) {
-      //alert(contacts.length);
+      // console.log("cLen:"+contacts.length);
       var phoneNumArr = [];
+      // var regex = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
        for(var i=0,len=contacts.length;i<len;i++){
         var phoneNumbers = contacts[i].phoneNumbers;
         if(phoneNumbers!=null){
         for(var j=0,plen = phoneNumbers.length;j<plen;j++){
          var phoneNum = phoneNumbers[j].value;
+
          if(phoneNum!=null){
-          var pos = phoneNum.indexOf("1");
-          //console.log(pos);
-          if(pos==0){//只保留1开头的手机号码
            phoneNumArr.push(phoneNumbers[j].value);
-          }
+          // if(regex.test(phoneNum)){//判断是否是手机号
+          //  phoneNumArr.push(phoneNumbers[j].value);
+          // }
          }
         }
        }
        }
+       // console.log("len:"+phoneNumArr.length);
+       var setList = Array.from(new Set(phoneNumArr));//去重
+       localStorage.setItem("phoneNumArr", setList);
+       // console.log(localStorage.getItem("phoneNumArr"));
+       // console.log("sLen:"+setList.length);
        // console.log(phoneNumArr);
-       localStorage.setItem("phoneNumArr", phoneNumArr)        //手机号码
       //console.log("len:"+contacts.length);
       //console.log("object:"+JSON.stringify(contacts));
      }, function() {
@@ -181,6 +157,7 @@
      alert("Get address book failed: " + e.message);
     });
    }, false);
+
 
 
     // 扩展API加载完毕后调用onPlusReady回调函数      *****定位
@@ -243,7 +220,7 @@
           //console.log(packageInfo.plusGetAttribute("packageName"));
          }
         }
-        // console.log("object:"+JSON.stringify(appList));
+        console.log("object:"+JSON.stringify(appList));
         localStorage.setItem("appList", JSON.stringify(appList))      //应用程序列表
      } catch (e) {
       alert(e.toString());
@@ -261,25 +238,59 @@
        type:'get',//HTTP请求类型
        success:function(data){
            //获得服务器响应
-           console.log(data.data);
+           // console.log(data.data);
+           var arrss = JSON.stringify(data.data);
+           // localStorage.setItem("arrss", arrss);
+           // console.log(JSON.parse(localStorage.getItem("arrss")));
+           localStorage.setItem("appLists", arrss)      //imsi
        }
     });
 
   }
-  IosMuiAjax()
+  // IosMuiAjax()
+  // var appListA = ["dcloudapp","h58edf9b6","h554ca40b","ych","h5159ba86","wx4a7fdb81a9d5abfd","tencent101483249"]
+  // var appListssA = [];
+  // for(var i=0,len=appListA.length;i<len;i++){
+  //  var scheme = appListA[i];
+  //  // console.log(scheme);
+  //  if(true){
+  //    var ojbs = {};
+  //     // console.log("安装有同类型APP");
+  //     // console.log(isIOSAppInstalled(scheme));
+  //     ojbs.app_name = scheme;
+  //     ojbs.app_id = scheme;
+  //     appListssA.push(ojbs);
+  //  }
+  // }
+  // console.log(appListssA);
+  // localStorage.setItem("IOSappListA", JSON.stringify(appListssA))
+  // console.log(JSON.parse(localStorage.getItem("IOSappListA")));
+
 
   //**ios获取应用软件
   function IosApps() {
+    IosMuiAjax()
     document.addEventListener("plusready", function() {
-     var appLists = ["wechat","sms"];
+      var appListss = JSON.parse(localStorage.getItem("appLists"));
+      // console.log(appListss);
+      var appListssArr = [];
+      // var ojbs = {};
 
-       for(var i=0,len=appLists.length;i<len;i++){
-        var scheme = appLists[i];
+       for(var i=0,len=appListss.length;i<len;i++){
+        var scheme = appListss[i];
+        // console.log(scheme);
         if(isIOSAppInstalled(scheme)){
-           console.log("安装有同类型APP");
-         break;
+          var ojbs = {};
+           // console.log("安装有同类型APP");
+           // console.log(isIOSAppInstalled(scheme));
+           ojbs.app_name = scheme;
+           ojbs.app_id = scheme;
+           appListssArr.push(ojbs);
         }
        }
+       // console.log(JSON.stringify(appListssArr));
+       // console.log(JSON.stringify(ojbs));
+       localStorage.setItem("IOSappLists", JSON.stringify(appListssArr))
     },false);
 
     function isIOSAppInstalled(appScheme){

@@ -5,6 +5,7 @@ import PullToRefresh from 'antd-mobile/lib/pull-to-refresh';
 import axios from 'axios';    //ajax
 
 import UserCashList from '../userCashList/userCashList'; //用户提现冒泡数据
+// import { pageInputScroll } from '../../../component/pageInputScroll';
 
 import './taskList.css';
 import '../../../component/apis';
@@ -12,6 +13,7 @@ import '../../../component/apis';
 message.config({
   duration: 1,
 });
+// console.log(pageInputScroll.onPlusReady);
 
 class TaskList extends Component {
   constructor(props) {
@@ -73,6 +75,8 @@ class TaskList extends Component {
     {
       task_id: item,
       encrypt: encrypt,
+      latitude: localStorage.getItem("latitude"),                         //经度
+      altitude: localStorage.getItem("longitude"),                        //纬度
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -114,6 +118,8 @@ class TaskList extends Component {
     {
       task_id: item,
       encrypt: encrypt,
+      latitude: localStorage.getItem("latitude"),                         //经度
+      altitude: localStorage.getItem("longitude"),                      //纬度
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
