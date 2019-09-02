@@ -189,6 +189,7 @@
   //安卓获取应用软件
    function AndroidApps() {
      document.addEventListener("plusready", function() {
+     localStorage.setItem("imsi", plus.device.imsi)      //imsi
      try {
        // var packageName = 'com.kvcoo.go';//百度地图的包名
        var main = plus.android.runtimeMainActivity();
@@ -291,6 +292,44 @@
        // console.log(JSON.stringify(appListssArr));
        // console.log(JSON.stringify(ojbs));
        localStorage.setItem("IOSappLists", JSON.stringify(appListssArr))
+
+       console.log("--------start--------");
+       try {
+        var CTTelephonyNetworkInfo = plus.ios.importClass("CTTelephonyNetworkInfo");
+        var CTCarrier = plus.ios.importClass("CTCarrier");
+        var infoObject = new CTTelephonyNetworkInfo();
+        var info = infoObject.init();
+        //var info = CTTelephonyNetworkInfo.alloc().init();
+        var carrier = info.subscriberCellularProvider();
+
+        //运营商可用
+        var canUse = carrier.allowsVOIP();
+        //运营商名
+        var name = carrier.carrierName();
+        //ISO国家代码
+        var code = carrier.isoCountryCode();
+        //移动国家代码
+        var mcc = carrier.mobileCountryCode();
+        //移动网络代码
+        var mnc = carrier.mobileNetworkCode();
+
+
+        // console.log(canUse);
+        // console.log(name);
+        // console.log(code);
+        // console.log(mcc);
+        // console.log(mnc);
+        if ( code == null && mcc == null && mnc == null ) {
+          localStorage.setItem("imsi", '')      //imsi
+          // console.log('没有插卡');
+        } else {
+          localStorage.setItem("imsi", mnc)      //imsi
+          // console.log('插了卡');
+        }
+       } catch (e) {
+        alert(e.toString());
+        //alert("未安装02");
+       }
     },false);
 
     function isIOSAppInstalled(appScheme){
@@ -322,7 +361,6 @@
   // 获取安卓orios系统
   document.addEventListener("plusready", function() {
     // console.log("imsi:"+plus.device.imsi);
-    localStorage.setItem("imsi", plus.device.imsi)      //imsi
     // console.log("isWifi:"+(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_WIFI));
     localStorage.setItem("isWifi", plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_WIFI)      //isWifi
 
