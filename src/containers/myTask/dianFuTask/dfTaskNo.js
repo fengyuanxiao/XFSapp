@@ -256,6 +256,7 @@ class DfTaskNo extends Component {
   routerToWenda (item) {
     let this_ = this;
     localStorage.setItem("order_id", item);
+    localStorage.setItem("order_type", 0)     //order_type 为3 说明浏览任务
     this_.props.history.push("/myTaskDetails");
   }
 

@@ -149,7 +149,7 @@ class TaskHallPage extends Component {
         <TaskList history ={this.props.history} />
         {/* tabs */}
         <RouteTabComponent />
-        <img className="getJinagli" onClick={ this.clickTuiJian } src={ require("../../img/download.gif") } alt="小钱包"/>
+        {/* // <img className="getJinagli" onClick={ this.clickTuiJian } src={ require("../../img/download.gif") } alt="小钱包"/> */}
       </div>
     )
   }

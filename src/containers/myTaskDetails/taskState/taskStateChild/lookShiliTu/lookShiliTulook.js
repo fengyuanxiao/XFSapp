@@ -20,18 +20,16 @@ message.config({
   top: 300,
 });
 
-class LookShiliTus extends Component {
+class LookShiliTulook extends Component {
   constructor(props) {
     super(props);
     this.state = {
       animating: false,
       onevisible: false,
-      onevisibles: false,
       twovisible: false,
       threevisible: false,
       files: data,
       oks: false,                         //是否核对过店铺
-      oks2: false,                         //是否核对过店铺
     }
     // console.log(props);
   }
@@ -44,11 +42,6 @@ class LookShiliTus extends Component {
   showOneShiliTu = () => {
     this.setState({
       onevisible: true,
-    })
-  }
-  showOneShiliTus = () => {
-    this.setState({
-      onevisibles: true,
     })
   }
   // 浏览店铺示例图
@@ -85,42 +78,11 @@ class LookShiliTus extends Component {
     })
     // console.log(e.target.value);
   }
-
-  // 输入商家设置的答案value值
-  shopAnswer =(e) => {
-    this.setState({
-      answer: e.target.value
-    })
-    // console.log(e.target.value);
-  }
-  answerBtn = () => {
-    axios.post(global.constants.website+'/api/task/checkQuestion', {
-      stayanswer: this.state.answer,                           //用户输入的答案
-      task_id: this.props.task_id,                             //任务ID
-    },{
-      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-    })
-    .then( res => {
-      if ( res.data.status ) {
-        message.success(res.data.msg)
-        this.setState({
-          oks2: true,
-        })
-      } else {
-        message.error(res.data.msg)
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  }
-
   // 关闭查看示例图
   handleOk = (e) => {
     // console.log(e);
     this.setState({
       onevisible: false,
-      onevisibles: false,
       twovisible: false,
       threevisible: false
     });
@@ -129,7 +91,6 @@ class LookShiliTus extends Component {
     // console.log(e);
     this.setState({
       onevisible: false,
-      onevisibles: false,
       twovisible: false,
       threevisible: false
     });
@@ -162,9 +123,7 @@ class LookShiliTus extends Component {
     // console.log(imgs);
     this.props.form.validateFields((err, values) => {
       if ( this.state.oks === false ) {
-        message.error("请先核对店铺！")
-      } else if ( this.state.oks2 === false ) {
-        message.error("请先核对商家问题！")
+        message.error("请先验证店铺！")
       } else {
         if ( !err === true && imgs.length === this.props.pic_uploads_num ) {
           if ( !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber) ) {
@@ -209,7 +168,7 @@ class LookShiliTus extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { files, animating } = this.state;
-    const { stay_pic, stayquestion, itemnum, itemprice,chatpic,is_muti_keyword,shop_namess, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
+    const { itemnum, itemprice,chatpic,is_muti_keyword,shop_namess, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
     return(
       <div>
         {/* 第一步货比三家 */}
@@ -220,15 +179,7 @@ class LookShiliTus extends Component {
             <p>.打开{tasktype_itemname}，在搜索框手动输入指定关键词（禁止复制关键词）</p>
             <p>.按任务要求先浏览任意2-4家同类产品1-3分钟（或者按商家要求货比）</p>
             <p>.做单期间全程不要截图，需要提交的图片在按要求完成付款后截取:需要店外截图关键词的，请截图后退出关闭{platformname}APP，一分钟后再重新登入{platformname}APP继续后续操作</p>
-            <div style={{ display: 'flex', alignItems:'center',justifyContent:'space-between' }}>
-              <h3 style={{ color:'#c15958', marginTop:'1rem' }}>核对商家店铺名是否正确</h3>
-              {
-                stay_pic === "" ?
-                  ''
-                :
-                <p onClick={this.showOneShiliTus} style={{ marginTop: '1rem',fontSize: '1rem',color:'red' }}>点击答案提示</p>
-              }
-            </div>
+            <h3 style={{ color:'#c15958', marginTop:'1rem' }}>核对商家店铺名是否正确</h3>
             <div className="shop-title">
               <span>1</span><span>商家店铺名称:{shop_namess}</span>
             </div>
@@ -237,21 +188,6 @@ class LookShiliTus extends Component {
               <Input onChange={ this.shopName } placeholder="请在此输入店铺名核对" />
               <Button type="primary" onClick={ this.heDuiName }>核对</Button>
             </div>
-            {
-              stayquestion === "" ?
-                ""
-              :
-              <div>
-                <div className="shop-title">
-                  <span>3</span><span>商家设置的问题:{stayquestion}</span>
-                </div>
-                <div className="shop-title">
-                  <span>4</span>
-                  <Input onChange={ this.shopAnswer } placeholder="请在此输入答案" />
-                  <Button type="primary" onClick={ this.answerBtn }>核对</Button>
-                </div>
-              </div>
-            }
             {/* 第二步 浏览店铺 */}
             <div className="buzou-title"><span>第二步 浏览店铺</span><span onClick={this.showTwoShiliTu}>点击查看示例</span></div>
 
@@ -392,16 +328,6 @@ class LookShiliTus extends Component {
         >
           <img className="shilitu" src={require('../../../../../img/4444.jpg')} alt="货比三家" />
         </Modal>
-        <Modal
-          visible={this.state.onevisibles}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          maskClosable={true}
-          okText={"知道了"}
-          cancelText={"关闭"}
-        >
-          <img className="shilitu" src={stay_pic} alt="货比三家" />
-        </Modal>
         {/* 第二步浏览店铺的图片示例 */}
         <Modal
           visible={this.state.twovisible}
@@ -429,5 +355,5 @@ class LookShiliTus extends Component {
   }
 }
 
-const LookShiliTu = Form.create()(LookShiliTus);
-export default LookShiliTu
+const LookShiliTulook = Form.create()(LookShiliTulooks);
+export default LookShiliTulook

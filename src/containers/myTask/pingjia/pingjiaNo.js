@@ -19,7 +19,7 @@ var page1 = 1;          //待返款
 var page3 = 1;          //待评价
 var page0 = 1;          //待操作
 
-class LiuLanTaskNo extends Component {
+class PingJiaTaskNo extends Component {
   constructor() {
     super();
     this.state = {
@@ -39,7 +39,7 @@ class LiuLanTaskNo extends Component {
     // 所有
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page5,{
       status: 5,
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -77,7 +77,7 @@ class LiuLanTaskNo extends Component {
     // 待操作
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page1,{
       status: 0,
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -95,7 +95,7 @@ class LiuLanTaskNo extends Component {
     // 待返佣金
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page3,{
       status: 4,
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -157,7 +157,7 @@ class LiuLanTaskNo extends Component {
     // 所有
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + ++page5,{
       status: 5,
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -181,9 +181,34 @@ class LiuLanTaskNo extends Component {
     })
 
     // 待操作
+    // axios.post(global.constants.website+'/api/task/mytasklist?page=' + ++page0,{
+    //   status: 0
+    // },{
+    //   headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    // })
+    // .then( res => {
+    //   let resData = res.data.data;
+    //   // console.log(resData.task_list);
+    //   if ( resData.task_list.length === 0 ) {
+    //     that.setState({
+    //       isLoadingMore: true,
+    //     })
+    //   }
+    //   for (var i = 0; i < resData.task_list.length; i++) {
+    //     statea.push(resData.task_list[i])
+    //   }
+    //   that.setState({
+    //     statea: statea,                //任务列表数据
+    //   });
+    // })
+    // .catch( error => {
+    //   console.log(error);
+    // })
+
+    // 待操作
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + ++page1,{
       status: 0,
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -209,7 +234,7 @@ class LiuLanTaskNo extends Component {
     // 待返佣金
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + ++page3,{
       status: 4,
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -237,9 +262,16 @@ class LiuLanTaskNo extends Component {
   routerToWenda (item) {
     let this_ = this;
     localStorage.setItem("order_id", item);
-    localStorage.setItem("order_type", 1);
-    this_.props.history.push("/myTaskDetails");
+    this_.props.history.push("/taskPingjia");
   }
+
+  //点击进入申诉详情页面
+  routerToWendas (item) {
+      let this_ = this;
+      // console.log(item);
+      this_.props.history.push({pathname: "/appealTaskDetails", state: {data: item}});
+    }
+
 
 
   render() {
@@ -252,6 +284,59 @@ class LiuLanTaskNo extends Component {
         </header>
         <WhiteSpace style={{ paddingTop: '3rem' }} />
         <Tabs tabs={tabs} initialPage={2} animated={false} useOnPan={false} onTabClick={this.onChange}>
+          {/* 待操作 */}
+          {/* <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
+            循环 all-task div
+            <div className="App">
+              {
+            statea ?
+            statea.map((item, index) => {
+            return(
+            <div key={index} className="all-task">
+            <div className="left-img">
+            <img src={item.goodspic} alt=""/>
+            </div>
+            <div className="right">
+            top
+            <div className="right-top">
+            <span className="right-top-child">
+            <img className="right-top-childImg" src={item.taskitem_pic} alt="平台图标"/>
+            {item.user_taobao}
+            </span>
+            <span>
+            {item.addtime}
+            </span>
+            </div>
+            center
+            <div>
+            <div className="right-center">
+            <p>￥{item.commission}</p>
+            {
+            item.is_appeal === 1 ?
+            <Button type="primary" onClick={ ()=>this.routerToWendas(item.order_id)}>该任务在申诉中</Button>
+            :
+            // <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
+            <Button type="primary" onClick={()=>this.routerToWenda(item.order_id)}>{item.order_status_text}</Button>
+            }
+            </div>
+            <div className="right-bottom">
+            <p className="paddingBottom">
+            <span>垫资{item.need_principal}元</span>
+            <span>{item.refundtext}</span>
+            </p>
+            <p className="taskss">请在{item.limittime}前操作</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            )
+            })
+            :
+            <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
+              }
+            </div>
+            <div style={{ textAlign: 'center' }} ref="wrapper" onClick={this.loadMoreDataFn.bind(this, this)}></div>
+          </div> */}
           {/* 待操作 */}
           <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
             <div className="App">
@@ -325,8 +410,8 @@ class LiuLanTaskNo extends Component {
                           <div>
                             <div className="right-center">
                               <p>￥{item.commission}</p>
-                              <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
-                              {/* <Button type="primary">待返佣金</Button> */}
+                              {/* <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button> */}
+                              <Button type="primary">待返佣金</Button>
                             </div>
                             <div className="right-bottom">
                               <p className="paddingBottom">
@@ -394,7 +479,7 @@ class LiuLanTaskNo extends Component {
                                   {/* <Button type="primary"><Link to="/taskStateChild">{item.order_status_text}</Link></Button> */}
                                   {
                                     item.order_status === 4 ?
-                                      <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
+                                      <Button type="primary">待返佣金</Button>
                                     :
                                     <Button onClick={()=>this.routerToWenda(item.order_id)} type="primary">{item.order_status_text}</Button>
                                   }
@@ -438,4 +523,4 @@ class LiuLanTaskNo extends Component {
   }
 }
 
-export default LiuLanTaskNo
+export default PingJiaTaskNo

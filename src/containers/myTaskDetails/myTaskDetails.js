@@ -29,6 +29,7 @@ class MyTaskDetails extends Component {
     axios.post(global.constants.website+'/api/task/myTaskDetail',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
+      order_type: localStorage.getItem("order_type"),
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -58,6 +59,7 @@ class MyTaskDetails extends Component {
           order_message: responses.task_detail.order_message,                             //订单留言
           is_limit_cancle: responses.task_detail.is_limit_cancle,                         //1表示再撤销需要警告提醒，0代表不需要
           order_id: responses.task_detail.order_id,                                       //任务编号
+          task_type: responses.task_detail.task_type,                                     //task_type为1是浏览任务
           user_taobao: responses.task_detail.user_taobao,                                 //买号
           chat_pay_content: responses.task_detail.chat_pay_content,                       //聊天下单图片
           platformname: responses.platformname,                                           //商家平台
@@ -69,6 +71,7 @@ class MyTaskDetails extends Component {
           is_addcomments: responses.task_detail.is_addcomments,                           //是否需要追评 0：不需要 1：需要
           is_muti_keyword: responses.task_detail.is_muti_keyword,                         //是否是多关键词，1表示多关键词、0代表不是
           shop_around_time: responses.task_detail.shop_around_time,                       //有值代表多关键词任务第一步已提交并审核 没有值代表还未操作第一步
+          fav_flow_content: responses.task_detail.fav_flow_content,                       //浏览任务反显图片
           })
         }
     })
@@ -96,11 +99,11 @@ class MyTaskDetails extends Component {
   }
 
   render() {
-    const { is_limit_cancle,remark,platformname,addition_pic,is_addcomments,receive_evaluate_content,taobao_ordersn, shop_around_time, is_muti_keyword, order_status, datas, goodspic, itemprice, itemnum, tasktype_pic, ordertatusText, time, remark_pic, order_message, order_id, user_taobao, chat_pay_content, need_principal, addtime } = this.state;
+    const { fav_flow_content,task_type,is_limit_cancle,remark,platformname,addition_pic,is_addcomments,receive_evaluate_content,taobao_ordersn, shop_around_time, is_muti_keyword, order_status, datas, goodspic, itemprice, itemnum, tasktype_pic, ordertatusText, time, remark_pic, order_message, order_id, user_taobao, chat_pay_content, need_principal, addtime } = this.state;
     return(
       <div>
         <header className="tabTitle">
-          <div className="return"><Link to="/dfTaskNo"><Icon type="left" theme="outlined" />返回</Link></div>
+          <div className="return"><Link to="/myTask"><Icon type="left" theme="outlined" />返回</Link></div>
           我的任务详情
         </header>
         {
@@ -121,9 +124,9 @@ class MyTaskDetails extends Component {
         {/* <DetailsPouduct /> */}
         { datas ? <DetailsPouduct goodspic={goodspic} itemprice={itemprice} itemnum={itemnum} tasktype_pic={tasktype_pic} /> : "" }
         {/* 任务状态 */}
-        { datas ? <TaskState history={this.props.history} remark={remark} order_id={order_id} order_status={order_status} shop_around_time={shop_around_time} is_muti_keyword={is_muti_keyword} tasktype_pic={tasktype_pic} ordertatusText={ordertatusText} time={time} remark_pic={remark_pic} order_message={order_message} /> : "" }
+        { datas ? <TaskState history={this.props.history} task_type={task_type} remark={remark} order_id={order_id} order_status={order_status} shop_around_time={shop_around_time} is_muti_keyword={is_muti_keyword} tasktype_pic={tasktype_pic} ordertatusText={ordertatusText} time={time} remark_pic={remark_pic} order_message={order_message} /> : "" }
         {/* 任务进度 */}
-        { datas ? <TaskPlan platformname={platformname} addition_pic={addition_pic} is_addcomments={is_addcomments} receive_evaluate_content={receive_evaluate_content} taobao_ordersn={taobao_ordersn} order_status={order_status} order_id={order_id} user_taobao={user_taobao} chat_pay_content={chat_pay_content} need_principal={need_principal} addtime={addtime} itemprice={itemprice} itemnum={itemnum} /> : "" }
+        { datas ? <TaskPlan fav_flow_content={fav_flow_content} task_type={task_type} platformname={platformname} addition_pic={addition_pic} is_addcomments={is_addcomments} receive_evaluate_content={receive_evaluate_content} taobao_ordersn={taobao_ordersn} order_status={order_status} order_id={order_id} user_taobao={user_taobao} chat_pay_content={chat_pay_content} need_principal={need_principal} addtime={addtime} itemprice={itemprice} itemnum={itemnum} /> : "" }
         {/* tabs */}
         <RouteTabComponent />
       </div>

@@ -34,14 +34,22 @@ class BuyAdmins extends Component {
         pdd_status: responses.pdd_bind.bind_status,          //拼多多绑定状态 文字显示
         pdd_remark: responses.pdd_bind.remark,               //拼多多未通过留言
         pdd__status: responses.pdd_bind.status,              //拼多多绑定状态 数字显示
-        taobao_bind: responses.taobao_bind.nickname,         //淘宝用户名
+
+        taobao_bind: responses.taobao_bind,         //淘宝用户名
         taobao_status: responses.taobao_bind.bind_status,    //淘宝绑定状态  文字显示
         taobao_remark: responses.taobao_bind.remark,         //淘宝未通过留言
         taobao__status: responses.taobao_bind.status,        //淘宝绑定状态  数字显示
+
         wph_bind: responses.wph_bind.nickname,               //唯品会用户名
         wph_status: responses.wph_bind.bind_status,          //唯品会绑定状态  文字显示
         wph_remark: responses.wph_bind.remark,               //唯品会未通过留言
         wph__status: responses.wph_bind.status,              //唯品会绑定状态  数字显示
+
+        wykl_bind: responses.wykl_bind.nickname,               //唯品会用户名
+        wykl_status: responses.wykl_bind.bind_status,          //唯品会绑定状态  文字显示
+        wykl_remark: responses.wykl_bind.remark,               //唯品会未通过留言
+        wykl__status: responses.wykl_bind.status,              //唯品会绑定状态  数字显示
+
       })
     })
     .catch(error => {
@@ -50,14 +58,16 @@ class BuyAdmins extends Component {
   }
 
   // 点击 进入修改淘宝买号
-  taobaoInto = () => {
+  taobaoInto = (status, id) => {
+    console.log(id);
+    console.log(status);
     // 存入接口放回的数据json
     let datas_Status = this.state.datas_Status;
     // console.log(datas_Status);
-    if ( this.state.taobao__status === 0 ) {
+    if ( status === 0 ) {
       this.props.history.push("/taobao")
-    } else if ( this.state.taobao__status === 3 ) {
-      this.props.history.push({pathname: "/correct_taobao", state: {data: datas_Status.taobao_bind.id}})
+    } else if ( status === 3 ) {
+      this.props.history.push({pathname: "/correct_taobao", state: {data: id}})
     } else {
       // console.log(123);
     }
@@ -103,8 +113,21 @@ class BuyAdmins extends Component {
     // console.log(this);
   }
 
+  // 点击 进入修改京东买号
+  wyklInto = () => {
+    // 存入接口放回的数据json
+    let datas_Status = this.state.datas_Status;
+    if ( this.state.wykl__status === 0 ) {
+      this.props.history.push("/weipinhui")
+    } else if ( this.state.wykl__status === 3 ) {
+      this.props.history.push({pathname: "/correct_weipinhui", state: {data: datas_Status.wykl_bind.id}})
+    } else {
+      // console.log(123);
+    }
+  }
+
   render() {
-    const { taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
+    const { wykl__status,wykl_remark,wykl_status,wykl_bind,taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -115,21 +138,34 @@ class BuyAdmins extends Component {
         <div className="buyAdmin-box">
           <ul>
             {/* 绑定淘宝账号 */}
-            <li>
-              {/* <Link to="/taobao"> */}
-              {/* <div className="bind-list" onClick={ ()=>this.taobaoInto(item) }> */}
-              <div className="bind-list" onClick={ this.taobaoInto }>
+            {/* <Link to="/taobao"> */}
+            {/* <div className="bind-list" onClick={ ()=>this.taobaoInto(item) }> */}
+            {/* <div className="bind-list" onClick={ this.taobaoInto }>
                 <div><img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ taobao_bind }</span></div>
                 <div><span>{ taobao_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
-              </div>
-              {
-                taobao__status === 3 ?
-                  <p className="bind-content">{ taobao_remark }</p>
-                :
-                  ""
-              }
-              {/* </Link> */}
-            </li>
+            </div> */}
+            {
+              taobao_bind ?
+                taobao_bind.map((item,index) => {
+                  return(
+                    <li key={index}>
+                      <div className="bind-list" onClick={ () => this.taobaoInto(item.status, item.id) }>
+                        <div><img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ item.nickname }</span></div>
+                        <div><span>{ item.bind_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
+                      </div>
+                    </li>
+                  )
+                })
+              :
+              ""
+            }
+            {
+              taobao__status === 3 ?
+                <p className="bind-content">{ taobao_remark }</p>
+              :
+              ""
+            }
+            {/* </Link> */}
             {/* 绑定拼多多账号 */}
             <li>
               <div className="bind-list" onClick={ this.pinduoduoInto }>
@@ -165,6 +201,19 @@ class BuyAdmins extends Component {
               {
                 wph__status === 3 ?
                   <p className="bind-content">{ wph_remark }</p>
+                :
+                  ""
+              }
+            </li>
+            {/* 网易考拉账号 */}
+            <li>
+              <div className="bind-list" onClick={ this.wyklInto }>
+                <div><img src={require("../../../img/wykl.png")} alt="网易考拉图标"/><span>{ wykl_bind }</span></div>
+                <div><span>{ wykl_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
+              </div>
+              {
+                wykl__status === 3 ?
+                  <p className="bind-content">{ wykl_remark }</p>
                 :
                   ""
               }

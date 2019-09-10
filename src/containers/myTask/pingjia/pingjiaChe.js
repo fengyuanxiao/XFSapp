@@ -6,7 +6,7 @@ import '../../../component/apis';
 
 var page = 1;
 
-class LiuLanTaskChe extends Component {
+class PingJiaTaskChe extends Component {
   constructor() {
     super()
     this.state ={
@@ -19,7 +19,7 @@ class LiuLanTaskChe extends Component {
     page = 1;
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page,{
       status: 10,             //已撤销
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -76,7 +76,7 @@ class LiuLanTaskChe extends Component {
     // 在此调用ajax获取多页数据
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + ++page,{
       status: 10,             //已撤销
-      order_type: 1,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -165,4 +165,4 @@ class LiuLanTaskChe extends Component {
   }
 }
 
-export default LiuLanTaskChe
+export default PingJiaTaskChe

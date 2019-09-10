@@ -97,7 +97,7 @@ class TaskState extends Component {
 
   render() {
     //存父组件传来的数据 order_message
-    const { remark, order_status, tasktype_pic, ordertatusText, remark_pic, is_muti_keyword,shop_around_time } = this.props;
+    const { task_type, remark, order_status, tasktype_pic, ordertatusText, remark_pic, is_muti_keyword,shop_around_time } = this.props;
     const { cuttime } = this.state;
     // console.log(remark_pic);
     return(
@@ -134,7 +134,7 @@ class TaskState extends Component {
             shop_around_time ?
               <button className="stateBtns"><Link to={{ pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>
             :
-            <button className="stateBtns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: "/taskStateChild", state: remark_pic }}>操作任务</Link></button>
+            <button className="stateBtns"><Link to={ is_muti_keyword === 1 ? { pathname: "/taskStateChilds", state: remark_pic } : { pathname: task_type === "1"?"/lookTaskStateChild":"/taskStateChild", state: remark_pic }}>操作任务</Link></button>
           }
           <button className="tasktn"><Link to="/appealTask">申诉任务</Link></button>
         </div>

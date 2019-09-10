@@ -37,6 +37,10 @@ class MyTaskPage extends Component {
           complete_flowtask_count: datas.complete_flowtask_count,           //浏览任务已完成的订单数
           cancel_flowtask_count: datas.cancel_flowtask_count,               //浏览任务已撤销的订单数
 
+          nocomplete_assigntask_count: datas.nocomplete_assigntask_count,   //指定评价任务未完成的订单数
+          complete_assigntask_count:datas.complete_assigntask_count,        //指定评价任务已完成的订单数
+          cancel_assigntask_count:datas.cancel_assigntask_count,            //指定评价任务已撤销的订单数
+
           nocomplete_answertask_count: datas.nocomplete_answertask_count,   //问答任务未完成的订单数
           complete_answertask_count: datas.complete_answertask_count,       //问答任务已完成的订单数
           cancel_answertask_count: datas.cancel_answertask_count,           //问答任务已撤销的订单数
@@ -54,7 +58,7 @@ class MyTaskPage extends Component {
 }
 
   render() {
-    const { cancel_answertask_count,complete_answertask_count,nocomplete_answertask_count,cancel_flowtask_count,complete_flowtask_count,nocomplete_flowtask_count,nocomplete_task_count,complete_task_count,cancel_task_count } = this.state;
+    const { cancel_assigntask_count,complete_assigntask_count,nocomplete_assigntask_count,cancel_answertask_count,complete_answertask_count,nocomplete_answertask_count,cancel_flowtask_count,complete_flowtask_count,nocomplete_flowtask_count,nocomplete_task_count,complete_task_count,cancel_task_count } = this.state;
     return(
       <div>
         <header className="tabTitle">我的任务</header>
@@ -136,6 +140,46 @@ class MyTaskPage extends Component {
               </div>
               <div>
                 <Badge count={cancel_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Icon type="right" theme="outlined" />
+              </div>
+            </Link>
+          </li>
+          {/* 已接指定评价任务 */}
+          <li className="myTask-box-title">
+            已接指定评价任务
+          </li>
+          <li>
+            <Link to="/pingjiaNo">
+              <div>
+                <Icon style={{ fontSize: '1.2rem' }} type="form" theme="outlined" />
+                <span>未完成</span>
+              </div>
+              <div>
+                <Badge count={nocomplete_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Icon type="right" theme="outlined" />
+              </div>
+            </Link>
+          </li>
+          <li>
+            <Link to="/pingjiaOk">
+              <div>
+                <Icon style={{ fontSize: '1.2rem' }} type="check" theme="outlined" />
+                <span>已完成</span>
+              </div>
+              <div>
+                <Badge count={complete_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Icon type="right" theme="outlined" />
+              </div>
+            </Link>
+          </li>
+          <li>
+            <Link to="/pingjiaChe">
+              <div>
+                <Icon style={{ fontSize: '1.2rem' }} type="rest" theme="outlined" />
+                <span>已撤销</span>
+              </div>
+              <div>
+                <Badge count={cancel_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>

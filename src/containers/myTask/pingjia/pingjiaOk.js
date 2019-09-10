@@ -6,10 +6,10 @@ import '../../../component/apis';
 
 var page = 1;
 
-class LiuLanTaskChe extends Component {
+class PingJiaTaskOk extends Component {
   constructor() {
-    super()
-    this.state ={
+    super();
+    this.state = {
       datasState: false,      //进入任务大厅调用ajax 请求延时状态
       isLoadingMore: false    //为true 不在调用滚动执行ajax
     }
@@ -18,8 +18,8 @@ class LiuLanTaskChe extends Component {
   componentWillMount() {
     page = 1;
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page,{
-      status: 10,             //已撤销
-      order_type: 1,
+      status: 9,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
@@ -40,6 +40,7 @@ class LiuLanTaskChe extends Component {
       return;
     };
   }
+
 
   componentDidMount() {
     const wrapper = this.refs.wrapper;
@@ -75,14 +76,16 @@ class LiuLanTaskChe extends Component {
     let task_lists = that.state.task_lists;
     // 在此调用ajax获取多页数据
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + ++page,{
-      status: 10,             //已撤销
-      order_type: 1,
+      status: 9,
+      order_type: 3,
     },{
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
     .then( res => {
       let resData = res.data.data;
-      // console.log(resData.task_list);
+      // console.log(resData);
+      // console.log(task_lists);
+      // resData.task_list没有数据的时候 停止调用滚动
       if ( resData.task_list === "" ) {
         that.setState({
           isLoadingMore: true,
@@ -92,11 +95,11 @@ class LiuLanTaskChe extends Component {
         task_lists.push(resData.task_list[i])
       }
       that.setState({
-        task_lists: task_lists,
-      })
+        task_lists: task_lists,                       //任务列表数据
+      });
     })
-    .catch( err => {
-      console.log(err);
+    .catch( error => {
+      console.log(error);
     })
   }
 
@@ -106,7 +109,7 @@ class LiuLanTaskChe extends Component {
       <div>
         <header className="tabTitle">
           <div className="return"><Link to="/myTask"><Icon type="left" theme="outlined" />返回</Link></div>
-          已撤回任务
+          已完成任务
         </header>
         <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff', paddingTop: '3rem' }}>
           {/* 循环 all-task div */}
@@ -156,6 +159,7 @@ class LiuLanTaskChe extends Component {
                 <img src={require("../../../img/loading.gif")} alt="loading"/>
                 <p>任务加载中...</p>
               </div>
+                // Toast.loading('任务加载中...')
             }
           </div>
           <div style={{ textAlign: 'center' }} ref="wrapper" onClick={this.loadMoreDataFn.bind(this, this)}>{ isLoadingMore ? "没有更多..." : "" }</div>
@@ -165,4 +169,4 @@ class LiuLanTaskChe extends Component {
   }
 }
 
-export default LiuLanTaskChe
+export default PingJiaTaskOk

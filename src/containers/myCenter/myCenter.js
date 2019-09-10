@@ -170,17 +170,17 @@ class MyCenterPage extends Component {
               </div>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link className="myCenter-A" to="/tuiJian">
               <div>
-                <Icon type="like" />
-                <span>推荐有奖</span>
+            <Icon type="like" />
+            <span>推荐有奖</span>
               </div>
               <div>
-                <Icon type="right" />
+            <Icon type="right" />
               </div>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link className="myCenter-A" to="/allCenter">
               <div>
