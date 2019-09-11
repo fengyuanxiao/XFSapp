@@ -32,6 +32,7 @@ class BindTaobaos extends Component {
       animating: false,
       files: data,
       onevisible: false,
+      twovisible1: false,
       twovisible: false,
       visible: false,         //提交成功弹框提示
     }
@@ -63,6 +64,11 @@ class BindTaobaos extends Component {
     })
     // console.log(123);
   }
+  showTwoShiliTu1 = () => {
+    this.setState({
+      twovisible1: true,
+    })
+  }
   showTwoShiliTu = () => {
     this.setState({
       twovisible: true,
@@ -73,6 +79,7 @@ class BindTaobaos extends Component {
     // console.log(e);
     this.setState({
       onevisible: false,
+      twovisible1: false,
       twovisible: false,
     });
   }
@@ -80,6 +87,7 @@ class BindTaobaos extends Component {
     // console.log(e);
     this.setState({
       onevisible: false,
+      twovisible1: false,
       twovisible: false,
     });
   }
@@ -95,7 +103,7 @@ class BindTaobaos extends Component {
     let states = this.state;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && states.maxlengths.length === 18 && _this.length === 2 ) {
+      if ( !err === true && states.maxlengths.length === 18 && _this.length === 3 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
@@ -103,7 +111,7 @@ class BindTaobaos extends Component {
           this_.setState({ animating: true })            //数据提交中显示的login.....
           // console.log(values);
           // 图片集合存入imgs 传给后端
-          let imgs = [values.images[0].url, values.images[1].url]
+          let imgs = [values.images[0].url, values.images[1].url, values.images[2].url]
           // console.log(imgs);
           //以上数据都正确 在此 ajax交互
           axios.post(global.constants.website+'/api/index/tbOperate',
@@ -142,8 +150,8 @@ class BindTaobaos extends Component {
       }else {
         if ( states.maxlengths.length < 18 ) {
           message.error('淘宝订单号有误');
-        } else if ( _this.length > 2 ) {
-          message.error('只能上传2张必要图片');
+        } else if ( _this.length > 3 ) {
+          message.error('只能上传3张必要图片');
         } else {
           message.error('请完善信息');
         }
@@ -182,7 +190,7 @@ class BindTaobaos extends Component {
                 {getFieldDecorator('tb_order_sign', {
                   rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
                 })(
-                  <Input onChange={ this.maxlength } className="buy-input" maxLength="18" placeholder="淘宝订单号" />
+                  <Input onChange={ this.maxlength } className="buy-input" maxLength={11} placeholder="淘宝订单号" />
                 )}
               </FormItem>
               <FormItem
@@ -227,7 +235,7 @@ class BindTaobaos extends Component {
                 {getFieldDecorator('GoodsPhone', {
                   rules: [{ required: true, message: '请输入收货人手机号码!' }],
                 })(
-                  <Input className="buy-input" type="text" maxLength="11" placeholder="收货人手机号" />
+                  <Input className="buy-input" type="text" maxLength={11} placeholder="收货人手机号" />
                 )}
               </FormItem>
               <FormItem
@@ -240,24 +248,25 @@ class BindTaobaos extends Component {
                 )}
               </FormItem>
               <FormItem
-                label="上传 我的淘宝 和 支付宝实名截图"
+                label="上传 我的淘宝 和 最近订单详情截图 和 支付宝实名截图"
               >
                 {getFieldDecorator('images', {
-                  rules: [{ required: true, message: '请上传淘宝和支付宝截图!' }],
+                  rules: [{ required: true, message: '请上传淘宝和订单详情截图和支付宝截图!' }],
                 })(
                   <ImagePicker
-                    length={2}
+                    length={3}
                     files={files}
                     onChange={this.onUploadOne}
                     onImageClick={(index, fs) => console.log(index, fs)}
-                    selectable={files.length < 2}
+                    selectable={files.length < 3}
                     multiple={false}
                   />
                 )}
               </FormItem>
               {/* 查看截图上传示例图 */}
-              <div className="look-shilitu">
+              <div style={{ fontSize: '12px' }} className="look-shilitu">
                 <p onClick={this.showOneShiliTu}>查看示例图>></p>
+                <p onClick={this.showTwoShiliTu1}>查看示例图>></p>
                 <p onClick={this.showTwoShiliTu}>查看示例图>></p>
               </div>
 
@@ -285,6 +294,17 @@ class BindTaobaos extends Component {
           cancelText={"关闭"}
         >
           <img className="shilitu" src={require('../../../../img/mytaobao.png')} alt="我的淘宝" />
+        </Modal>
+        {/* 我的最近订单详情截图 */}
+        <Modal
+          visible={this.state.twovisible1}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          maskClosable={true}
+          okText={"知道了"}
+          cancelText={"关闭"}
+        >
+          <img className="shilitu" src={require('../../../../img/tbdingdan.png')} alt="我的支付宝" />
         </Modal>
         {/* 我的支付宝示例图 */}
         <Modal

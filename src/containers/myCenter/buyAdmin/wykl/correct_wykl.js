@@ -1,4 +1,4 @@
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import { Icon, Form, Input, Button, Cascader, Modal, message, Select  } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -6,8 +6,8 @@ import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 
-import '../buyAdmin.css';
 import '../../../../component/apis';
+import '../buyAdmin.css';
 
 const city_new = require('../../../../component/city.js');    //三级联动资源库
 const data = [];      //上传图片集合
@@ -19,22 +19,26 @@ message.config({
   top: 300,
 });
 
-class Correct_weipinhuis extends Component {
+class Correct_wykls extends Component {
   constructor(props) {
     super();
     this.state = {
       animating: false,
       files: data,
-      shows: false,
       onevisible: false,
+      twovisible1: false,
       twovisible: false,
+      visible: false,         //提交成功弹框提示
       num: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
     }
-    // console.log(props);
   }
 
-  componentWillMount () {
-
+  // 获取淘宝订单号，存入并到提交按钮获取长度判断
+  maxlength = (val) => {
+    // console.log(val.target.value);
+    this.setState({
+      tb_order_sign: val.target.value,
+    })
   }
 
   componentDidMount () {
@@ -53,21 +57,27 @@ class Correct_weipinhuis extends Component {
       })
       .then(function (response) {   //调用接口成功执行
         let responses = response.data.data;
-        let datas = [responses.url1,responses.url2];        //存储后台放回过来的图片路径
+        let datas = [responses.url1,responses.url2,responses.url3];        //存储后台放回过来的图片路径
+        // console.log(datas);
         // console.log(responses);
         this_.props.form.setFieldsValue({
           Account: responses.nickname,                //账号名称
           GoodsName: responses.receiver,              //收货人
           address: responses.receiver_address,        //收货人详细地址
           GoodsPhone: responses.receiver_mobile,      //收货人手机号
+          tb_order_sign: responses.tb_order_sign,     //最近淘宝下单订单号
           sex: responses.sex,   //性别
           // provinces: responses.provinces,          //省市区组合
+          AlipayName: responses.alipay_name,          //支付宝姓名
           // images: responses.images,
         })
         this_.setState({
+          tb_order_sign: responses.tb_order_sign,
           files: datas,                             //让后端返回过来的图片 在页面做展示
           url1: responses.url1.url,                 //存储返回的图片
           url2: responses.url2.url,                 //存储返回的图片
+          url3: responses.url3.url,                 //存储返回的图片
+          sexs: responses.sex,   //性别
         })
       })
       .catch(function (error) {   //调用接口失败执行
@@ -100,6 +110,11 @@ class Correct_weipinhuis extends Component {
     })
     // console.log(123);
   }
+  showTwoShiliTu1 = () => {
+    this.setState({
+      twovisible1: true,
+    })
+  }
   showTwoShiliTu = () => {
     this.setState({
       twovisible: true,
@@ -110,6 +125,7 @@ class Correct_weipinhuis extends Component {
     // console.log(e);
     this.setState({
       onevisible: false,
+      twovisible1: false,
       twovisible: false,
     });
   }
@@ -117,8 +133,13 @@ class Correct_weipinhuis extends Component {
     // console.log(e);
     this.setState({
       onevisible: false,
+      twovisible1: false,
       twovisible: false,
     });
+  }
+  hiddenBtn = () => {
+    message.success(this.state.msgs);
+    this.props.history.push("/buyAdmin")
   }
 
   // 数据提交、ajax交互
@@ -126,10 +147,11 @@ class Correct_weipinhuis extends Component {
     e.preventDefault();
     let this_ = this;
     let states = this.state;
+    console.log(states.sexs);
     let _this = this.state.files    //用户上传图片集合
-    let fImgs = [states.url1, states.url2];     //储存后台放回需要反显得图片
+    let fImgs = [states.url1, states.url2, states.url3];     //储存后台放回需要反显得图片
+    // console.log(fImgs);
     this.props.form.validateFields((err, values) => {
-    // 图片集合存入imgs 传给后端
       let imgs = [];
       if ( states.num ) {                   //num为true 说明买手有新图片上传 并走新图去循环去base图路径
         for (var i = 0; i < values.images.length; i++) {
@@ -137,15 +159,15 @@ class Correct_weipinhuis extends Component {
         }
       }
       // console.log(values);
-      if ( !err === true && _this.length === 2 ) {
+      if ( !err === true && _this.length === 3 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
         } else {
           this_.setState({ animating: true })            //数据提交中显示的login.....
-          // console.log(values);
+          // 图片集合存入imgs 传给后端
           //以上数据都正确 在此 ajax交互
-          axios.post(global.constants.website+'/api/index/updatewph_bind',
+          axios.post(global.constants.website+'/api/index/wykl_bind',
           {
             Account: values.Account,                  //绑定帐号昵称
             GoodsName: values.GoodsName,              //收货人
@@ -163,8 +185,10 @@ class Correct_weipinhuis extends Component {
             let data_ = response.data;
             if ( data_.status ) {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
-              message.success(data_.msg);
-              this_.props.history.push("/buyAdmin")
+              this_.setState({
+                visible: true,
+                msgs: data_.msg,
+              })
             } else {
               message.warning(data_.msg);
             }
@@ -175,11 +199,11 @@ class Correct_weipinhuis extends Component {
           });
         }
       }else {
-        if ( _this.length > 2 ) {
-          message.error('只能上传2张必要图片');
-         } else {
-           message.error('请完善信息');
-         }
+        if ( _this.length > 3 ) {
+          message.error('只能上传3张必要图片');
+        } else {
+          message.error('请完善信息');
+        }
       }
     });
   }
@@ -191,21 +215,29 @@ class Correct_weipinhuis extends Component {
       <div>
         <header className="tabTitle">
           <div className="return"><Link to="/buyAdmin"><Icon type="left" theme="outlined" />返回</Link></div>
-          绑定唯品会买号
+          绑定淘宝买号
         </header>
         <div className="buyAdmin-box">
           <WingBlank>
-            <p className="buyAdmin-title">请务必完成以下信息</p>
             <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
               <FormItem
-                label="会员名称："
+                label="网易考拉买号："
               >
                 {getFieldDecorator('Account', {
-                  rules: [{ required: true, message: '请输入正确的淘宝旺旺账号：!' }],
+                  rules: [{ required: true, message: '请输入正确的考拉买号：!' }],
                 })(
-                  <Input className="buy-input" onChange={ this.nicknameVal } placeholder="旺旺账号" />
+                  <Input className="buy-input" onChange={ this.nicknameVal } placeholder="网易考拉买号" />
                 )}
               </FormItem>
+              {/* <FormItem
+                label="最近的淘宝订单号："
+                >
+                {getFieldDecorator('tb_order_sign', {
+                  rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
+                })(
+                  <Input onChange={ this.maxlength } className="buy-input" maxLength={18} placeholder="淘宝订单号" />
+                )}
+              </FormItem> */}
               <FormItem
                 label="收货人姓名："
               >
@@ -253,25 +285,35 @@ class Correct_weipinhuis extends Component {
                   <Input className="buy-input" type="text" maxLength={11} placeholder="收货人手机号" />
                 )}
               </FormItem>
+              {/* <FormItem
+                label="支付宝姓名"
+                >
+                {getFieldDecorator('AlipayName', {
+                  rules: [{ required: true, message: '请输入支付宝姓名!' }],
+                })(
+                  <Input className="buy-input" placeholder="支付宝姓名" />
+                )}
+              </FormItem> */}
               <FormItem
-                label="上传 个人中心截图: 和 拼多多订单截图:"
+                label="上传 个人中心截图 和 个人信息截图 和 实名认证截图"
               >
                 {getFieldDecorator('images', {
-                  rules: [{ required: false, message: '请上传淘宝和支付宝截图!' }],
+                  rules: [{ required: false, message: '请个人中心截图、个人信息截图和实名认证截图!' }],
                 })(
                   <ImagePicker
-                    length={2}
+                    length={3}
                     files={files}
                     multiple={false}
                     onChange={this.onUploadOne}
                     onImageClick={(index, fs) => console.log(index, fs)}
-                    selectable={files.length < 2}
+                    selectable={files.length < 3}
                   />
                 )}
               </FormItem>
               {/* 查看截图上传示例图 */}
-              <div className="look-shilitu">
+              <div style={{ fontSize: '12px' }} className="look-shilitu">
                 <p onClick={this.showOneShiliTu}>查看示例图>></p>
+                <p onClick={this.showTwoShiliTu1}>查看示例图>></p>
                 <p onClick={this.showTwoShiliTu}>查看示例图>></p>
               </div>
 
@@ -297,24 +339,44 @@ class Correct_weipinhuis extends Component {
           maskClosable={true}
           okText={"知道了"}
           cancelText={"关闭"}
-          >
-            <img className="shilitu" src={require('../../../../img/mytaobao.png')} alt="我的淘宝" />
-          </Modal>
-          {/* 我的支付宝示例图 */}
-          <Modal
-            visible={this.state.twovisible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-            maskClosable={true}
-            okText={"知道了"}
-            cancelText={"关闭"}
-          >
-            <img className="shilitu" src={require('../../../../img/myzhifubao.png')} alt="我的支付宝" />
-          </Modal>
+        >
+          <img className="shilitu" src={require('../../../../img/wykl3.jpg')} alt="个人中心截图" />
+        </Modal>
+        {/* 我的最近订单详情截图 */}
+        <Modal
+          visible={this.state.twovisible1}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          maskClosable={true}
+          okText={"知道了"}
+          cancelText={"关闭"}
+        >
+          <img className="shilitu" src={require('../../../../img/wykl1.jpg')} alt="个人信息截图" />
+        </Modal>
+        {/* 我的支付宝示例图 */}
+        <Modal
+          visible={this.state.twovisible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          maskClosable={true}
+          okText={"知道了"}
+          cancelText={"关闭"}
+        >
+          <img className="shilitu" src={require('../../../../img/wykl2.jpg')} alt="实名认证截图" />
+        </Modal>
+
+        <Modal
+          title="恭喜您提交成功"
+          closable={false}
+          visible={this.state.visible}
+          footer={<Button type="primary" onClick={this.hiddenBtn}>知道了</Button>}
+        >
+          <p>请添加专属客服微信：xiaomeng666444 联系客服审核账号！</p>
+        </Modal>
       </div>
     )
   }
 }
 
-const Correct_weipinhui = Form.create()(Correct_weipinhuis)
-export default Correct_weipinhui
+const Correct_wykl = Form.create()(Correct_wykls)
+export default Correct_wykl

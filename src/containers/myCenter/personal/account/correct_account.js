@@ -174,7 +174,7 @@ class Correct_Accounts extends Component {
               {getFieldDecorator('numb', {
                 rules: [{ required: true, message: '请输入手机号码!' }],
               })(
-                <Input className="buy-input"  onChange={ this.numbersPlace } maxLength="11" placeholder={ this.state.placeholder } />
+                <Input className="buy-input"  onChange={ this.numbersPlace } maxLength={11} placeholder={ this.state.placeholder } />
               )}
             </FormItem>
             <FormItem

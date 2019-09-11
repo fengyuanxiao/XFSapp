@@ -75,7 +75,7 @@ class MyTaskPage extends Component {
                 <span>未完成</span>
               </div>
               <div>
-                <Badge count={nocomplete_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={nocomplete_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -87,7 +87,7 @@ class MyTaskPage extends Component {
                 <span>已完成</span>
               </div>
               <div>
-                <Badge count={complete_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={complete_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -99,7 +99,7 @@ class MyTaskPage extends Component {
                 <span>已撤销</span>
               </div>
               <div>
-                <Badge count={cancel_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={cancel_task_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -115,7 +115,7 @@ class MyTaskPage extends Component {
                 <span>未完成</span>
               </div>
               <div>
-                <Badge count={nocomplete_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={nocomplete_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -127,7 +127,7 @@ class MyTaskPage extends Component {
                 <span>已完成</span>
               </div>
               <div>
-                <Badge count={complete_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={complete_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -139,7 +139,7 @@ class MyTaskPage extends Component {
                 <span>已撤销</span>
               </div>
               <div>
-                <Badge count={cancel_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={cancel_flowtask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -155,7 +155,7 @@ class MyTaskPage extends Component {
                 <span>未完成</span>
               </div>
               <div>
-                <Badge count={nocomplete_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={nocomplete_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -167,7 +167,7 @@ class MyTaskPage extends Component {
                 <span>已完成</span>
               </div>
               <div>
-                <Badge count={complete_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={complete_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -179,7 +179,7 @@ class MyTaskPage extends Component {
                 <span>已撤销</span>
               </div>
               <div>
-                <Badge count={cancel_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={cancel_assigntask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -195,7 +195,7 @@ class MyTaskPage extends Component {
                 <span>未完成</span>
               </div>
               <div>
-                <Badge count={nocomplete_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={nocomplete_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -207,7 +207,7 @@ class MyTaskPage extends Component {
                 <span>已完成</span>
               </div>
               <div>
-                <Badge count={complete_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={complete_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>
@@ -219,7 +219,7 @@ class MyTaskPage extends Component {
                 <span>已撤销</span>
               </div>
               <div>
-                <Badge count={cancel_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#007aff' }} />
+                <Badge count={cancel_answertask_count} style={{ marginRight: '0.5rem', backgroundColor:'#74bb17' }} />
                 <Icon type="right" theme="outlined" />
               </div>
             </Link>

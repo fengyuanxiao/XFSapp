@@ -266,7 +266,7 @@ class RegisterPages extends Component {
                     message: '请输入手机号码!'
                 }
                 ]
-              })(<Input className="register-input" onChange={this.onChange} maxLength="11" placeholder={this.state.placeholder}/>)
+              })(<Input className="register-input" onChange={this.onChange} maxLength={11} placeholder={this.state.placeholder}/>)
             }
           </FormItem>
           <FormItem {...formItemLayout} label="图形验证码：">

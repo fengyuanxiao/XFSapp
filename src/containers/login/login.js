@@ -214,7 +214,7 @@ class Logins extends Component {
               {getFieldDecorator('userName', {
                 rules: [{ required: true, message: '请输入手机号码!' }],
               })(
-                <Input onChange={this.handlePhone} style={{ width: '100%', height: '41px', margin: '0' }} type="text" maxLength="11" placeholder="手机号" />
+                <Input onChange={this.handlePhone} style={{ width: '100%', height: '41px', margin: '0' }} type="text" maxLength={11} placeholder="手机号" />
               )}
             </FormItem>
             <FormItem label="登录密码">

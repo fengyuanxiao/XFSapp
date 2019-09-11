@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd';
+import { Icon, Radio, Input, message } from 'antd';
 import axios from 'axios';    //ajax
 import RouteTabComponent from '../../../component/routeTab/routeTab';  //tabs
 import '../../../component/apis';
@@ -21,10 +21,12 @@ class BuyAdmins extends Component {
     axios.get(global.constants.website+'/api/index/tbBind',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       let responses = response.data.data;
-      // console.log(response.data.data);
+      // console.log(responses);
       // 获取绑定买号数据
       this.setState({
         datas_Status: response.data.data,                    //获取审核状态 判断是否点击进入平台对应的绑定买号
+        is_change: responses.is_change,                       //为0不显示单选框
+        value: responses.default_id,                          //默认id
 
         jd_bind: responses.jd_bind.nickname,                 //京东用户名
         jd_status: responses.jd_bind.bind_status,            //京东绑定状态  文字显示
@@ -57,10 +59,35 @@ class BuyAdmins extends Component {
     });
   }
 
+  // 修改接单号
+  onChange = e => {
+    // console.log('radio checked', e.target.value);
+    axios.post(global.constants.website+'/api/index/settb_account',
+    {
+      id: e.target.value,
+    },
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then(function (res) {
+      console.log(res.data);
+      message.success(res.data.msg)
+      if ( res.data.status ) {
+        window.location.reload();
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    this.setState({
+      value: e.target.value,
+    });
+  };
+
   // 点击 进入修改淘宝买号
   taobaoInto = (status, id) => {
-    console.log(id);
-    console.log(status);
+    // console.log(id);
+    // console.log(status);
     // 存入接口放回的数据json
     let datas_Status = this.state.datas_Status;
     // console.log(datas_Status);
@@ -118,16 +145,21 @@ class BuyAdmins extends Component {
     // 存入接口放回的数据json
     let datas_Status = this.state.datas_Status;
     if ( this.state.wykl__status === 0 ) {
-      this.props.history.push("/weipinhui")
+      this.props.history.push("/wykl")
     } else if ( this.state.wykl__status === 3 ) {
-      this.props.history.push({pathname: "/correct_weipinhui", state: {data: datas_Status.wykl_bind.id}})
+      this.props.history.push({pathname: "/correct_wykl", state: {data: datas_Status.wykl_bind.id}})
     } else {
       // console.log(123);
     }
   }
 
   render() {
-    const { wykl__status,wykl_remark,wykl_status,wykl_bind,taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
+    const { value, is_change, wykl__status,wykl_remark,wykl_status,wykl_bind,taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -137,20 +169,34 @@ class BuyAdmins extends Component {
         <RouteTabComponent />
         <div className="buyAdmin-box">
           <ul>
-            {/* 绑定淘宝账号 */}
-            {/* <Link to="/taobao"> */}
-            {/* <div className="bind-list" onClick={ ()=>this.taobaoInto(item) }> */}
-            {/* <div className="bind-list" onClick={ this.taobaoInto }>
-                <div><img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ taobao_bind }</span></div>
-                <div><span>{ taobao_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
-            </div> */}
             {
               taobao_bind ?
                 taobao_bind.map((item,index) => {
                   return(
-                    <li key={index}>
-                      <div className="bind-list" onClick={ () => this.taobaoInto(item.status, item.id) }>
-                        <div><img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ item.nickname }</span></div>
+                    <li key={index} style={{ display: 'flex' ,alignItems: 'center' }}>
+                      {
+                        is_change ?
+                          <Radio.Group onChange={this.onChange} value={value}>{/* value={this.state.value}*/}
+                            {
+                              item.status ?
+                                <Radio style={radioStyle} value={item.id}></Radio>
+                              :
+                              ""
+                            }
+                          </Radio.Group>
+                        :
+                        ""
+                      }
+                      <div style={{ width: '100%' }} className="bind-list" onClick={ () => this.taobaoInto(item.status, item.id) }>
+                        <div>
+                          <img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ item.nickname }</span>
+                          {
+                            item.is_default ?
+                              <span style={{ color: 'red' }}>（默认买号）</span>
+                            :
+                            ""
+                          }
+                        </div>
                         <div><span>{ item.bind_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                       </div>
                     </li>

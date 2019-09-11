@@ -212,7 +212,7 @@ class ForgetPasswords extends Component {
                   required: true, message: '请输入手机号码!',
                 }],
               })(
-                <Input className="register-input" onChange={ this.onChange } maxLength="11" placeholder={ this.state.placeholder } />
+                <Input className="register-input" onChange={ this.onChange } maxLength={11} placeholder={ this.state.placeholder } />
               )}
             </FormItem>
             <FormItem
@@ -227,7 +227,7 @@ class ForgetPasswords extends Component {
                   required: true, message: '请输入图形验证码!',
                 }],
               })(
-                <Input onChange={ this.tuCode } className="register-input" maxLength="11" placeholder="请输入图形验证码" />
+                <Input onChange={ this.tuCode } className="register-input" maxLength={11} placeholder="请输入图形验证码" />
               )}
             </FormItem>
             <FormItem

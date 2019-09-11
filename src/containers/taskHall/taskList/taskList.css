@@ -11,9 +11,12 @@
 .listLeft {
   width: 45%;
 }
-.listLeft > p:first-child {
+.listLeft > div:first-child {
   color: #ff6235;
   font-size: 1.2rem;
+}
+.listLeft > div {
+  text-align: center;
 }
 .listLeft > p {
   text-align: center;
@@ -42,7 +45,7 @@
   width: 25%;
   text-align: center;
 }
-.listCenter > p:first-child {
+.listCenter > div:first-child {
   color: #ff6235;
   font-size: 1.3rem;
 }

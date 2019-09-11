@@ -242,20 +242,20 @@ class TaskList extends Component {
                           <div className="listLeft">
                             {
                               item.task_type === 2 ?
-                                <p style={{ fontSize: '0.9rem' }}>佣金{item.commission}元 {item.commission_desc}</p>
+                                <p style={{ fontSize: '0.9rem', color:'#ff6235', fontSize:'1.2rem' }}>佣金{item.commission}元 {item.commission_desc}</p>
                               :
                               (
                                 item.task_type === 0 ?
-                                  <p>
+                                  <div>
                                     <p>{item.commission}元</p>
                                     <p style={{ fontSize: '15px' }}>{item.commission_desc}</p>
-                                  </p>
+                                  </div>
                                 :
                                 (
                                   item.task_type === 1 ?
-                                    <p style={{ fontSize: '0.9rem' }}>最低0.4元起{item.commission_desc}</p>
+                                    <p style={{ fontSize: '0.9rem', color:'#ff6235', fontSize:'1.2rem' }}>最低0.4元起{item.commission_desc}</p>
                                   :
-                                  <p style={{ fontSize: '0.9rem' }}>佣金{item.commission}元{item.commission_desc}</p>
+                                  <p style={{ fontSize: '0.9rem', color:'#ff6235', fontSize:'1.2rem' }}>佣金{item.commission}元{item.commission_desc}</p>
                                 )
                               )
                             }
@@ -268,10 +268,10 @@ class TaskList extends Component {
                           <div className="listCenter">
                             {
                               item.task_type === 0 ?
-                                <p>
+                                <div>
                                   <p>{item.itemprice + item.subtotal_commission}￥</p>
                                   <p style={{ color: '#797979',fontSize: '0.9rem' }}>{item.task_type_text}</p>
-                                </p>
+                                </div>
                               :
                               <p style={{ fontSize: '0.9rem',color: '#797979' }}>{item.task_type_text}</p>
                             }

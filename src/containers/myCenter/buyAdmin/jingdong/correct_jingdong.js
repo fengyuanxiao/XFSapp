@@ -266,7 +266,7 @@ class Correct_jingdongs extends Component {
                 {getFieldDecorator('GoodsPhone', {
                   rules: [{ required: true, message: '请输入收货人手机号码!' }],
                 })(
-                  <Input className="buy-input" type="text" maxLength="11" placeholder="收货人手机号" />
+                  <Input className="buy-input" type="text" maxLength={11} placeholder="收货人手机号" />
                 )}
               </FormItem>
               <FormItem

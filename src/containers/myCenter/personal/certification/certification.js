@@ -178,42 +178,42 @@ class certifications extends Component {
                 {getFieldDecorator('cardid', {
                   rules: [{ required: true, message: '请输入身份证号!' }],
                 })(
-                  <Input className="buy-input" type="text" placeholder="请输入身份证号" maxLength="18" />
+                  <Input className="buy-input" type="text" placeholder="请输入身份证号" maxLength={18} />
                 )}
               </FormItem>
-              <FormItem
+              {/* <FormItem
                 label="上传身份证正面图"
-              >
+                >
                 {getFieldDecorator('images1', {
                   rules: [{ required: localStorage.getItem("realname_status") === "0" ? true : false , message: '请上传身份证正面图和反面图!' }],
                 })(
                   <ImagePicker
-                    length={1}
-                    files={files01}
-                    multiple={false}
-                    onChange={this.onUploadOne1}
-                    onImageClick={(index, fs) => console.log(index, fs)}
-                    selectable={files01.length < 1}
+                length={1}
+                files={files01}
+                multiple={false}
+                onChange={this.onUploadOne1}
+                onImageClick={(index, fs) => console.log(index, fs)}
+                selectable={files01.length < 1}
                   />
                 )}
-              </FormItem>
-              <FormItem
+                </FormItem>
+                <FormItem
                 label="上传身份证反面图"
-              >
+                >
                 {getFieldDecorator('images2', {
                   rules: [{ required: localStorage.getItem("realname_status") === "0" ? true : false , message: '请上传身份证正面图和反面图!' }],
                 })(
                   <ImagePicker
-                    length={1}
-                    files={files02}
-                    onChange={this.onUploadOne2}
-                    onImageClick={(index, fs) => console.log(index, fs)}
-                    selectable={files02.length < 1}
+                length={1}
+                files={files02}
+                onChange={this.onUploadOne2}
+                onImageClick={(index, fs) => console.log(index, fs)}
+                selectable={files02.length < 1}
                   />
                 )}
-              </FormItem>
+              </FormItem> */}
               <div style={{ color:"red", paddingBottom: '0.8rem' }}>
-                温馨提示：绑定的身份证名字须和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，小跳蛙将保证信息安全不泄漏，不用于其他用途。
+                温馨提示：绑定的身份证名字须和支付宝实名认证一致，请认真核对，填写不正确将导致返款失败！您的信息仅用于返款用途，幸福树将保证信息安全不泄漏，不用于其他用途。
               </div>
               <Button type="primary" htmlType="submit" className="accountBtn">提交</Button>
               <div className="toast-example">

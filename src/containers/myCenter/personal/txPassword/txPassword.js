@@ -191,7 +191,7 @@ class TxPasswords extends Component {
               {getFieldDecorator('newPassword', {
                 rules: [{ required: true, message: '请输入新密码!' }],
               })(
-                <Input className="buy-input" placeholder="请输入新密码" maxLength="11" />
+                <Input className="buy-input" placeholder="请输入新密码" maxLength={11} />
               )}
             </FormItem>
             <FormItem
@@ -209,7 +209,7 @@ class TxPasswords extends Component {
               {getFieldDecorator('numbers', {
                 rules: [{ required: true, message: '请输入手机号!' }],
               })(
-                <Input onChange={ this.numbersPlace } maxLength="11" className="buy-input" type="text" placeholder="请输入手机号码" />
+                <Input onChange={ this.numbersPlace } maxLength={11} className="buy-input" type="text" placeholder="请输入手机号码" />
               )}
             </FormItem>
             <FormItem

@@ -48,6 +48,8 @@ import BuyAdmin from '../../containers/myCenter/buyAdmin/buyAdmin';             
     import Correct_pinduoduo from '../../containers/myCenter/buyAdmin/pinduoduo/correct_pinduoduo';       //修改绑定拼多多的账号
   import BindWinpinhui from '../../containers/myCenter/buyAdmin/weipinhui/weipinhui';                   //绑定唯品会账号
     import Correct_weipinhui from '../../containers/myCenter/buyAdmin/weipinhui/correct_weipinhui';       //修改绑定唯品会账号
+  import BindWykl from '../../containers/myCenter/buyAdmin/wykl/wykl';                                  //绑定网易考拉账号
+    import Correct_wykl from '../../containers/myCenter/buyAdmin/wykl/correct_wykl';                      //修改绑定网易考拉账号
 import AllCenter from '../../containers/myCenter/callCenter/allCenter';                               //客服中心
 import Personal from '../../containers/myCenter/personal/personal';                                   //个人信息
 import ShenSu from '../../containers/myCenter/shenSu/shenSu';                                         //申诉记录
@@ -128,6 +130,8 @@ class RouteTabComponent extends Component {
             <Route path="/buyAdmin" component={BuyAdmin} />
             <Route path="/taobao" component={BindTaobao}/>
             <Route path="/correct_taobao" component={Correct_taobao}/>
+            <Route path="/wykl" component={BindWykl}/>
+            <Route path="/correct_wykl" component={Correct_wykl}/>
             <Route path="/jingdong" component={BindJingdong}/>
             <Route path="/correct_jingdong" component={Correct_jingdong}/>
             <Route path="/pinduoduo" component={BindPinduoduo}/>
