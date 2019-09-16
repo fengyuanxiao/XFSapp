@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Icon, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import lrz from 'lrz';
-import ImagePicker from 'antd-mobile/lib/image-picker';
+// import ImagePicker from 'antd-mobile/lib/image-picker';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 import '../../../../component/apis';
@@ -153,7 +153,7 @@ class certifications extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { files01, files02, animating } = this.state;
+    const { animating } = this.state;
     return(
       <div>
         <header className="tabTitle">

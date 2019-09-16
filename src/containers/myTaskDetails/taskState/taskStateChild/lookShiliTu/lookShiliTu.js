@@ -30,8 +30,8 @@ class LookShiliTus extends Component {
       twovisible: false,
       threevisible: false,
       files: data,
-      oks: false,                         //是否核对过店铺
-      oks2: false,                         //是否核对过店铺
+      oks: false,                                                          //是否核对过店铺
+      oks2: this.props.is_staytime ? false : true,                         //是否核对过商家问题
     }
     // console.log(props);
   }
@@ -40,7 +40,7 @@ class LookShiliTus extends Component {
   //      pageInputScroll()
   //  }
 
-  // 货比三家示例图
+  // 货比商品示例图
   showOneShiliTu = () => {
     this.setState({
       onevisible: true,
@@ -209,10 +209,10 @@ class LookShiliTus extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { files, animating } = this.state;
-    const { stay_pic, stayquestion, itemnum, itemprice,chatpic,is_muti_keyword,shop_namess, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
+    const { is_staytime,stay_pic, stayquestion, itemnum, itemprice,chatpic,is_muti_keyword,shop_namess, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
     return(
       <div>
-        {/* 第一步货比三家 */}
+        {/* 第一步货比商品 */}
         <div className="task-plan buzhou" style={{ marginBottom: '0' }}>
           <WingBlank>
             <div className="buzou-title"><span>第一步 货比商品</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
@@ -238,19 +238,19 @@ class LookShiliTus extends Component {
               <Button type="primary" onClick={ this.heDuiName }>核对</Button>
             </div>
             {
-              stayquestion === "" ?
-                ""
+              is_staytime ?
+                <div>
+                  <div className="shop-title">
+                    <span>3</span><span>商家设置的问题:{stayquestion}</span>
+                  </div>
+                  <div className="shop-title">
+                    <span>4</span>
+                    <Input onChange={ this.shopAnswer } placeholder="请在此输入答案" />
+                    <Button type="primary" onClick={ this.answerBtn }>核对</Button>
+                  </div>
+                </div>
               :
-              <div>
-                <div className="shop-title">
-                  <span>3</span><span>商家设置的问题:{stayquestion}</span>
-                </div>
-                <div className="shop-title">
-                  <span>4</span>
-                  <Input onChange={ this.shopAnswer } placeholder="请在此输入答案" />
-                  <Button type="primary" onClick={ this.answerBtn }>核对</Button>
-                </div>
-              </div>
+              ""
             }
             {/* 第二步 浏览店铺 */}
             <div className="buzou-title"><span>第二步 浏览店铺</span><span onClick={this.showTwoShiliTu}>点击查看示例</span></div>
@@ -387,7 +387,7 @@ class LookShiliTus extends Component {
         </div>
 
 
-        {/* 第一步货比三家的图片示例 */}
+        {/* 第一步货比商品的图片示例 */}
         <Modal
           visible={this.state.onevisible}
           onOk={this.handleOk}
@@ -396,7 +396,7 @@ class LookShiliTus extends Component {
           okText={"知道了"}
           cancelText={"关闭"}
         >
-          <img className="shilitu" src={require('../../../../../img/4444.jpg')} alt="货比三家" />
+          <img className="shilitu" src={require('../../../../../img/4444.jpg')} alt="货比商品" />
         </Modal>
         <Modal
           visible={this.state.onevisibles}
@@ -406,7 +406,7 @@ class LookShiliTus extends Component {
           okText={"知道了"}
           cancelText={"关闭"}
         >
-          <img className="shilitu" src={stay_pic} alt="货比三家" />
+          <img className="shilitu" src={stay_pic} alt="货比商品" />
         </Modal>
         {/* 第二步浏览店铺的图片示例 */}
         <Modal

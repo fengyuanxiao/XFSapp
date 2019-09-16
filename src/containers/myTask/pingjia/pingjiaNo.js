@@ -17,7 +17,6 @@ const tabs = [
 var page5 = 1;          //所有
 var page1 = 1;          //待返款
 var page3 = 1;          //待评价
-var page0 = 1;          //待操作
 
 class PingJiaTaskNo extends Component {
   constructor() {
@@ -35,7 +34,6 @@ class PingJiaTaskNo extends Component {
     page5 = 1;
     page1 = 1;
     page3 = 1;
-    page0 = 1;
     // 所有
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page5,{
       status: 5,
@@ -151,7 +149,6 @@ class PingJiaTaskNo extends Component {
   loadMoreDataFn(that) {
 
     let task_lists = that.state.task_lists;       //所有
-    let statea = that.state.statea;               //待操作
     let stateb = that.state.stateb;               //待返款
     let statec = that.state.statec;               //待评价
     // 所有
@@ -275,7 +272,7 @@ class PingJiaTaskNo extends Component {
 
 
   render() {
-    const { statec,stateb,statea,datasShow,task_lists} = this.state;
+    const { statec,stateb,datasShow,task_lists} = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -284,59 +281,6 @@ class PingJiaTaskNo extends Component {
         </header>
         <WhiteSpace style={{ paddingTop: '3rem' }} />
         <Tabs tabs={tabs} initialPage={2} animated={false} useOnPan={false} onTabClick={this.onChange}>
-          {/* 待操作 */}
-          {/* <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
-            循环 all-task div
-            <div className="App">
-              {
-            statea ?
-            statea.map((item, index) => {
-            return(
-            <div key={index} className="all-task">
-            <div className="left-img">
-            <img src={item.goodspic} alt=""/>
-            </div>
-            <div className="right">
-            top
-            <div className="right-top">
-            <span className="right-top-child">
-            <img className="right-top-childImg" src={item.taskitem_pic} alt="平台图标"/>
-            {item.user_taobao}
-            </span>
-            <span>
-            {item.addtime}
-            </span>
-            </div>
-            center
-            <div>
-            <div className="right-center">
-            <p>￥{item.commission}</p>
-            {
-            item.is_appeal === 1 ?
-            <Button type="primary" onClick={ ()=>this.routerToWendas(item.order_id)}>该任务在申诉中</Button>
-            :
-            // <Button type="primary"><Link to={{ pathname: '/myTaskDetails', state: item.order_id }}>{item.order_status_text}</Link></Button>
-            <Button type="primary" onClick={()=>this.routerToWenda(item.order_id)}>{item.order_status_text}</Button>
-            }
-            </div>
-            <div className="right-bottom">
-            <p className="paddingBottom">
-            <span>垫资{item.need_principal}元</span>
-            <span>{item.refundtext}</span>
-            </p>
-            <p className="taskss">请在{item.limittime}前操作</p>
-            </div>
-            </div>
-            </div>
-            </div>
-            )
-            })
-            :
-            <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
-              }
-            </div>
-            <div style={{ textAlign: 'center' }} ref="wrapper" onClick={this.loadMoreDataFn.bind(this, this)}></div>
-          </div> */}
           {/* 待操作 */}
           <div style={{ padding: '0.3rem 0.3rem', backgroundColor: '#fff' }}>
             <div className="App">

@@ -138,7 +138,7 @@ class TaskPlan extends Component {
             {/* 任务要求 */}
             <div className="plan-box">
               <p className="title"><b className="plan-title">一：任务要求</b><span></span></p>
-              <p className="task-plan-list"><span>货比三家</span><span></span></p>
+              <p className="task-plan-list"><span>货比商品</span><span></span></p>
               <p className="task-plan-list"><span>浏览店铺</span><span></span></p>
               <div className="task-plan-list"><span>聊天下单</span>
                 <div className="task-plan-list-img">

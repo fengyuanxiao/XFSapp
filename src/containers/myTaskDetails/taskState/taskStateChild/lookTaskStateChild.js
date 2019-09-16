@@ -170,7 +170,7 @@ class LookTaskStateChild extends Component {
 
   render() {
     const { files } = this.state;
-    const { remark_pic,remarks,shop_name,charset_two,charset_one,remark,maxprice,minprice,goods_address, pic_desc, pic_uploads_num, is_muti_keyword, position, sortmsg, keyword, goodsname, goodspic, tasktype_name } = this.state;
+    const { shop_namess, remark_pic,remarks,shop_name,charset_two,charset_one,remark,maxprice,minprice,goods_address, pic_desc, pic_uploads_num, is_muti_keyword, position, sortmsg, keyword, goodsname, goodspic, tasktype_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -180,7 +180,7 @@ class LookTaskStateChild extends Component {
         {/* 目标商品详情介绍 */}
         <div className="task-plan" style={{ margin:0 }}>
           <div className="plan-box" style={{ marginTop: "2rem" }}>
-            <p className="task-plan-list"><span>{shop_name}</span>
+            <p className="task-plan-list"><span>{shop_namess}</span>
               {/* <Link to="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</Link> */}
               <a href="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</a>
             </p>

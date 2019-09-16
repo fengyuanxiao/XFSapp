@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Radio, Input, message } from 'antd';
+import { Icon, Radio, message } from 'antd';
 import axios from 'axios';    //ajax
 import RouteTabComponent from '../../../component/routeTab/routeTab';  //tabs
 import '../../../component/apis';
@@ -89,7 +89,7 @@ class BuyAdmins extends Component {
     // console.log(id);
     // console.log(status);
     // 存入接口放回的数据json
-    let datas_Status = this.state.datas_Status;
+    // let datas_Status = this.state.datas_Status;
     // console.log(datas_Status);
     if ( status === 0 ) {
       this.props.history.push("/taobao")
@@ -159,7 +159,7 @@ class BuyAdmins extends Component {
       height: '30px',
       lineHeight: '30px',
     };
-    const { value, is_change, wykl__status,wykl_remark,wykl_status,wykl_bind,taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_status, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
+    const { value, is_change, wykl__status,wykl_remark,wykl_status,wykl_bind,taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -191,7 +191,7 @@ class BuyAdmins extends Component {
                         <div>
                           <img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ item.nickname }</span>
                           {
-                            item.is_default ?
+                            item.new_default ?
                               <span style={{ color: 'red' }}>（默认买号）</span>
                             :
                             ""

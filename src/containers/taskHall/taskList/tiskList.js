@@ -151,7 +151,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { bind_status, is_bind,task_lists, datasState, money_account, commission_account, buttonState } = this.state;
+    const { bind_status,task_lists, datasState, money_account, commission_account, buttonState } = this.state;
     return (
       <div>
         <PullToRefresh
@@ -159,6 +159,7 @@ class TaskList extends Component {
           style={{
             height: this.state.height,
             overflow: 'auto',
+            backgroundColor: '#f6f6f6',
           }}
           refreshing={this.state.refreshing}
           onRefresh={() => {
@@ -187,10 +188,9 @@ class TaskList extends Component {
           </section>
           {/* 提现用户数据冒泡 */}
           <UserCashList />
-          <div style={{ backgroundColor: '#ffe479' }} className="is_bind">
-            {/* <span></span> */}
+          {/* <div style={{ backgroundColor: '#ffe479' }} className="is_bind">
             <Link style={{ color: 'red' }} to="/activity">你有一笔奖励金待领取，速领 >></Link>
-          </div>
+          </div> */}
           {
             bind_status === 6 ?
               <div className="is_bind">
@@ -212,24 +212,6 @@ class TaskList extends Component {
             :
               ''
           }
-          {/* {
-            bind_status === 0 || bind_status ===  ?
-              ""
-            :
-            <div className="is_bind">
-              <span>未绑定淘宝账号！</span>
-              <Link to="/buyAdmin">前往绑定 >></Link>
-            </div>
-          } */}
-          {/* {新用户红包状态
-            is_bind ?
-              ""
-            :
-            <div className="is_bind">
-              <span>未绑定淘宝账号！</span>
-              <Link to="/buyAdmin">前往绑定 >></Link>
-            </div>
-          } */}
           {/* 任务列表 */}
           {
             datasState ?
@@ -242,7 +224,7 @@ class TaskList extends Component {
                           <div className="listLeft">
                             {
                               item.task_type === 2 ?
-                                <p style={{ fontSize: '0.9rem', color:'#ff6235', fontSize:'1.2rem' }}>佣金{item.commission}元 {item.commission_desc}</p>
+                                <p style={{ color:'#ff6235', fontSize:'1.2rem' }}>佣金{item.commission}元 {item.commission_desc}</p>
                               :
                               (
                                 item.task_type === 0 ?
@@ -253,9 +235,9 @@ class TaskList extends Component {
                                 :
                                 (
                                   item.task_type === 1 ?
-                                    <p style={{ fontSize: '0.9rem', color:'#ff6235', fontSize:'1.2rem' }}>最低0.4元起{item.commission_desc}</p>
+                                    <p style={{ color:'#ff6235', fontSize:'0.9rem' }}>最低0.4元起{item.commission_desc}</p>
                                   :
-                                  <p style={{ fontSize: '0.9rem', color:'#ff6235', fontSize:'1.2rem' }}>佣金{item.commission}元{item.commission_desc}</p>
+                                  <p style={{ color:'#ff6235', fontSize:'1.2rem' }}>佣金{item.commission}元{item.commission_desc}</p>
                                 )
                               )
                             }
@@ -295,8 +277,8 @@ class TaskList extends Component {
               </ul>
             :
             <div className="loading">
-              <img src={require("../../../img/loading.gif")} alt="loading"/>
-              <p>任务加载中...</p>
+              <img style={{ maxWidth: '100%' }} src={require("../../../img/loading1.gif")} alt="loading"/>
+              <p style={{ color: '#89c997' }}>任务加载中...</p>
             </div>
             // Toast.loading('任务加载中...')
           }

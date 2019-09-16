@@ -20,8 +20,8 @@ const FormItem = Form.Item;
 let phoneNumber = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/; //手机号码正则
 
 class RegisterPages extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       getCodesState: true,
       codeNum: 60,        //倒计时 60 秒
@@ -167,16 +167,16 @@ class RegisterPages extends Component {
               if ( response.data.status ) {
                 // 保存token到本地
                 localStorage.setItem("token", response.data.token);
-                message.success(response.data.msg);
+                // message.success(response.data.msg);
                 // 显示红包
-                this_.setState({
-                  hongbao: true,
-                  register_money: response.data.data.register_money,
-                })
-                // 注册成功后执行回调跳转到任务大厅
-                // message.success("注册成功！", successSkip => {
-                //   this.props.history.push('/taskHallPage')
+                // this_.setState({
+                //   hongbao: true,
+                //   register_money: response.data.data.register_money,
                 // })
+                // 注册成功后执行回调跳转到任务大厅
+                message.success(response.data.msg, successSkip => {
+                  this_.props.history.push('/taskHallPage')
+                })
               } else {  // response.data状态为 false的时候跳转
                 message.error(response.data.msg)
               }

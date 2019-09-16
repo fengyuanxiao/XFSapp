@@ -68,6 +68,7 @@ class TaskStateChild extends Component {
         remark_pic: responses.taskInfo.remark_pic,              //商家要求图片
         stayquestion: responses.stayquestion,                   //商家设置的问题
         stay_pic: responses.stay_pic,                           //答案图
+        is_staytime: responses.is_staytime,                     //为1说明有商家问题
       })
       if ( responses.taskInfo.remark_pic === "" && responses.taskInfo.remark === "" ) {
 
@@ -98,7 +99,7 @@ class TaskStateChild extends Component {
   }
 
   render() {
-    const { stay_pic,task_id,stayquestion,rule,keyword_type,remark_pic,remarks,order_message,shop_name,charset_two,charset_one,remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_namess, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const { is_staytime, stay_pic,task_id,stayquestion,rule,keyword_type,remark_pic,remarks,order_message,shop_name,charset_two,charset_one,remark,maxprice,minprice,goods_address,paychannel,chatpic,user_taobao,platformname,platform, pic_desc, pic_uploads_num, is_muti_keyword, sku_set, order_id, datas, position, sortmsg, keyword, shop_namess, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -108,7 +109,7 @@ class TaskStateChild extends Component {
         {/* 目标商品详情介绍 */}
         <div className="task-plan" style={{ margin:0 }}>
           <div className="plan-box" style={{ marginTop: "2rem" }}>
-            <p className="task-plan-list"><span>{shop_name}</span>
+            <p className="task-plan-list"><span>{shop_namess}</span>
               {/* <Link to="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</Link> */}
               <a href="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</a>
             </p>
@@ -235,8 +236,12 @@ class TaskStateChild extends Component {
 
         {/* 在此判断是否是浏览任务 任务步骤 lookShiliTu.js */}
 
-        { datas ? <LookShiliTu stay_pic={stay_pic} task_id={task_id} stayquestion={stayquestion} shop_name={shop_name} itemprice={itemprice} itemnum={itemnum} chatpic={chatpic} user_taobao={user_taobao} platformname={platformname} tasktype_itemname={tasktype_itemname} platform={platform} goodsname={goodsname} shop_namess={shop_namess} pic_desc={pic_desc} pic_uploads_num={pic_uploads_num} history={this.props.history} is_muti_keyword={is_muti_keyword} order_id={order_id} /> : "" }
-      </div>
+        { datas ?
+          <LookShiliTu is_staytime={is_staytime} stay_pic={stay_pic} task_id={task_id} stayquestion={stayquestion} shop_name={shop_name} itemprice={itemprice} itemnum={itemnum} chatpic={chatpic} user_taobao={user_taobao} platformname={platformname} tasktype_itemname={tasktype_itemname} platform={platform} goodsname={goodsname} shop_namess={shop_namess} pic_desc={pic_desc} pic_uploads_num={pic_uploads_num} history={this.props.history} is_muti_keyword={is_muti_keyword} order_id={order_id} />
+          :
+            ""
+        }
+        </div>
     )
   }
 }

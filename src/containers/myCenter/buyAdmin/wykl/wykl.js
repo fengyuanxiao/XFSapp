@@ -92,7 +92,7 @@ class BindWykls extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let this_ = this;
-    let states = this.state;
+    // let states = this.state;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
       if ( !err === true && _this.length === 3 ) {

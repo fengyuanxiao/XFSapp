@@ -74,6 +74,10 @@ class TaskStateChilds extends Component {
         order_message: responses.order_message,                 //订单留言
         remark: responses.taskInfo.remark,                      //商家要求文字
         remark_pic: responses.taskInfo.remark_pic,              //商家要求图片
+        is_staytime: responses.is_staytime,                     //为1说明有商家问题
+        stayquestion: responses.stayquestion,                   //商家设置的问题
+        oks2: responses.is_staytime ? false : true,             //是否核对过商家问题
+        task_id: responses.task_id,                             //任务id
       })
       if ( responses.taskInfo.remark_pic === "" && responses.taskInfo.remark === "" ) {
 
@@ -155,12 +159,43 @@ class TaskStateChilds extends Component {
     // console.log(e.target.value);
   }
 
+  // 输入商家设置的答案value值
+  shopAnswer =(e) => {
+    this.setState({
+      answer: e.target.value
+    })
+    // console.log(e.target.value);
+  }
+  answerBtn = () => {
+    axios.post(global.constants.website+'/api/task/checkQuestion', {
+      stayanswer: this.state.answer,                           //用户输入的答案
+      task_id: this.state.task_id,                             //任务ID
+    },{
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then( res => {
+      if ( res.data.status ) {
+        message.success(res.data.msg)
+        this.setState({
+          oks2: true,
+        })
+      } else {
+        message.error(res.data.msg)
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
   //提交多关键词任务
   submitCharset = () => {
     let thisState = this.state;
     let this_ = this;
     if ( this.state.oks === false ) {
       message.error("请先验证店铺！")
+    }  else if ( this.state.oks2 === false ) {
+      message.error("请先核对商家问题！")
     } else {
       if ( thisState.files.length === 4 ) {
         this_.setState({ animating: true })            //数据提交中显示的login.....
@@ -197,7 +232,7 @@ class TaskStateChilds extends Component {
   }
 
   render() {
-    const { rule,keyword_type,shop_name,remark_pic,remarks,order_message,remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
+    const {oks2,stayquestion,is_staytime,rule,keyword_type,shop_name,remark_pic,remarks,order_message,remark,paychannel,minprice,maxprice,goods_address,files, animating,datas, platformname, user_taobao, sku_set, charset_two, charset_one, position, sortmsg, keyword, shop_nameaa, goodsname, goodspic, searchprice, itemnum, itemprice, tasktype_name, tasktype_itemname,keyword_type_name } = this.state;
     return(
       <div className="taskStateChild-box">
         <header className="tabTitle">
@@ -209,7 +244,7 @@ class TaskStateChilds extends Component {
             {/* 目标商品详情介绍 */}
             <div className="task-plan" style={{ margin:0 }}>
               <div className="plan-box" style={{ marginTop: "2rem" }}>
-                <p className="task-plan-list"><span>{shop_name}</span>
+                <p className="task-plan-list"><span>{shop_nameaa}</span>
                   {/* <Link to="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</Link> */}
                   <a href="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</a>
                 </p>
@@ -327,7 +362,7 @@ class TaskStateChilds extends Component {
               <span>任务步骤</span>
             </div>
             <div className="task-plan buzhou" style={{ marginBottom: 0 }}>
-              <div className="buzou-title"><span>第一步 货比三家</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
+              <div className="buzou-title"><span>第一步 货比商品</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
               <p>.请确认使用{user_taobao}（{platformname}账号）登入{tasktype_itemname}APP</p>
               <p>.第一个关键词<span className="charsets">（{charset_one}）</span>搜索 找到对应的主宝贝店外截图</p>
               <p>.进店浏览2-3分钟后  收藏主宝贝 退出</p>
@@ -353,6 +388,21 @@ class TaskStateChilds extends Component {
                 <Input onChange={ this.shopName } placeholder="请在此输入店铺名核对" />
                 <Button type="primary" onClick={ this.heDuiName }>核对</Button>
               </div>
+              {
+                is_staytime ?
+                  <div>
+                    <div className="shop-title">
+                      <span>3</span><span>商家设置的问题:{stayquestion}</span>
+                    </div>
+                    <div className="shop-title">
+                      <span>4</span>
+                      <Input onChange={ this.shopAnswer } placeholder="请在此输入答案" />
+                      <Button type="primary" onClick={ this.answerBtn }>核对</Button>
+                    </div>
+                  </div>
+                :
+                ""
+              }
             </div>
             <Button onClick={ this.submitCharset } type="primary" className="login-form-button">
               提交任务
@@ -370,7 +420,7 @@ class TaskStateChilds extends Component {
         {/* { datas ? <LookShiliTu history={this.props.history} shop_name={shop_name} order_id={order_id} /> : "" } */}
 
 
-        {/* 第一步货比三家的图片示例 */}
+        {/* 第一步货比商品的图片示例 */}
         <Modal
           visible={this.state.onevisible}
           onOk={this.handleOk}
@@ -379,7 +429,7 @@ class TaskStateChilds extends Component {
           okText={"知道了"}
           cancelText={"关闭"}
         >
-          <img className="shilitu" src={require('../../../../img/guanjianci.png')} alt="货比三家" />
+          <img className="shilitu" src={require('../../../../img/guanjianci.png')} alt="货比商品" />
         </Modal>
         <Modal
           title="多关键词任务须知"

@@ -17,7 +17,6 @@ const tabs = [
 var page5 = 1;          //所有
 var page1 = 1;          //待返款
 var page3 = 1;          //待评价
-var page0 = 1;          //待操作
 
 class LiuLanTaskNo extends Component {
   constructor() {
@@ -35,7 +34,6 @@ class LiuLanTaskNo extends Component {
     page5 = 1;
     page1 = 1;
     page3 = 1;
-    page0 = 1;
     // 所有
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page5,{
       status: 5,
@@ -151,7 +149,6 @@ class LiuLanTaskNo extends Component {
   loadMoreDataFn(that) {
 
     let task_lists = that.state.task_lists;       //所有
-    let statea = that.state.statea;               //待操作
     let stateb = that.state.stateb;               //待返款
     let statec = that.state.statec;               //待评价
     // 所有
@@ -243,7 +240,7 @@ class LiuLanTaskNo extends Component {
 
 
   render() {
-    const { statec,stateb,statea,datasShow,task_lists} = this.state;
+    const { statec,stateb,datasShow,task_lists} = this.state;
     return(
       <div>
         <header className="tabTitle">

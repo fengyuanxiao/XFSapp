@@ -28,7 +28,7 @@ class Correct_taobaos extends Component {
       onevisible: false,
       twovisible1: false,
       twovisible: false,
-      visible: false,         //提交成功弹框提示
+      // visible: false,         //提交成功弹框提示
       num: 0,                 //如果是false 点击确认绑定就传后台放回过来的图片路径，为true就传买手上传的图片
     }
   }
@@ -188,7 +188,7 @@ class Correct_taobaos extends Component {
             if ( data_.status ) {
               this_.setState({ animating: false })          //数据提交成功关闭login.....
               this_.setState({
-                visible: true,
+                // visible: true,
                 msgs: data_.msg,
               })
             } else {
@@ -373,14 +373,14 @@ class Correct_taobaos extends Component {
           <img className="shilitu" src={require('../../../../img/myzhifubao.png')} alt="我的支付宝" />
         </Modal>
 
-        <Modal
+        {/* <Modal
           title="恭喜您提交成功"
           closable={false}
           visible={this.state.visible}
           footer={<Button type="primary" onClick={this.hiddenBtn}>知道了</Button>}
-        >
+          >
           <p>请添加专属客服微信：xiaomeng666444 联系客服审核账号！</p>
-        </Modal>
+        </Modal> */}
       </div>
     )
   }

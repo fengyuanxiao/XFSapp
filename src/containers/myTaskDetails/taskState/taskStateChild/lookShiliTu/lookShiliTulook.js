@@ -38,7 +38,7 @@ class LookShiliTulook extends Component {
   //      pageInputScroll()
   //  }
 
-  // 货比三家示例图
+  // 货比商品示例图
   showOneShiliTu = () => {
     this.setState({
       onevisible: true,
@@ -171,7 +171,7 @@ class LookShiliTulook extends Component {
     const { itemnum, itemprice,chatpic,is_muti_keyword,shop_namess, pic_uploads_num, pic_desc, platform,tasktype_itemname,platformname,user_taobao } = this.props;
     return(
       <div>
-        {/* 第一步货比三家 */}
+        {/* 第一步货比商品 */}
         <div className="task-plan buzhou" style={{ marginBottom: '0' }}>
           <WingBlank>
             <div className="buzou-title"><span>第一步 货比商品</span><span onClick={this.showOneShiliTu}>点击查看示例</span></div>
@@ -317,7 +317,7 @@ class LookShiliTulook extends Component {
         </div>
 
 
-        {/* 第一步货比三家的图片示例 */}
+        {/* 第一步货比商品的图片示例 */}
         <Modal
           visible={this.state.onevisible}
           onOk={this.handleOk}
@@ -326,7 +326,7 @@ class LookShiliTulook extends Component {
           okText={"知道了"}
           cancelText={"关闭"}
         >
-          <img className="shilitu" src={require('../../../../../img/4444.jpg')} alt="货比三家" />
+          <img className="shilitu" src={require('../../../../../img/4444.jpg')} alt="货比商品" />
         </Modal>
         {/* 第二步浏览店铺的图片示例 */}
         <Modal

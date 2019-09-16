@@ -121,7 +121,7 @@ class TaskPingJia extends Component {
         // console.log(res.data.status);
         if ( res.data.status ) {
           this_.setState({ animating: false })          //数据提交成功关闭login.....
-          this_.props.history.push("/myTaskDetails");
+          this_.props.history.push("/pingjiaNo");
           message.success(res.data.msg);
         } else {
           this_.setState({ animating: false })          //数据提交成功关闭login.....
