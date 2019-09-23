@@ -27,7 +27,7 @@ class Logins extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // localStorage.setItem("numA", 1);
     if (localStorage.getItem("numAs") === "2") {//防止返回无线刷新，优化token无效时退出不显示及验证问题
       localStorage.removeItem("numAs");
@@ -73,16 +73,16 @@ class Logins extends Component {
                 {
                   headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
                 })
-                .then(res => {
-                  if (res.status) {
-                    // console.log(res.data);
+                .then(res => {//data.
+                  if ( res.status === 200 ) {
+                    // console.log(res.data.status);
                     this_.setState({ animating: false })          //数据提交成功关闭login.....
                     message.success(response.data.msg);
                     // 如果数据验证全部正确则跳转
                     this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
                   }else {
                     this_.setState({ animating: false })          //数据提交成功关闭login.....
-                    console.log(res.data.mgs);
+                    message.error(response.data.msg);
                   }
                 })
                 .catch(err => {
@@ -126,20 +126,18 @@ class Logins extends Component {
         });
       }
     }
+    this.props.form.setFieldsValue({
+    userName: localStorage.getItem("mobile"),                //获取本地账号
+    password: localStorage.getItem("password"),              //获取本地密码
+  })
+  if ( localStorage.getItem("mobile") || localStorage.getItem("password") ) {
+    this.setState({
+      stateID1: false,
+      stateID2: false,
+    })
+  }
   }
 
-  componentDidMount () {
-      this.props.form.setFieldsValue({
-      userName: localStorage.getItem("mobile"),                //获取本地账号
-      password: localStorage.getItem("password"),              //获取本地密码
-    })
-    if ( localStorage.getItem("mobile") || localStorage.getItem("password") ) {
-      this.setState({
-        stateID1: false,
-        stateID2: false,
-      })
-    }
-  }
 
   handlePhone = (e) => {
     this.setState({

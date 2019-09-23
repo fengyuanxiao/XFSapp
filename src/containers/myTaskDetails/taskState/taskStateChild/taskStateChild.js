@@ -18,7 +18,7 @@ class TaskStateChild extends Component {
     // console.log(props);
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     axios.post(global.constants.website+'/api/task/operateTask',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id

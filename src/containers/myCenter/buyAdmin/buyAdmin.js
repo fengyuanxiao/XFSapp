@@ -39,8 +39,6 @@ class BuyAdmins extends Component {
 
         taobao_bind: responses.taobao_bind,         //淘宝用户名
         taobao_status: responses.taobao_bind.bind_status,    //淘宝绑定状态  文字显示
-        taobao_remark: responses.taobao_bind.remark,         //淘宝未通过留言
-        taobao__status: responses.taobao_bind.status,        //淘宝绑定状态  数字显示
 
         wph_bind: responses.wph_bind.nickname,               //唯品会用户名
         wph_status: responses.wph_bind.bind_status,          //唯品会绑定状态  文字显示
@@ -159,7 +157,7 @@ class BuyAdmins extends Component {
       height: '30px',
       lineHeight: '30px',
     };
-    const { value, is_change, wykl__status,wykl_remark,wykl_status,wykl_bind,taobao__status,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, taobao_remark, wph_bind, wph_status, wph_remark } = this.state;
+    const { value, is_change, wykl__status,wykl_remark,wykl_status,wykl_bind,pdd__status,wph__status,jd__status,jd_bind, jd_status, jd_remark, pdd_bind, pdd_status, pdd_remark, taobao_bind, wph_bind, wph_status, wph_remark } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -173,7 +171,7 @@ class BuyAdmins extends Component {
               taobao_bind ?
                 taobao_bind.map((item,index) => {
                   return(
-                    <li key={index} style={{ display: 'flex' ,alignItems: 'center' }}>
+                    <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
                       {
                         is_change ?
                           <Radio.Group onChange={this.onChange} value={value}>{/* value={this.state.value}*/}
@@ -199,15 +197,15 @@ class BuyAdmins extends Component {
                         </div>
                         <div><span>{ item.bind_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                       </div>
+                      {
+                        item.status === 3 ?
+                          <p className="bind-content">理由：{ item.remark }</p>
+                        :
+                        ""
+                      }
                     </li>
                   )
                 })
-              :
-              ""
-            }
-            {
-              taobao__status === 3 ?
-                <p className="bind-content">{ taobao_remark }</p>
               :
               ""
             }

@@ -1,11 +1,80 @@
 import React,{ Component } from 'react';
-import { Icon, Collapse  } from 'antd';
+import { Icon, Collapse } from 'antd';
 import { Link  } from 'react-router-dom';
 
 const Panel = Collapse.Panel;
 
 class AllCenter extends Component {
+
+  componentWillMount() {
+    // 储存永久时间到本地
+    if (localStorage.getItem("dateNumq") === null) {
+      localStorage.setItem("dateNumq", 1)        //只调用一次获取电话号码接口
+      function getNowFormatDate() {
+          var date = new Date();
+          var seperator1 = "-";
+          var year = date.getFullYear();
+          var month = date.getMonth() + 1;
+          var strDate = date.getDate();
+          if (month >= 1 && month <= 9) {
+              month = "0" + month;
+          }
+          if (strDate >= 0 && strDate <= 9) {
+              strDate = "0" + strDate;
+          }
+          var currentdate = year + seperator1 + month + seperator1 + strDate;
+          return currentdate;
+      }
+      localStorage.setItem("getNowFormatDateq", getNowFormatDate())
+      // console.log(getNowFormatDate());
+    }
+    // 需要每天获取的时间
+    function getNewFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+    //时间字符串的格式：月-日-年
+			var date1 = localStorage.getItem("getNowFormatDateq");
+      // console.log(date1);
+			var date2 = getNewFormatDate();
+
+			//讲时间字符串转化为距离1970年1月1日午夜零时的时间间隔的毫秒数
+			var time1 = Date.parse(date1);
+			var time2 = Date.parse(date2);
+      // console.log(time1);
+      // console.log(time2);
+
+			//讲两个时间相减，求出相隔的天数
+			var dayCount = (Math.abs(time2 - time1))/1000/60/60/24;
+      if (dayCount > 7) {
+        this.setState({
+          calls: "问题咨询加微信 xiaowanziyy666；",
+        })
+      } else if ( dayCount === 14 ) {
+        localStorage.removeItem("dateNumq");     //到了30天将储存到本地的永久时间删除
+      } else {
+        this.setState({
+          calls: "问题咨询加微信 ssxdong666；",
+        })
+      }
+			console.log(dayCount);
+
+  }
+
   render() {
+    const { calls } = this.state;
     return(
       <div>
         <header className="tabTitle">
@@ -15,10 +84,10 @@ class AllCenter extends Component {
         <div style={{ paddingTop: '3.7rem' }}>
           <Collapse accordion>
             <Panel header="微信客服" key="1">
-              <p>问题咨询加微信 xiaomeng666444；</p>
+              <p>{calls}</p>
             </Panel>
             <Panel header="QQ客服" key="2">
-              <p>问题咨询加 QQ3527307663或3219647714；</p>
+              <p>问题咨询加 QQ1243979841；</p>
             </Panel>
           </Collapse>
           <p style={{ padding: '0.4rem 0.5rem' , fontSize: '1.1rem' }}>常见问题</p>

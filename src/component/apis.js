@@ -4,7 +4,7 @@
 // }
 
 global.constants = {
-    website:"https://www.mhtang888.com",                    //线上
-    // website: "http://192.168.21.252",                    //测试
+    // website:"http://www.mhtang888.com",                    //线上
+    website: "http://192.168.21.252",                    //测试
     // website:"https://budan.php12.cn",                    //测试
 };

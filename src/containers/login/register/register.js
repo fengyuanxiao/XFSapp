@@ -1,18 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {
-  Icon,
-  Form,
-  Input,
-  Button,
-  Row,
-  Col,
-  message,
-  Modal
-} from 'antd';
+import { Icon, Form, Input, Button, Row, Col, message, Modal } from 'antd';
 import axios from 'axios';
 
-import Hongbao from '../../../img/hongbao.png';
+// import Hongbao from '../../../img/hongbao.png';
 import './register.css';
 import '../../../component/apis';
 
@@ -31,21 +22,26 @@ class RegisterPages extends Component {
       tuCode: null,       //图片验证码内容
       sid: null,          //图片验证码 码sid
       time: null,         //time
-      hongbao: false,     //注册成功注册的红包显示
-      openhonbao: false,  //打开红包状态
-      visible: false,      //点击打开红包显示得到的金额弹窗
-      register_money: null  //获得的红包金额
+      // hongbao: false,     //注册成功注册的红包显示
+      // openhonbao: false,  //打开红包状态
+      // visible: false,      //点击打开红包显示得到的金额弹窗
+      // register_money: null  //获得的红包金额
     }
   }
 
   // 生命周期函数 此函数最先执行
-  componentWillMount() {
+  componentDidMount() {
     axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
-      this.setState({
-        tuCodeLink: response.data.data.captcha_src,
-        sid: response.data.data.sid,
-      })
+      // console.log(response);
+      if ( response.status === 200 ) {
+        this.setState({
+          tuCodeLink: response.data.data.captcha_src,
+          sid: response.data.data.sid,
+        })
+      } else {
+        message.error("网络错误！")
+      }
       // console.log(response.data.data);
     })
     .catch(error => {
@@ -213,8 +209,8 @@ class RegisterPages extends Component {
       this.props.history.push('/')
     }
 
-    render() {
-      const { hongbao, openhonbao, visible, register_money } = this.state;
+    render() {// hongbao, openhonbao,
+      const { visible, register_money } = this.state;
       const {getFieldDecorator} = this.props.form;
       const formItemLayout = {
         labelCol: {
@@ -367,9 +363,9 @@ class RegisterPages extends Component {
         </Form>
 
         {/* 注册成功红包弹窗 */}
-        <Modal className={ openhonbao ? "shake" : "" } closable={false} visible={hongbao} footer={null} onCancel={this.handleCancel}>
+        {/* <Modal className={ openhonbao ? "shake" : "" } closable={false} visible={hongbao} footer={null} onCancel={this.handleCancel}>
           <img onClick={ this.openBtn } alt="红包" style={{ width: '100%' }} src={Hongbao} />
-        </Modal>
+        </Modal> */}
 
         {/* 打开红包获取奖励的金额弹窗 */}
         <Modal

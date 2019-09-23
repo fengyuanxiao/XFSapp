@@ -150,7 +150,7 @@ class Correct_taobaos extends Component {
     console.log(states.sexs);
     let _this = this.state.files    //用户上传图片集合
     let fImgs = [states.url1, states.url2, states.url3];     //储存后台放回需要反显得图片
-    // console.log(fImgs);
+    console.log(fImgs);
     this.props.form.validateFields((err, values) => {
       let imgs = [];
       if ( states.num ) {                   //num为true 说明买手有新图片上传 并走新图去循环去base图路径
@@ -158,7 +158,8 @@ class Correct_taobaos extends Component {
           imgs.push(values.images[i].url)
         }
       }
-      // console.log(values);
+      console.log(imgs);
+      console.log(values.images);
       if ( !err === true && states.tb_order_sign.length === 18 && _this.length === 3 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
@@ -191,6 +192,7 @@ class Correct_taobaos extends Component {
                 // visible: true,
                 msgs: data_.msg,
               })
+              this_.props.history.push({pathname: "/buyAdmin"});
             } else {
               message.warning(data_.msg);
             }

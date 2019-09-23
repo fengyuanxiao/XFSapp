@@ -29,9 +29,9 @@ class TaskList extends Component {
   }
 
   // 进入任务大厅 调用任务接口
-  componentWillMount() {
+  componentDidMount() {
     let this_ = this;
-    // Toast.loading('任务加载中...');
+    // Toast.loading('加载中...');
     // 在此调用ajax 获取任务列表
     axios.get(global.constants.website+'/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
@@ -93,7 +93,7 @@ class TaskList extends Component {
         if ( is_gift === 4 ) {
           this_.props.history.push({pathname: "/taskPingjia", state: {data: data_.data.order_id}});
         } else {
-          this_.props.history.push({pathname: "/myTaskDetails", state: {data: data_.data.order_id}});
+          this_.props.history.push({pathname: "/myTaskDetails"});
         }
         // 按钮状态被点击后数据返回成功再次进入可点击状态
         this_.setState({
@@ -278,9 +278,9 @@ class TaskList extends Component {
             :
             <div className="loading">
               <img style={{ maxWidth: '100%' }} src={require("../../../img/loading1.gif")} alt="loading"/>
-              <p style={{ color: '#89c997' }}>任务加载中...</p>
+              <p style={{ color: '#89c997' }}>加载中...</p>
             </div>
-            // Toast.loading('任务加载中...')
+            // Toast.loading('加载中...')
           }
       </PullToRefresh>
     </div>

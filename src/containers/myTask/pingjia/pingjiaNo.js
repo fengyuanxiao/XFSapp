@@ -453,8 +453,8 @@ class PingJiaTaskNo extends Component {
                   <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
                 :
                 <div className="loading">
-                  <img src={require("../../../img/loading.gif")} alt="loading"/>
-                  <p>任务加载中...</p>
+                  <img src={require("../../../img/loading1.gif")} alt="loading"/>
+                  <p>加载中...</p>
                 </div>
               }
             </div>

@@ -23,7 +23,7 @@ class LookTaskStateChild extends Component {
     // console.log(props);
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     axios.post(global.constants.website+'/api/task/operateFlowTask',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id

@@ -28,6 +28,9 @@
   </body>
   <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
   <script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.js"></script>
+  <script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>
+  <script src="https://cdn.bootcss.com/es6-shim/0.35.5/es6-sham.min.js"></script>
+  <script src="https://cdn.bootcss.com/es6-shim/0.35.5/es6-shim.min.js"></script>
   <script type="text/javascript">
 
   document.addEventListener('plusready', function(a) {
@@ -121,14 +124,14 @@
     t.parentNode.insertBefore(s, t);
 
 
-    // 统计
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?4c7eff31f74db00828abda6a74c101ea";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
+    // // 统计
+    // var _hmt = _hmt || [];
+    // (function() {
+    //   var hm = document.createElement("script");
+    //   hm.src = "https://hm.baidu.com/hm.js?4c7eff31f74db00828abda6a74c101ea";
+    //   var s = document.getElementsByTagName("script")[0];
+    //   s.parentNode.insertBefore(hm, s);
+    // })();
 
 
     //获取通讯录联系人列表
@@ -236,7 +239,7 @@
           //console.log(packageInfo.plusGetAttribute("packageName"));
          }
         }
-        console.log("object:"+JSON.stringify(appList));
+        // console.log("object:"+JSON.stringify(appList));
         localStorage.setItem("appList", JSON.stringify(appList))      //应用程序列表
      } catch (e) {
       alert(e.toString());
@@ -263,25 +266,6 @@
     });
 
   }
-  // IosMuiAjax()
-  // var appListA = ["dcloudapp","h58edf9b6","h554ca40b","ych","h5159ba86","wx4a7fdb81a9d5abfd","tencent101483249"]
-  // var appListssA = [];
-  // for(var i=0,len=appListA.length;i<len;i++){
-  //  var scheme = appListA[i];
-  //  // console.log(scheme);
-  //  if(true){
-  //    var ojbs = {};
-  //     // console.log("安装有同类型APP");
-  //     // console.log(isIOSAppInstalled(scheme));
-  //     ojbs.app_name = scheme;
-  //     ojbs.app_id = scheme;
-  //     appListssA.push(ojbs);
-  //  }
-  // }
-  // console.log(appListssA);
-  // localStorage.setItem("IOSappListA", JSON.stringify(appListssA))
-  // console.log(JSON.parse(localStorage.getItem("IOSappListA")));
-
 
   //**ios获取应用软件
   function IosApps() {
@@ -308,7 +292,7 @@
        // console.log(JSON.stringify(ojbs));
        localStorage.setItem("IOSappLists", JSON.stringify(appListssArr))
 
-       console.log("--------start--------");
+       // console.log("--------start--------");
        try {
         var CTTelephonyNetworkInfo = plus.ios.importClass("CTTelephonyNetworkInfo");
         var CTCarrier = plus.ios.importClass("CTCarrier");

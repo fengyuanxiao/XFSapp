@@ -67,93 +67,93 @@ import Certification from '../../containers/myCenter/personal/certification/cert
 import Bank from '../../containers/myCenter/personal/bank/bank';                                       //银行卡绑定
 
 //统计代码
-const GetBaidu = props => {
-  let children = props.children;
-  var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?4c7eff31f74db00828abda6a74c101ea";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
-  return children;
-};
+// const GetBaidu = props => {
+//   let children = props.children;
+//   var _hmt = _hmt || [];
+//   (function() {
+//     var hm = document.createElement("script");
+//     hm.src = "https://hm.baidu.com/hm.js?4c7eff31f74db00828abda6a74c101ea";
+//     var s = document.getElementsByTagName("script")[0];
+//     s.parentNode.insertBefore(hm, s);
+//   })();
+//   return children;
+// };
 
 class RouteTabComponent extends Component {
   render() {
     return(
       <Router>
         <div>
-          <GetBaidu>
-            {/* login */}
-            <Route exact path="/" component={Login} />
-            <Route path="/registerPage" component={RegisterPage}/>
-            <Route path="/forgetPassword" component={ForgetPassword}/>
-            {/* 任务大厅 */}
-            <Route path="/taskHallPage" component={TaskHallPage} />
-            <Route path="/activity" component={ActivityPage} />
-            <Route path="/myTask" component={MyTaskPage} />
-            <Route path="/myCenter" component={MyCenterPage} />
-            <Route path="/cash" component={CashPage} />
-            <Route path="/cashRecord" component={CashRecord} />
-            <Route path="/commission" component={CommissionPage} />
-            <Route path="/myTaskDetails" component={MyTaskDetails} />
-            <Route path="/questionsTask" component={QuestionsTask} />
-            <Route path="/questionsTasks" component={QuestionsTasks}/>
-            {/* <Route path="/myTaskDetails/:id" component={MyTaskDetails} />     {/*点击抢任务按钮 进入相对应的任务详情页面*/}
-            <Route path="/taskStateChild" component={TaskStateChild}/>
-            <Route path="/taskStateChilds" component={TaskStateChilds}/>
-            <Route path="/lookTaskStateChild" component={LookTaskStateChild}/>
-            <Route path="/goodPingJia" component={GoodPingJia} />
-            <Route path="/taskPingjia" component={TaskPingJia} />
-            <Route path="/addPingJia" component={AddPingJia}/>
-            <Route path="/appealTask" component={AppealTask} />
-            <Route path="/appealTaskDetails" component={AppealTaskDetails} />
-            {/* 我的任务 */}
-            {/* 已接垫付任务 */}
-            <Route path="/dfTaskNo" component={DfTaskNo} />
-            <Route path="/dfTaskOk" component={DfTaskOk} />
-            <Route path="/dfTaskChe" component={DfTaskChe} />
-            {/* 已接浏览任务 */}
-            <Route path="/liuLanTaskNo" component={LiuLanTaskNo} />
-            <Route path="/liuLanTaskOk" component={LiuLanTaskOk} />
-            <Route path="/liuLanTaskChe" component={LiuLanTaskChe} />
-            {/* 已接评价任务 */}
-            <Route path="/pingjiaNo" component={PingJiaTaskNo} />
-            <Route path="/pingjiaOk" component={PingJiaTaskOk} />
-            <Route path="/pingjiaChe" component={PingJiaTaskChe} />
-            {/* 已接问答任务 */}
-            <Route path="/wenDaTaskNo" component={WenDaTaskNo}/>
-            <Route path="/wenDaTaskOk" component={WenDaTaskOk}/>
-            <Route path="/wenDaTaskChe" component={WenDaTaskChe}/>
-            {/* 个人中心 */}
-            <Route path="/buyAdmin" component={BuyAdmin} />
-            <Route path="/taobao" component={BindTaobao}/>
-            <Route path="/correct_taobao" component={Correct_taobao}/>
-            <Route path="/wykl" component={BindWykl}/>
-            <Route path="/correct_wykl" component={Correct_wykl}/>
-            <Route path="/jingdong" component={BindJingdong}/>
-            <Route path="/correct_jingdong" component={Correct_jingdong}/>
-            <Route path="/pinduoduo" component={BindPinduoduo}/>
-            <Route path="/correct_pinduoduo" component={Correct_pinduoduo}/>
-            <Route path="/weipinhui" component={BindWinpinhui}/>
-            <Route path="/correct_weipinhui" component={Correct_weipinhui}/>
-            <Route path="/allCenter" component={AllCenter} />
-            <Route path="/personal" component={Personal} />
-            <Route path="/shenSu" component={ShenSu} />
-            <Route path="/tongZhi" component={TongZhi} />
-            <Route path="/tuiJian" component={TuiJian} />
-            {/* 个人信息 */}
-            <Route path="/account" component={Account} />
-            <Route path="/correct_account" component={Correct_Account}/>
-            <Route path="/loginPassword" component={LoginPassword} />
-            <Route path="/txPassword" component={TxPassword} />
-            <Route path="/xgQQ" component={XgQQ} />
-            <Route path="/certification" component={Certification} />
-            <Route path="/bank" component={Bank} />
-            {/* 通知公告子页面  公告详情 */}
-            <Route path="/tongZhiChild" component={TongZhiChild} />
-          </GetBaidu>
+          {/* <GetBaidu> */}
+          {/* login */}
+          <Route exact path="/" component={Login} />
+          <Route path="/registerPage" component={RegisterPage}/>
+          <Route path="/forgetPassword" component={ForgetPassword}/>
+          {/* 任务大厅 */}
+          <Route path="/taskHallPage" component={TaskHallPage} />
+          <Route path="/activity" component={ActivityPage} />
+          <Route path="/myTask" component={MyTaskPage} />
+          <Route path="/myCenter" component={MyCenterPage} />
+          <Route path="/cash" component={CashPage} />
+          <Route path="/cashRecord" component={CashRecord} />
+          <Route path="/commission" component={CommissionPage} />
+          <Route path="/myTaskDetails" component={MyTaskDetails} />
+          <Route path="/questionsTask" component={QuestionsTask} />
+          <Route path="/questionsTasks" component={QuestionsTasks}/>
+          {/* <Route path="/myTaskDetails/:id" component={MyTaskDetails} />     {/*点击抢任务按钮 进入相对应的任务详情页面*/}
+          <Route path="/taskStateChild" component={TaskStateChild}/>
+          <Route path="/taskStateChilds" component={TaskStateChilds}/>
+          <Route path="/lookTaskStateChild" component={LookTaskStateChild}/>
+          <Route path="/goodPingJia" component={GoodPingJia} />
+          <Route path="/taskPingjia" component={TaskPingJia} />
+          <Route path="/addPingJia" component={AddPingJia}/>
+          <Route path="/appealTask" component={AppealTask} />
+          <Route path="/appealTaskDetails" component={AppealTaskDetails} />
+          {/* 我的任务 */}
+          {/* 已接垫付任务 */}
+          <Route path="/dfTaskNo" component={DfTaskNo} />
+          <Route path="/dfTaskOk" component={DfTaskOk} />
+          <Route path="/dfTaskChe" component={DfTaskChe} />
+          {/* 已接浏览任务 */}
+          <Route path="/liuLanTaskNo" component={LiuLanTaskNo} />
+          <Route path="/liuLanTaskOk" component={LiuLanTaskOk} />
+          <Route path="/liuLanTaskChe" component={LiuLanTaskChe} />
+          {/* 已接评价任务 */}
+          <Route path="/pingjiaNo" component={PingJiaTaskNo} />
+          <Route path="/pingjiaOk" component={PingJiaTaskOk} />
+          <Route path="/pingjiaChe" component={PingJiaTaskChe} />
+          {/* 已接问答任务 */}
+          <Route path="/wenDaTaskNo" component={WenDaTaskNo}/>
+          <Route path="/wenDaTaskOk" component={WenDaTaskOk}/>
+          <Route path="/wenDaTaskChe" component={WenDaTaskChe}/>
+          {/* 个人中心 */}
+          <Route path="/buyAdmin" component={BuyAdmin} />
+          <Route path="/taobao" component={BindTaobao}/>
+          <Route path="/correct_taobao" component={Correct_taobao}/>
+          <Route path="/wykl" component={BindWykl}/>
+          <Route path="/correct_wykl" component={Correct_wykl}/>
+          <Route path="/jingdong" component={BindJingdong}/>
+          <Route path="/correct_jingdong" component={Correct_jingdong}/>
+          <Route path="/pinduoduo" component={BindPinduoduo}/>
+          <Route path="/correct_pinduoduo" component={Correct_pinduoduo}/>
+          <Route path="/weipinhui" component={BindWinpinhui}/>
+          <Route path="/correct_weipinhui" component={Correct_weipinhui}/>
+          <Route path="/allCenter" component={AllCenter} />
+          <Route path="/personal" component={Personal} />
+          <Route path="/shenSu" component={ShenSu} />
+          <Route path="/tongZhi" component={TongZhi} />
+          <Route path="/tuiJian" component={TuiJian} />
+          {/* 个人信息 */}
+          <Route path="/account" component={Account} />
+          <Route path="/correct_account" component={Correct_Account}/>
+          <Route path="/loginPassword" component={LoginPassword} />
+          <Route path="/txPassword" component={TxPassword} />
+          <Route path="/xgQQ" component={XgQQ} />
+          <Route path="/certification" component={Certification} />
+          <Route path="/bank" component={Bank} />
+          {/* 通知公告子页面  公告详情 */}
+          <Route path="/tongZhiChild" component={TongZhiChild} />
+          {/* </GetBaidu> */}
         </div>
       </Router>
     )

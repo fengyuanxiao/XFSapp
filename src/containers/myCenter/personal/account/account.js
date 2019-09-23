@@ -233,7 +233,7 @@ class Accounts extends Component {
           onChange = {
             this.numbersPlace
           }
-          maxLength = "11"
+          maxLength = {11}
           placeholder = {
             this.state.placeholder
           }

@@ -205,7 +205,7 @@ class CashPage extends Component {
                   </ul>
                 :
                 <div className="loading">
-                  <img src={require("../../img/loading.gif")} alt="loading"/>
+                  <img src={require("../../img/loading1.gif")} alt="loading"/>
                   <p>数据加载中...</p>
                 </div>
               }
@@ -240,7 +240,7 @@ class CashPage extends Component {
                   </ul>
                 :
                 <div className="loading">
-                  <img src={require("../../img/loading.gif")} alt="loading"/>
+                  <img src={require("../../img/loading1.gif")} alt="loading"/>
                   <p>数据加载中...</p>
                 </div>
               }

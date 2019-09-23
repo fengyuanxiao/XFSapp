@@ -136,7 +136,7 @@ class TongZhi extends Component {
                 </ul>
               :
               <div className="loadings">
-                <img src={require("../../../img/loading.gif")} alt="loading"/>
+                <img style={{ maxWidth: '100%' }} src={require("../../../img/loading1.gif")} alt="loading"/>
                 <p>数据加载中...</p>
               </div>
             }

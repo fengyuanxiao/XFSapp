@@ -4,7 +4,7 @@
 }
 .task-hall-top-child {
   display: flex;
-  border: 1px solid #32920c;
+  border: 1px solid #52c41a;
   border-radius: 3px;
   /* margin-top: 3rem; */
 }
@@ -16,7 +16,7 @@
   font-size: 1rem;
 }
 .task-hall-top-child > a:first-child {
-  background-color: #32920c;
+  background-color: #52c41a;
   color: #fff;
 }
 

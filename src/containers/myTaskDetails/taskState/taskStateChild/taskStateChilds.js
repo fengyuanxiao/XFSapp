@@ -26,7 +26,7 @@ class TaskStateChilds extends Component {
     }
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.setState({
       visible: true,
     })
@@ -396,7 +396,7 @@ class TaskStateChilds extends Component {
                     </div>
                     <div className="shop-title">
                       <span>4</span>
-                      <Input onChange={ this.shopAnswer } placeholder="请在此输入答案" />
+                      <Input onChange={ this.shopAnswer } placeholder="请在此输入答案(严禁询问商家)" />
                       <Button type="primary" onClick={ this.answerBtn }>核对</Button>
                     </div>
                   </div>

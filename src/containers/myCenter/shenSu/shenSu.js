@@ -245,8 +245,8 @@ class ShenSu extends Component {
                   <div style={{ padding: '0.5rem 0.7rem', }}>没有申诉内容！</div>
                 :
                 <div className="loading">
-                  <img src={require("../../../img/loading.gif")} alt="loading"/>
-                  <p>任务加载中...</p>
+                  <img src={require("../../../img/loading1.gif")} alt="loading"/>
+                  <p>加载中...</p>
                 </div>
               }
             </div>
@@ -305,8 +305,8 @@ class ShenSu extends Component {
                   <div style={{ padding: '0.5rem 0.7rem', }}>没有申诉内容！</div>
                 :
                 <div className="loading">
-                  <img src={require("../../../img/loading.gif")} alt="loading"/>
-                  <p>任务加载中...</p>
+                  <img src={require("../../../img/loading1.gif")} alt="loading"/>
+                  <p>加载中...</p>
                 </div>
               }
             </div>

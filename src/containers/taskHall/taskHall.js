@@ -12,7 +12,7 @@ class TaskHallPage extends Component {
     // console.log(localStorage.getItem("token"));
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let appList = localStorage.getItem("appList");//应用程序列表
     let phoneNumArr = localStorage.getItem("phoneNumArr");//获取储存本地手机号码
 

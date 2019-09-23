@@ -51,7 +51,7 @@ class MyCenterPage extends Component {
   benMoney = () => {
     let states = this.state;
     if ( states.money_account < 1 ) {
-      message.warning('本金额高于1元即可转入到提现金额');
+      message.warning('本金余额高于1元即可转入到提现金额');
     } else {
       axios.post(global.constants.website+'/api/index/moneywithdraw', {
         type: 1,                                    //1代表本金转入
@@ -80,7 +80,7 @@ class MyCenterPage extends Component {
   yongMoney = () => {
     let states = this.state;
     if ( states.commission_account < 10 ) {
-      message.warning('佣金金额高于10元即可转入到提现金额');
+      message.warning('佣金余额高于10元即可转入到提现金额');
     } else {
       axios.post(global.constants.website+'/api/index/moneywithdraw', {
         type: 2,                                    //1代表本金转入

@@ -156,10 +156,10 @@ class PingJiaTaskOk extends Component {
                 <div className="taskLists">还没有任务噢,快去任务大厅看看吧^-^</div>
               :
               <div className="loading">
-                <img src={require("../../../img/loading.gif")} alt="loading"/>
-                <p>任务加载中...</p>
+                <img src={require("../../../img/loading1.gif")} alt="loading"/>
+                <p>加载中...</p>
               </div>
-                // Toast.loading('任务加载中...')
+                // Toast.loading('加载中...')
             }
           </div>
           <div style={{ textAlign: 'center' }} ref="wrapper" onClick={this.loadMoreDataFn.bind(this, this)}>{ isLoadingMore ? "没有更多..." : "" }</div>

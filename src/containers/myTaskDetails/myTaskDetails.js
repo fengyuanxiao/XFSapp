@@ -19,12 +19,9 @@ class MyTaskDetails extends Component {
     }
   }
 
-  // componentWillMount () {
-  //
-  // }
 
   // 页面未加载就开始执行 生命周期函数，componentWillMount最先执行   此处函数调 ajax数据交互
-  componentWillMount = () => {
+  componentDidMount = () => {
     let this_ = this;
     axios.post(global.constants.website+'/api/task/myTaskDetail',
     {

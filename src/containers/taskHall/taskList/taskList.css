@@ -78,7 +78,7 @@
 .loading > p {
   font-size: 1rem;
   font-weight: bold;
-  color: #0673bb;
+  color: #32920c;
 }
 
 .loadings {
@@ -87,8 +87,14 @@
 .loadings > p {
   font-size: 1rem;
   font-weight: bold;
-  color: #0673bb;
+  color: #32920c;
 }
 .loadings {
   padding-top: 50%;
+}
+.loadings > img {
+  max-width: 100%;
+}
+.loading > img {
+  max-width: 100%;
 }
