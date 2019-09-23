@@ -124,9 +124,9 @@ class MyTaskDetails extends Component {
         { datas ? <TaskState history={this.props.history} task_type={task_type} remark={remark} order_id={order_id} order_status={order_status} shop_around_time={shop_around_time} is_muti_keyword={is_muti_keyword} tasktype_pic={tasktype_pic} ordertatusText={ordertatusText} time={time} remark_pic={remark_pic} order_message={order_message} /> : "" }
         {/* 任务进度 */}
         { datas ? <TaskPlan fav_flow_content={fav_flow_content} task_type={task_type} platformname={platformname} addition_pic={addition_pic} is_addcomments={is_addcomments} receive_evaluate_content={receive_evaluate_content} taobao_ordersn={taobao_ordersn} order_status={order_status} order_id={order_id} user_taobao={user_taobao} chat_pay_content={chat_pay_content} need_principal={need_principal} addtime={addtime} itemprice={itemprice} itemnum={itemnum} /> : "" }
-        {/* tabs */}
-        <RouteTabComponent />
-      </div>
+          {/* tabs */}
+          <RouteTabComponent />
+        </div>
     )
   }
 }

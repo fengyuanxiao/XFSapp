@@ -69,8 +69,8 @@ class LookTaskStateChild extends Component {
       let shop_name = this.state.shop_name;
       let goodsname = this.state.goodsname;
       if ( shop_name.length >= 3 && goodsname.length >= 4 ) {
-        let newShopName = `${shop_name.substring(0,3)}*****`;
-        let newGoodsname = `${goodsname.substring(0,4)}*********`;
+        let newShopName = `${shop_name.substring(0,1)}*****${shop_name.substring(shop_name.length-1)}`;
+        let newGoodsname = `${goodsname.substring(0,1)}********${goodsname.substring(goodsname.length-3)}`;
         this.setState({
           shop_namess: newShopName,
           goodsname: newGoodsname,
@@ -182,7 +182,7 @@ class LookTaskStateChild extends Component {
           <div className="plan-box" style={{ marginTop: "2rem" }}>
             <p className="task-plan-list"><span>{shop_namess}</span>
               {/* <Link to="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</Link> */}
-              <a href="mqqwpa://im/chat?chat_type=wpa&uin=3527307663&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</a>
+              <a href="mqqwpa://im/chat?chat_type=wpa&uin=1243979841&version=1&src_type=web&web_src=qzone.com">如遇到问题点击联系平台客服</a>
             </p>
           </div>
           <section className="taskDetail-header" style={{ padding:0 }}>

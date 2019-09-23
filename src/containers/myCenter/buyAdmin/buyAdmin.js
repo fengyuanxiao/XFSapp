@@ -171,31 +171,33 @@ class BuyAdmins extends Component {
               taobao_bind ?
                 taobao_bind.map((item,index) => {
                   return(
-                    <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                      {
-                        is_change ?
-                          <Radio.Group onChange={this.onChange} value={value}>{/* value={this.state.value}*/}
+                    <li key={index}>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        {
+                          is_change ?
+                            <Radio.Group onChange={this.onChange} value={value}>{/* value={this.state.value}*/}
+                              {
+                                item.status ?
+                                  <Radio style={radioStyle} value={item.id}></Radio>
+                                :
+                                ""
+                              }
+                            </Radio.Group>
+                          :
+                          ""
+                        }
+                        <div style={{ width: '100%' }} className="bind-list" onClick={ () => this.taobaoInto(item.status, item.id) }>
+                          <div>
+                            <img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ item.nickname }</span>
                             {
-                              item.status ?
-                                <Radio style={radioStyle} value={item.id}></Radio>
+                              item.new_default ?
+                                <span style={{ color: 'red' }}>（默认买号）</span>
                               :
                               ""
                             }
-                          </Radio.Group>
-                        :
-                        ""
-                      }
-                      <div style={{ width: '100%' }} className="bind-list" onClick={ () => this.taobaoInto(item.status, item.id) }>
-                        <div>
-                          <img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ item.nickname }</span>
-                          {
-                            item.new_default ?
-                              <span style={{ color: 'red' }}>（默认买号）</span>
-                            :
-                            ""
-                          }
+                          </div>
+                          <div><span>{ item.bind_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                         </div>
-                        <div><span>{ item.bind_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                       </div>
                       {
                         item.status === 3 ?

@@ -226,9 +226,9 @@ class Correct_taobaos extends Component {
         <div className="buyAdmin-box">
           <WingBlank>
             <p className="buyAdmin-title">请务必完成以下信息</p>
-            <p style={{ marginBottom: '15px' }}>
+            {/* <p style={{ marginBottom: '15px' }}>
               资料提交成功后，请在24小时内添加专属客服微信：<span style={{ color: 'red' }}>xiaomeng666444</span> 联系客服审核账号，否则系统将自动审核不通过！新手务必查看截图示例
-            </p>
+            </p> */}
             <Form style={{ height:'100%' }} onSubmit={this.handleSubmit}>
               <FormItem
                 label="淘宝旺旺账号："
