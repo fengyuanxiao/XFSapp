@@ -8,6 +8,7 @@ import TaskList from './taskList/tiskList';
 class TaskHallPage extends Component {
   constructor(props) {
     super();
+    this.state = {}
     // 打印获取token
     // console.log(localStorage.getItem("token"));
   }
@@ -129,7 +130,7 @@ class TaskHallPage extends Component {
     // console.log(localStorage.getItem("phoneNumArr"));
   }
   // 处理内存泄露
-  componentWillUnmount = () => {
+  UNSAFE_componentWillMount = () => {
     this.setState = (state,callback)=>{
       return;
     };

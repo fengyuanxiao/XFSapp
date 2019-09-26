@@ -22,8 +22,38 @@
       border: 1px #32920c solid !important;
     }
 
+/*
+    .a {
+    		position: absolute;
+    		top: 0;
+    		left: 0;
+    		right: 0;
+    		bottom: 0;
+    		background-color: rgba(0,0,0,0.4);
+    		text-align: center;
+        z-index: 999;
+    	}
+    	.a > p {
+    		position: absolute;
+    		top: 40%;
+    		left: 50%;
+    		transform: translate(-50%, -50%);
+    		font-size: 1.2rem;
+        color: #fff;
+        font-weight: bold;
+    	}
+    	.a > img {
+    		max-width: 100%;
+    	}
+      .hidden {
+        display: none;
+      } */
   </style>
   <body>
+	<!-- <div class="a">
+		<p>正在加载页面...</p>
+		<img src="./sd.gif" alt="稍等" />
+	</div> -->
     <div id="root"></div>
   </body>
   <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
@@ -32,6 +62,9 @@
   <script src="https://cdn.bootcss.com/es6-shim/0.35.5/es6-sham.min.js"></script>
   <script src="https://cdn.bootcss.com/es6-shim/0.35.5/es6-shim.min.js"></script>
   <script type="text/javascript">
+
+window.onload = function() {
+
 
   document.addEventListener('plusready', function(a) {
     var first = null;
@@ -375,7 +408,8 @@
    }
   },false);
 
+    // mui('.a')[0].classList.add('hidden');
 
-
+  }
   </script>
 </html>

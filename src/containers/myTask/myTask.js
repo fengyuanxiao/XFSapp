@@ -14,7 +14,7 @@ class MyTaskPage extends Component {
 
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     let this_ = this;
     axios.get(global.constants.website+'/api/task/mytaskindex', {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

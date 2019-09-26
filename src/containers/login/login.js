@@ -74,15 +74,15 @@ class Logins extends Component {
                   headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
                 })
                 .then(res => {//data.
-                  if ( res.status === 200 ) {
-                    // console.log(res.data.status);
+                  if ( res.status ) {
+                    console.log(res.data.status);
                     this_.setState({ animating: false })          //数据提交成功关闭login.....
-                    message.success(response.data.msg);
+                    message.success(res.data.msg);
                     // 如果数据验证全部正确则跳转
                     this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
                   }else {
                     this_.setState({ animating: false })          //数据提交成功关闭login.....
-                    message.error(response.data.msg);
+                    message.error(res.data.msg);
                   }
                 })
                 .catch(err => {

@@ -79,7 +79,7 @@ import Bank from '../../containers/myCenter/personal/bank/bank';                
 //   return children;
 // };
 
-class RouteTabComponent extends Component {
+class RouteTabComponents extends Component {
   render() {
     return(
       <Router>
@@ -160,4 +160,4 @@ class RouteTabComponent extends Component {
   }
 }
 
-export default RouteTabComponent
+export default RouteTabComponents
