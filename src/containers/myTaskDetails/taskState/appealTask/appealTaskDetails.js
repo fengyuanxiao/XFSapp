@@ -21,7 +21,7 @@ class AppealTaskDetails extends Component {
     // console.log(props.location.state.data);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     axios.post(global.constants.website+'/api/task/appealTaskDetail',{
       order_id: this.props.location.state.data,   //获取存储到本地的order_id
     },{

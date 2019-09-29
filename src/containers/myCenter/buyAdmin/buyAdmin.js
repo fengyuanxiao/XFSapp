@@ -16,7 +16,7 @@ class BuyAdmins extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // 在此调用ajax 获取绑定买号列表
     axios.get(global.constants.website+'/api/index/tbBind',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {

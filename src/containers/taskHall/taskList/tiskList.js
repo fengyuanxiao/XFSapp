@@ -35,25 +35,31 @@ class TaskList extends Component {
     // 在此调用ajax 获取任务列表
     axios.get(global.constants.website+'/api/task/tasklist',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
-      let datas = response.data.data;
-      // console.log(response.data);
-      if ( response.data.status === "_0001" ) {
-          message.success(response.data.msg, successSkip => {
-          this_.props.history.push("/");
-        })
+      if ( response.data.status ) {
+        let datas = response.data.data;
+        // console.log(response.data);
+        if ( response.data.status === "_0001" ) {
+            message.success(response.data.msg, successSkip => {
+            this_.props.history.push("/");
+          })
+        } else {
+          this.setState({
+            task_lists: datas.task_list,                      //调用ajax 任务列表数据导入接口
+            datasState: true,
+            money_account: datas.money_account,               //本金
+            commission_account: datas.commission_account,     //佣金
+            is_bind: datas.is_bind,                           //是否绑定淘宝号
+            bind_status: datas.bind_status,                   //是否为被冻结账号提供绑定买号入口，1是的
+          })
+        }
       } else {
         this.setState({
-          task_lists: datas.task_list,                      //调用ajax 任务列表数据导入接口
-          datasState: true,
-          money_account: datas.money_account,               //本金
-          commission_account: datas.commission_account,     //佣金
-          is_bind: datas.is_bind,                           //是否绑定淘宝号
-          bind_status: datas.bind_status,                   //是否为被冻结账号提供绑定买号入口，1是的
+          datasState: false,
         })
       }
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error.status);
     });
   }
   // 处理内存泄露
@@ -217,7 +223,7 @@ class TaskList extends Component {
             datasState ?
               <ul style={{ marginBottom: '4rem' }}>
                 {
-                  task_lists.length ?
+                  task_lists ?
                     task_lists.map((item,index) => {
                       return(
                         <li key={item.task_id} className="task-list">

@@ -26,7 +26,7 @@ class ShenSu extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page = 1;
     page1 = 1;
 

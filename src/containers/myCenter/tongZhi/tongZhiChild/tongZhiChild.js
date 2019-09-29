@@ -12,7 +12,7 @@ class TongZhiChild extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     axios.post(global.constants.website+'/api/help/noticeDetail', {
       notice_id: this.props.location.state.data,
     },

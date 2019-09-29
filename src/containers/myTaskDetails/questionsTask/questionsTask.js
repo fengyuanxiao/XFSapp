@@ -25,7 +25,7 @@ class QuestionsTask extends Component {
     // console.log(props.location.state.data);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let this_ = this;
     if ( this.props.location.state === undefined ) {
       message.warning('任务待商家审核中！');

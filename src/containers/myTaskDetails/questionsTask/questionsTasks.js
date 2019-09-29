@@ -18,7 +18,7 @@ class QuestionsTasks extends Component {
     // console.log(props.location.state);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let this_ = this;
     axios.post(global.constants.website+'/api/task/askTaskTwo',
     {

@@ -26,7 +26,7 @@ class AddPingJia extends Component {
     // console.log(props);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     axios.post(global.constants.website+'/api/task/additionalTask', {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },{

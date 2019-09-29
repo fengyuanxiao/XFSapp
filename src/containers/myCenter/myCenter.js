@@ -16,7 +16,7 @@ class MyCenterPage extends Component {
   }
 
   // 进入个人中心页面 调用ajax 获取数据
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let this_ = this;
     axios.get(global.constants.website+'/api/index/index',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {

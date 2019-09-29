@@ -31,7 +31,7 @@ class GoodPingJia extends Component {
     // console.log(props);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let this_ = this;
     if ( this.props.location.state === undefined ) {
       message.warning('任务完成好评截图上传！');

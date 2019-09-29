@@ -26,7 +26,7 @@ class CashPage extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page = 1;
     page1 = 1;
     axios.post(global.constants.website+'/api/index/usermoneylog?page=' + page1, {

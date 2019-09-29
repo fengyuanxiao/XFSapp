@@ -22,7 +22,7 @@ class cashRecord extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page = 1;
     axios.get(global.constants.website+'/api/index/applycashlist?page=' + page,{headers: {AppAuthorization: localStorage.getItem("token")}})
     .then( res => {

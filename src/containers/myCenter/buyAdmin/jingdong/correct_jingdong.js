@@ -34,7 +34,7 @@ class Correct_jingdongs extends Component {
     // console.log(props);
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
 
   }
 

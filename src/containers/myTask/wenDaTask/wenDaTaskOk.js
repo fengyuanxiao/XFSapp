@@ -15,7 +15,7 @@ class WenDaTaskOk extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page = 1;
     axios.post(global.constants.website+'/api/task/mytaskanswerlist?page=' + page,{
       status: 9,             //已完成

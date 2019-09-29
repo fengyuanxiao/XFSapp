@@ -17,7 +17,7 @@ class TongZhi extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page = 1;
     axios.get(global.constants.website+'/api/help/noticeList?page=' + page, {
       headers: {AppAuthorization: localStorage.getItem("token")}

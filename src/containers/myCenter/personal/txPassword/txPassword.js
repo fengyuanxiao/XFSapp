@@ -18,7 +18,7 @@ class TxPasswords extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // 进入登录手机号页面 调用图片验证码获取图片
     axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {

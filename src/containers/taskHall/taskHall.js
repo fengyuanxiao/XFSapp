@@ -6,12 +6,11 @@ import RouteTabComponent from '../../component/routeTab/routeTab';  //tabs
 import TaskList from './taskList/tiskList';
 
 class TaskHallPage extends Component {
-  constructor(props) {
-    super();
-    this.state = {}
-    // 打印获取token
-    // console.log(localStorage.getItem("token"));
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // 打印获取token
+  //   // console.log(localStorage.getItem("token"));
+  // }
 
   componentDidMount() {
     let appList = localStorage.getItem("appList");//应用程序列表
@@ -130,7 +129,7 @@ class TaskHallPage extends Component {
     // console.log(localStorage.getItem("phoneNumArr"));
   }
   // 处理内存泄露
-  UNSAFE_componentWillMount = () => {
+  componentWillUnmount = () => {
     this.setState = (state,callback)=>{
       return;
     };

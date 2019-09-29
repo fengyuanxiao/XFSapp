@@ -30,7 +30,7 @@ class PingJiaTaskNo extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page5 = 1;
     page1 = 1;
     page3 = 1;

@@ -33,7 +33,7 @@ class Correct_weipinhuis extends Component {
     // console.log(props);
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
 
   }
 

@@ -15,7 +15,7 @@ class WenDaTaskChe extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page = 1;
     axios.post(global.constants.website+'/api/task/mytaskanswerlist?page=' + page,{
       status: 10,             //已撤销

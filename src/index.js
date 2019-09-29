@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'babel-polyfill';
 import 'antd/dist/antd.css';
 import 'antd-mobile/dist/antd-mobile.css';
 import './index.css';

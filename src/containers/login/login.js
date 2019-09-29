@@ -28,6 +28,11 @@ class Logins extends Component {
   }
 
   componentDidMount() {
+    setTimeout(function () {
+      if ( localStorage.getItem("latitude") == null || localStorage.getItem("longitude") == null ) {
+        message.error("未获取到位置信息，请允许相关权限！");
+      }
+    }, 1000);
     // localStorage.setItem("numA", 1);
     if (localStorage.getItem("numAs") === "2") {//防止返回无线刷新，优化token无效时退出不显示及验证问题
       localStorage.removeItem("numAs");
@@ -74,15 +79,16 @@ class Logins extends Component {
                   headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
                 })
                 .then(res => {//data.
-                  if ( res.status ) {
+                  if ( res.data.status ) {
                     console.log(res.data.status);
                     this_.setState({ animating: false })          //数据提交成功关闭login.....
-                    message.success(res.data.msg);
+                    message.success(response.data.msg);
                     // 如果数据验证全部正确则跳转
                     this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
                   }else {
                     this_.setState({ animating: false })          //数据提交成功关闭login.....
                     message.error(res.data.msg);
+                    // message.error("未获取到手机识别码，请允许相关权限！");
                   }
                 })
                 .catch(err => {

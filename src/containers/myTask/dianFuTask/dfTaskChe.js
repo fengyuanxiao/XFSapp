@@ -15,7 +15,7 @@ class DfTaskNo extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     page = 1;
     axios.post(global.constants.website+'/api/task/mytasklist?page=' + page,{
       status: 10,             //已撤销

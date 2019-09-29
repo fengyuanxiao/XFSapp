@@ -22,7 +22,7 @@ class CashPage extends Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     axios.get(global.constants.website+'/api/index/cash',
     {
       headers: {AppAuthorization: localStorage.getItem("token")}

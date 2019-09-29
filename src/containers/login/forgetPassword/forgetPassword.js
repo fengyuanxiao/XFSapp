@@ -23,7 +23,7 @@ class ForgetPasswords extends Component {
   }
 
   // 生命周期函数 此函数最先执行
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
       let responses = response.data.data

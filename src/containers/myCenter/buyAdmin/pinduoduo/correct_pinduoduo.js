@@ -32,7 +32,7 @@ class Correct_pinduoduos extends Component {
     }
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
 
   }
 

@@ -10,7 +10,7 @@ message.config({
 
 class Personal extends Component {
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     axios.get(global.constants.website+'/api/index/userInfo', {
       headers: {AppAuthorization: localStorage.getItem("token")}
     })

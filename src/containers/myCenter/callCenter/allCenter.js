@@ -6,7 +6,7 @@ const Panel = Collapse.Panel;
 
 class AllCenter extends Component {
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // 储存永久时间到本地
     if (localStorage.getItem("dateNumq") === null) {
       localStorage.setItem("dateNumq", 1)        //只调用一次获取电话号码接口
