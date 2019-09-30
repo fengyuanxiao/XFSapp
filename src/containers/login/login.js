@@ -28,11 +28,6 @@ class Logins extends Component {
   }
 
   componentDidMount() {
-    setTimeout(function () {
-      if ( localStorage.getItem("latitude") == null || localStorage.getItem("longitude") == null ) {
-        message.error("未获取到位置信息，请允许相关权限！");
-      }
-    }, 1000);
     // localStorage.setItem("numA", 1);
     if (localStorage.getItem("numAs") === "2") {//防止返回无线刷新，优化token无效时退出不显示及验证问题
       localStorage.removeItem("numAs");

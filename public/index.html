@@ -21,6 +21,35 @@
     .am-tabs-default-bar-underline {
       border: 1px #32920c solid !important;
     }
+    .mui-toast-message:before{
+      color:#fff;
+      margin-right:8px;
+      background-color: red;
+      border-radius: 47%;
+      content:'×';
+      padding: 1px 5px;
+    }
+    .mui-toast-message {
+      width: 75%;
+      background-color: #fff;
+      color: #000;
+      border-radius: 0;
+      position: absolute;
+      padding: 10px 7px;
+      border-radius: 5px;
+      text-align: center;
+      left: 50%;
+      top: 40%;
+      font-size: 13px;
+      -moz-box-shadow: 2px 2px 10px #909090;
+      -webkit-box-shadow: 2px 2px 10px #909090;
+      box-shadow:2px 2px 10px #909090;
+      transform: translate(-50%, -50%);
+    }
+    .hidden {
+      display: none;
+    }
+
   </style>
   <body>
     <div id="root"></div>
@@ -34,7 +63,7 @@
 
 window.onload = function() {
 
-
+console.log();
   document.addEventListener('plusready', function(a) {
     var first = null;
     plus.key.addEventListener('backbutton', function() {
@@ -177,14 +206,15 @@ window.onload = function() {
 
     // 扩展API加载完毕后调用onPlusReady回调函数      *****定位
     document.addEventListener('plusready', function() {
-      localStorage.removeItem("latitude");
-      localStorage.removeItem("longitude");
       plus.geolocation.getCurrentPosition(function(p) {
         localStorage.setItem("latitude", p.coords.latitude);      //经度
         localStorage.setItem("longitude", p.coords.longitude);    //维度
         // alert('Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude + '\nAltitude:' + p.coords.altitude);
       }, function(e) {
-       // alert('Geolocation error: ' + e.message);
+        mui.toast("未获取到位置信息，请允许相关权限！",{type:'div'});
+        setTimeout(function() {
+          mui('.mui-toast-message')[0].classList.add('hidden');
+        },3000)
       });
     }, false);
 

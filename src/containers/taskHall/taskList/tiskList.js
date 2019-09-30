@@ -37,7 +37,7 @@ class TaskList extends Component {
     .then(response => {
       if ( response.data.status ) {
         let datas = response.data.data;
-        // console.log(response.data);
+        // console.log( datas.task_list);
         if ( response.data.status === "_0001" ) {
             message.success(response.data.msg, successSkip => {
             this_.props.history.push("/");
@@ -223,7 +223,7 @@ class TaskList extends Component {
             datasState ?
               <ul style={{ marginBottom: '4rem' }}>
                 {
-                  task_lists ?
+                  task_lists.length ?
                     task_lists.map((item,index) => {
                       return(
                         <li key={item.task_id} className="task-list">
