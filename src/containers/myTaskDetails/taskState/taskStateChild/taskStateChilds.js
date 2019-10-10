@@ -27,6 +27,7 @@ class TaskStateChilds extends Component {
   }
 
   componentDidMount = () => {
+    let this_ = this;
     this.setState({
       visible: true,
     })
@@ -39,6 +40,13 @@ class TaskStateChilds extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
+      if ( response.data.status === "_0001" ) {
+          message.success(response.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       // console.log(responses);   //任务详情数据，完成的任务进度
       this.setState({
         datas: true,
@@ -98,6 +106,7 @@ class TaskStateChilds extends Component {
           goodsname: newGoodsname,
         })
       }
+    }
     })
     .catch(error => {
       // console.log(error);

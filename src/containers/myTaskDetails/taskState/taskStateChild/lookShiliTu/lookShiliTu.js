@@ -15,6 +15,9 @@ let taobaoOride =  /^T200P\d{18}$/;   //淘宝订单号
 let jingdongOride = /^\d{11,12}$/;       //京东订单号
 let pinduoduoOride = /^\d{6}[-]\d+$/; //拼多多订单号
 let weipinhuiOride = /^\d{14}$/;      //唯品会订单号
+let wyklOride = /^\d{25}$/;      //网易考拉订单号
+let orides = [0,taobaoOride,jingdongOride,0,0,pinduoduoOride,weipinhuiOride,wyklOride];
+
 
 message.config({
   top: 300,
@@ -167,7 +170,8 @@ class LookShiliTus extends Component {
         message.error("请先核对商家问题！")
       } else {
         if ( !err === true && imgs.length === this.props.pic_uploads_num ) {
-          if ( !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber) ) {
+// !taobaoOride.test(values.orderNumber) && !jingdongOride.test(values.orderNumber) && !pinduoduoOride.test(values.orderNumber) && !weipinhuiOride.test(values.orderNumber)
+          if ( !orides[this.props.platform].test(values.orderNumber) ) {
             message.error("请输入正确的订单号！")
           } else {
             this_.setState({ animating: true })            //数据提交中显示的login.....

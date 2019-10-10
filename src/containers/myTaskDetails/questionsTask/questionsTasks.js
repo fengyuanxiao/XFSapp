@@ -29,7 +29,14 @@ class QuestionsTasks extends Component {
     })
     .then(function (response) {
       let data_ = response.data.data;
-      console.log(data_);
+      if ( response.data.status === "_0001" ) {
+          message.success(response.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
+      // console.log(data_);
       this_.setState({
         id: data_.order_id,                                   //任务ID
         goodsname: data_.goodsname,                     //商品名称
@@ -40,6 +47,7 @@ class QuestionsTasks extends Component {
         answer_pic_content: data_.answer_pic_content,   //商家给定的答案截图
         check_question: data_.check_question,           //买手选中的问题
       })
+    }
     })
     .catch(function (error) {
       console.log(error);

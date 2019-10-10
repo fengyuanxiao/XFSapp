@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button } from 'antd';
+import { Icon, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../../../component/apis';
@@ -16,6 +16,7 @@ class WenDaTaskOk extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     page = 1;
     axios.post(global.constants.website+'/api/task/mytaskanswerlist?page=' + page,{
       status: 9,             //已完成
@@ -23,11 +24,19 @@ class WenDaTaskOk extends Component {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
     })
     .then( res => {
+    if ( res.data.status === "_0001" ) {
+        message.success(res.data.msg, successSkip => {
+        localStorage.removeItem("token");
+        this_.props.history.push("/");
+        window.location.reload();
+      })
+    } else {
       // console.log(res.data.data.task_list);
       this.setState({
         task_lists: res.data.data.task_list,
         datasState: true,                       //状态改为true
       })
+    }
     })
     .catch( err => {
       console.log(err);

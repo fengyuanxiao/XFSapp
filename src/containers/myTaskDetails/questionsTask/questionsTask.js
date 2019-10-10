@@ -40,6 +40,13 @@ class QuestionsTask extends Component {
       })
       .then(function (response) {
         let data_ = response.data.data;
+        if ( response.data.status === "_0001" ) {
+            message.success(response.data.msg, successSkip => {
+            localStorage.removeItem("token");
+            this_.props.history.push("/");
+            window.location.reload();
+          })
+        } else {
         this_.setState({
           id: data_.id,                       //任务ID
           goodsname: data_.goodsname,         //商品名称
@@ -47,6 +54,7 @@ class QuestionsTask extends Component {
           questype: data_.questype,           //问题类型
           quescontent: data_.quescontent,     //问题内容
         })
+      }
         // console.log(data_);
       })
       .catch(function (error) {

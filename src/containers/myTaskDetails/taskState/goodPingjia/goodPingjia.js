@@ -44,6 +44,13 @@ class GoodPingJia extends Component {
       })
       .then( res=> {
         let datas = res.data.data;
+        if ( res.data.status === "_0001" ) {
+            message.success(res.data.msg, successSkip => {
+            localStorage.removeItem("token");
+            this_.props.history.push("/");
+            window.location.reload();
+          })
+        } else {
         // console.log(datas);
         this.setState({
           order_id: datas.order_id,               //order_id
@@ -52,6 +59,7 @@ class GoodPingJia extends Component {
           pic_content: datas.pic_content,         //图片要求图片
           keyword_types: datas.keyword_types,     //判断是否显示文字图片
         })
+      }
       })
       .catch(error => {
         console.log(error);

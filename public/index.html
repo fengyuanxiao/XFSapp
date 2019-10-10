@@ -211,12 +211,22 @@ console.log();
         localStorage.setItem("longitude", p.coords.longitude);    //维度
         // alert('Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude + '\nAltitude:' + p.coords.altitude);
       }, function(e) {
-        mui.toast("未获取到位置信息，请允许相关权限！",{type:'div'});
+        // mui.toast("未获取到位置信息，请允许相关权限！",{type:'div'});
         setTimeout(function() {
           mui('.mui-toast-message')[0].classList.add('hidden');
         },3000)
       });
+      // 领任务
+      plus.geolocation.watchPosition(function(p) {
+        // console.log(p.coords.latitude);
+        localStorage.setItem("latitudes", p.coords.latitude);      //经度
+        localStorage.setItem("longitudes", p.coords.longitude);    //维度
+      }, function(e) {
+        localStorage.removeItem("latitudes");
+        localStorage.removeItem("longitudes");
+      });
     }, false);
+
 
    // Uuid   ***唯一标识
    function plusReady() {

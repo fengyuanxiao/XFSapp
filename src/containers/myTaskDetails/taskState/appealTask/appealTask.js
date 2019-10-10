@@ -38,6 +38,7 @@ class AppealTask extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     axios.post(global.constants.website+'/api/task/appealTask',{
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },{
@@ -45,9 +46,17 @@ class AppealTask extends Component {
     })
     .then( res =>{
       let issueType = res.data.data;
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       this.setState({
         order_id: issueType.order_id
       })
+    }
       // console.log(issueType);
     })
     .catch( error => {

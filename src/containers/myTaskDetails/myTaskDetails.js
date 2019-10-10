@@ -36,7 +36,9 @@ class MyTaskDetails extends Component {
       // console.log(responses);
         if ( response.data.status === "_0001" ) {
             message.success(response.data.msg, successSkip => {
+              localStorage.removeItem("token");
               this_.props.history.push("/");
+              window.location.reload();
             })
         } else if ( response.data.status === false ) {
             message.success("任务异常")

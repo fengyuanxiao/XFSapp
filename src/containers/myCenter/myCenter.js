@@ -24,7 +24,9 @@ class MyCenterPage extends Component {
       // console.log(data_s);
       if ( response.data.status === "_0001" ) {
           message.success(response.data.msg, successSkip => {
+          localStorage.removeItem("token");
           this_.props.history.push("/");
+          window.location.reload();
         })
       } else {
         this.setState({

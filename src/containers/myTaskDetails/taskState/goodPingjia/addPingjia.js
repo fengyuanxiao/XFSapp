@@ -27,6 +27,7 @@ class AddPingJia extends Component {
   }
 
   UNSAFE_componentWillMount() {
+  let this_ = this;
     axios.post(global.constants.website+'/api/task/additionalTask', {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
     },{
@@ -34,12 +35,20 @@ class AddPingJia extends Component {
     })
     .then( res=> {
       let datas = res.data.data;
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       // console.log(datas);
       this.setState({
         order_id: datas.order_id,                   //order_id
         template_pic: datas.template_pic,           //追评文字图片
         additional_pic: datas.additional_pic,       //追评图片
       })
+    }
     })
     .catch(error => {
       console.log(error);

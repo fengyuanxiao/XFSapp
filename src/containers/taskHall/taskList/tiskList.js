@@ -40,7 +40,9 @@ class TaskList extends Component {
         // console.log( datas.task_list);
         if ( response.data.status === "_0001" ) {
             message.success(response.data.msg, successSkip => {
+            localStorage.removeItem("token");
             this_.props.history.push("/");
+            window.location.reload();
           })
         } else {
           this.setState({
@@ -81,8 +83,8 @@ class TaskList extends Component {
     {
       task_id: item,
       encrypt: encrypt,
-      latitude: localStorage.getItem("latitude"),                         //经度
-      altitude: localStorage.getItem("longitude"),                        //纬度
+      latitude: localStorage.getItem("latitudes"),                         //经度
+      altitude: localStorage.getItem("longitudes"),                        //纬度
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
@@ -129,8 +131,8 @@ class TaskList extends Component {
     {
       task_id: item,
       encrypt: encrypt,
-      latitude: localStorage.getItem("latitude"),                         //经度
-      altitude: localStorage.getItem("longitude"),                      //纬度
+      latitude: localStorage.getItem("latitudes"),                         //经度
+      altitude: localStorage.getItem("longitudes"),                      //纬度
     },
     {
       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

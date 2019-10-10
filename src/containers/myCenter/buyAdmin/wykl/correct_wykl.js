@@ -57,6 +57,13 @@ class Correct_wykls extends Component {
       })
       .then(function (response) {   //调用接口成功执行
         let responses = response.data.data;
+        if ( response.data.status === "_0001" ) {
+            message.success(response.data.msg, successSkip => {
+            localStorage.removeItem("token");
+            this_.props.history.push("/");
+            window.location.reload();
+          })
+        } else {
         let datas = [responses.url1,responses.url2,responses.url3];        //存储后台放回过来的图片路径
         // console.log(datas);
         // console.log(responses);
@@ -79,6 +86,7 @@ class Correct_wykls extends Component {
           url3: responses.url3.url,                 //存储返回的图片
           sexs: responses.sex,   //性别
         })
+      }
       })
       .catch(function (error) {   //调用接口失败执行
         console.log(error);

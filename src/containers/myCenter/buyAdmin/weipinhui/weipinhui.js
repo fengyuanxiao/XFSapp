@@ -109,6 +109,12 @@ class BindWinpinhuis extends Component {
           })
           .then(function (response) {   //调用接口成功执行
             let data_ = response.data;
+            if ( response.data.status === "_0001" ) {
+                message.success(response.data.msg, successSkip => {
+                localStorage.removeItem("token");
+                this_.props.history.push("/");
+              })
+            } else {
             if ( data_.status ) {
               this_.setState({ animating: false })      //数据提交成功关闭login.....
               message.success(data_.msg);
@@ -116,6 +122,7 @@ class BindWinpinhuis extends Component {
             } else {
               message.warning(data_.msg);
             }
+          }
             // console.log(data_);   //数据提交成功打印
           })
           .catch(function (error) {   //调用接口失败执行

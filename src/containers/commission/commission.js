@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import { Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Tabs from 'antd-mobile/lib/tabs';
@@ -27,6 +27,7 @@ class CashPage extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     page = 1;
     page1 = 1;
     axios.post(global.constants.website+'/api/index/usermoneylog?page=' + page1, {
@@ -37,11 +38,19 @@ class CashPage extends Component {
     })
     .then( res => {
       let datas = res.data.data;
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       // console.log(datas);
       this.setState({
         commissionList2: datas,
         shows: true,
       })
+    }
     })
     .catch(error => {
       console.log(error);

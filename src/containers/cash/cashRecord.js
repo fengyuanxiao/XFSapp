@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import { Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 // import Tabs from 'antd-mobile/lib/tabs';
@@ -23,11 +23,19 @@ class cashRecord extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     page = 1;
     axios.get(global.constants.website+'/api/index/applycashlist?page=' + page,{headers: {AppAuthorization: localStorage.getItem("token")}})
     .then( res => {
       let datas = res.data.data;
       // console.log(datas);
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       this.setState({
         datasState: true,
         datasLists: datas,                      //本金提现列表
@@ -38,6 +46,7 @@ class cashRecord extends Component {
         })
         this.jieruBtn()
       }
+    }
         // console.log(res.data.data);
     })
     .catch(error => {
@@ -81,10 +90,17 @@ class cashRecord extends Component {
   }
 
   loadMoreDataFn(that) {
+    let this_ = this;
     let datasLists = that.state.datasLists;
     axios.get(global.constants.website+'/api/index/applycashlist?page=' + ++page,{headers: {AppAuthorization: localStorage.getItem("token")}})
     .then( res => {
       let datas = res.data.data;
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+        })
+      } else {
       // console.log(datas);
       // resData.task_list没有数据的时候 停止调用滚动
       if ( datas.length === 0 ) {
@@ -100,6 +116,7 @@ class cashRecord extends Component {
         datasLists: datasLists,                      //本金提现列表
       });
         // console.log(res.data.data);
+      }
     })
     .catch(error => {
       console.log(error);

@@ -19,6 +19,7 @@ class TaskStateChild extends Component {
   }
 
   componentDidMount = () => {
+    let this_ = this;
     axios.post(global.constants.website+'/api/task/operateTask',
     {
       order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
@@ -28,6 +29,13 @@ class TaskStateChild extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
+      if ( response.data.status === "_0001" ) {
+          message.success(response.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       // console.log(responses);   //任务详情数据，完成的任务进度
       this.setState({
         datas: true,
@@ -88,6 +96,7 @@ class TaskStateChild extends Component {
           goodsname: newGoodsname,
         })
       }
+    }
     })
     .catch(error => {
       // console.log(error.response.status);

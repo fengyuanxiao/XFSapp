@@ -17,10 +17,18 @@ class BuyAdmins extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     // 在此调用ajax 获取绑定买号列表
     axios.get(global.constants.website+'/api/index/tbBind',{headers: {AppAuthorization: localStorage.getItem("token")}})   //传入唯一标识
     .then(response => {
       let responses = response.data.data;
+      if ( response.data.status === "_0001" ) {
+          message.success(response.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       // console.log(responses);
       // 获取绑定买号数据
       this.setState({
@@ -51,6 +59,7 @@ class BuyAdmins extends Component {
         wykl__status: responses.wykl_bind.status,              //唯品会绑定状态  数字显示
 
       })
+    }
     })
     .catch(error => {
       console.log(error);

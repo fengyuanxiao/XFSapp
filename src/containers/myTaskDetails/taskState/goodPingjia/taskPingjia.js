@@ -32,6 +32,7 @@ class TaskPingJia extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
       axios.post(global.constants.website+'/api/task/operateAssignTask', {
         order_id: localStorage.getItem("order_id"),
       },{
@@ -39,6 +40,13 @@ class TaskPingJia extends Component {
       })
       .then( res=> {
         let datas = res.data.data;
+        if ( res.data.status === "_0001" ) {
+            message.success(res.data.msg, successSkip => {
+            localStorage.removeItem("token");
+            this_.props.history.push("/");
+            window.location.reload();
+          })
+        } else {
         // console.log(datas);
         this.setState({
           order_id: datas.order_id,               //order_id
@@ -50,6 +58,7 @@ class TaskPingJia extends Component {
           shop_name: datas.shop_name,
           goodsname: datas.goodsname,
         })
+      }
       })
       .catch(error => {
         console.log(error);

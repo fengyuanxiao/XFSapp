@@ -25,7 +25,9 @@ class MyTaskPage extends Component {
       // console.log(datas);
       if ( res.data.status === "_0001" ) {
           message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
           this_.props.history.push("/");
+          window.location.reload();
         })
       } else {
         this.setState({

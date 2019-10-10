@@ -24,14 +24,23 @@ class Correct_Accounts extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     // 进入登录手机号页面 调用图片验证码获取图片
     axios.get(global.constants.website+'/api/user/getcaptcha')
     .then(response => {
+    if ( response.data.status === "_0001" ) {
+        message.success(response.data.msg, successSkip => {
+        localStorage.removeItem("token");
+        this_.props.history.push("/");
+        window.location.reload();
+      })
+    } else {
       // console.log(response.data.data);
       this.setState({
         tuCodeLink: response.data.data.captcha_src,
         sid: response.data.data.sid,
       })
+    }
       // console.log(response.data.data);
     })
     .catch(error => {

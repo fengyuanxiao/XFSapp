@@ -7,7 +7,7 @@ import WingBlank from 'antd-mobile/lib/wing-blank';
 import '../../../component/apis';
 
 const FormItem = Form.Item;
-let phoneNumber = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
+let phoneNumber = /^1[3456789]\d{9}$/;   //手机号码正则
 
 class ForgetPasswords extends Component {
   constructor() {

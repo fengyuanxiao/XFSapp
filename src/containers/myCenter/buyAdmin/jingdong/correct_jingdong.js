@@ -54,6 +54,13 @@ class Correct_jingdongs extends Component {
       })
       .then(function (response) {   //调用接口成功执行
         let responses = response.data.data;
+        if ( response.data.status === "_0001" ) {
+            message.success(response.data.msg, successSkip => {
+            localStorage.removeItem("token");
+            this_.props.history.push("/");
+            window.location.reload();
+          })
+        } else {
         // console.log(responses);
         let datas = [responses.url1,responses.url2,responses.url3,responses.url4];        //存储后台放回过来的图片路径
         this_.props.form.setFieldsValue({
@@ -72,6 +79,7 @@ class Correct_jingdongs extends Component {
           url3: responses.url3.url,                 //存储返回的图片
           url4: responses.url4.url,                 //存储返回的图片
         })
+      }
       })
       .catch(function (error) {   //调用接口失败执行
         console.log(error);

@@ -23,6 +23,7 @@ class CashPage extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     axios.get(global.constants.website+'/api/index/cash',
     {
       headers: {AppAuthorization: localStorage.getItem("token")}
@@ -30,17 +31,24 @@ class CashPage extends Component {
     .then( res => {
       // console.log(res.data.data);
       let datas = res.data.data;
-      this.setState({
-        cashBJ: datas.money_account,                      //本金
-        cashYJ: datas.commission_account,                 //佣金
-        mobile: datas.mobile,                             //手机号
-        bank_name: datas.bank_name,                       //提现银行名称
-        bank_card_NO: datas.bank_card_NO,                 //银行卡卡号末尾四位数
-        bank_status: datas.bank_status,                   //银行卡绑定状态 0未绑定 1已审核 2 审核中 3未通过
-        realname_status:datas.realname_status,            //实名认证状态 0未绑定 1已审核 2 审核中 3未通过
-        is_black: datas.is_black,                         //1表示用户被冻结
-        withdraw_account: datas.withdraw_account,         //可提现总金额
-      });
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+        })
+      } else {
+        this.setState({
+          cashBJ: datas.money_account,                      //本金
+          cashYJ: datas.commission_account,                 //佣金
+          mobile: datas.mobile,                             //手机号
+          bank_name: datas.bank_name,                       //提现银行名称
+          bank_card_NO: datas.bank_card_NO,                 //银行卡卡号末尾四位数
+          bank_status: datas.bank_status,                   //银行卡绑定状态 0未绑定 1已审核 2 审核中 3未通过
+          realname_status:datas.realname_status,            //实名认证状态 0未绑定 1已审核 2 审核中 3未通过
+          is_black: datas.is_black,                         //1表示用户被冻结
+          withdraw_account: datas.withdraw_account,         //可提现总金额
+        });
+      }
     })
     .catch(error => {
       console.log(error);

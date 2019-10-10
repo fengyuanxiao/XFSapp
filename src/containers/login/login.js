@@ -6,10 +6,6 @@ import ActivityIndicator from 'antd-mobile/lib/activity-indicator';
 import WingBlank from 'antd-mobile/lib/wing-blank';
 import './login.css';
 import '../../component/apis';
-// import '../../component/mui';
-// console.log(window.mui);
-// global.constants.website+
-// ,"proxy": "https://budan.php12.cn/"          代理
 
 const FormItem = Form.Item;
 const phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;   //手机号码正则
@@ -28,14 +24,14 @@ class Logins extends Component {
   }
 
   componentDidMount() {
-    // localStorage.setItem("numA", 1);
-    if (localStorage.getItem("numAs") === "2") {//防止返回无线刷新，优化token无效时退出不显示及验证问题
-      localStorage.removeItem("numAs");
-      window.location.reload();
+    if ( localStorage.getItem("mobile") !== '' && localStorage.getItem("password") !== '' && localStorage.getItem("token") !== null ) {
+      this.props.history.push({pathname: '/taskHallPage', state: {token: localStorage.getItem("token")}});
     }
+
     let this_ = this;
     window.callback = function (res) {
       if ( res.ret === 0 ) {
+        this_.setState({ animating: true })            //数据提交中显示的login.....
         //以上数据都正确 在此 ajax交互
         axios.post(global.constants.website+'/api/user/login', {
           // 用户注册提交的所有数据
@@ -59,7 +55,6 @@ class Logins extends Component {
             this_.setState({ animating: true })            //数据提交中显示的login.....
             //   // 保存token到本地
               localStorage.setItem("token", response.data.token);
-              localStorage.setItem("numAs", "2");
               //   // 上传手机设备信息接口
               axios.post(global.constants.website+'/api/index/device',
                 {
@@ -75,7 +70,6 @@ class Logins extends Component {
                 })
                 .then(res => {//data.
                   if ( res.data.status ) {
-                    console.log(res.data.status);
                     this_.setState({ animating: false })          //数据提交成功关闭login.....
                     message.success(response.data.msg);
                     // 如果数据验证全部正确则跳转
@@ -89,36 +83,8 @@ class Logins extends Component {
                 .catch(err => {
                   console.log(err);
                 })
-
-            // 登录成功提示回调
-            // message.success(response.data.msg, successSkip => {
-            //   // 保存token到本地
-            //   localStorage.setItem("token", response.data.token);
-            //   localStorage.setItem("numAs", "2");
-            //   // 上传手机设备信息接口
-            //   axios.post(global.constants.website+'/api/index/device',
-            //     {
-            //       imei: localStorage.getItem("uuid"),             //手机标识
-            //       latitude: localStorage.getItem("latitude"),     //经度
-            //       altitude: localStorage.getItem("longitude"),    //纬度
-            //       is_wifi: localStorage.getItem("isWifi"),          //是否是4G还是wifi
-            //       smcard_name: localStorage.getItem("imsi"),      //SM卡的名字
-            //     },
-            //     {
-            //       headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
-            //     })
-            //     .then(res => {
-            //       console.log(res);
-            //       this_.setState({ animating: false })          //数据提交成功关闭login.....
-            //     })
-            //     .catch(err => {
-            //       console.log(err);
-            //     })
-            //
-            //   this_.props.history.push({pathname: '/taskHallPage', state: {token: response.data.token}});
-            // })
-
           } else {  // response.data状态为 false的时候跳转
+            this_.setState({ animating: false })
             message.error(response.data.msg)
           }
         })
@@ -137,7 +103,8 @@ class Logins extends Component {
       stateID2: false,
     })
   }
-  }
+
+}
 
 
   handlePhone = (e) => {
@@ -153,6 +120,10 @@ class Logins extends Component {
 
   // 点击登录按钮
   handleSubmit = (e) => {
+  // if (localStorage.getItem("numAs") === "2") {//防止返回无线刷新，优化token无效时退出不显示及验证问题
+  //   localStorage.removeItem("numAs");
+  //   window.location.reload();
+  // }
     let this_ = this;
     e.preventDefault();
     this.props.form.validateFields((err, values) => {

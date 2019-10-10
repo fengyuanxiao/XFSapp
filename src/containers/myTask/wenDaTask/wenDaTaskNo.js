@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button } from 'antd';
+import { Icon, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Tabs from 'antd-mobile/lib/tabs';
@@ -33,6 +33,7 @@ class WenDaTaskNo extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    let this_ = this;
     page5 = 1;
     page1 = 1;
     page4 = 1;
@@ -45,11 +46,19 @@ class WenDaTaskNo extends Component {
     })
     .then( res => {
       let resData = res.data.data;
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       // console.log(resData);
       this.setState({
         datasShow: true,                              //为true 显示任务列表
         task_lists: resData.task_list,                //任务列表数据
       });
+    }
     })
     .catch( error => {
       console.log(error);

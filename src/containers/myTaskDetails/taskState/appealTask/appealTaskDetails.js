@@ -22,6 +22,7 @@ class AppealTaskDetails extends Component {
   }
 
   UNSAFE_componentWillMount() {
+  let this_ = this;
     axios.post(global.constants.website+'/api/task/appealTaskDetail',{
       order_id: this.props.location.state.data,   //获取存储到本地的order_id
     },{
@@ -30,6 +31,13 @@ class AppealTaskDetails extends Component {
     .then( res => {
       // console.log(res);
       let datas = res.data.data;
+      if ( res.data.status === "_0001" ) {
+          message.success(res.data.msg, successSkip => {
+          localStorage.removeItem("token");
+          this_.props.history.push("/");
+          window.location.reload();
+        })
+      } else {
       this.setState({
         goodspic: datas.goodspic,                   //商品图片
         // seller_qq: datas.seller_qq,                 //商家QQ
@@ -42,6 +50,7 @@ class AppealTaskDetails extends Component {
         is_self: datas.is_self,                     //为1 显示申诉完结按钮
         complain_consult: datas.complain_consult,   //申诉协商记录，为[]时代表没有协商记录，有值表示有协商记录
       })
+    }
       // console.log(res.data);
     })
     .catch( error => {
