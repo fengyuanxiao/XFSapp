@@ -30,7 +30,6 @@
   margin-bottom: 1rem;
 }
 .buyAdmin-box > ul > li {
-  margin-bottom: 0.8rem;
   border-bottom: 1px solid #e7e7e7;
 }
 a {
@@ -47,4 +46,18 @@ a {
 .bind-content {
   color: red;
   margin-left: 2rem;
+}
+.names {
+  display: flex;
+  align-items: center;
+  width: 75%;
+}
+.longsize {
+  width: 45%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.toto {
+  width: 25%;
 }

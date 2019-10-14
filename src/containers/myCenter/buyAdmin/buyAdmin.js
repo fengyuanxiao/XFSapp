@@ -196,8 +196,9 @@ class BuyAdmins extends Component {
                           ""
                         }
                         <div style={{ width: '100%' }} className="bind-list" onClick={ () => this.taobaoInto(item.status, item.id) }>
-                          <div>
-                            <img src={require("../../../img/taobao.png")} alt="淘宝图标"/><span>{ item.nickname }</span>
+                          <div className="names">
+                            <img src={require("../../../img/taobao.png")} alt="淘宝图标"/>
+                            <p className="longsize">{ item.nickname }</p>
                             {
                               item.new_default ?
                                 <span style={{ color: 'red' }}>（默认买号）</span>
@@ -205,7 +206,7 @@ class BuyAdmins extends Component {
                               ""
                             }
                           </div>
-                          <div><span>{ item.bind_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
+                          <div className="toto"><span>{ item.bind_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
                         </div>
                       </div>
                       {
@@ -224,8 +225,13 @@ class BuyAdmins extends Component {
             {/* 绑定拼多多账号 */}
             <li>
               <div className="bind-list" onClick={ this.pinduoduoInto }>
-                <div><img src={require("../../../img/pinduoduo.png")} alt="拼多多图标"/><span>{ pdd_bind }</span></div>
-                <div><span>{ pdd_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
+                <div className="names">
+                  <img src={require("../../../img/pinduoduo.png")} alt="拼多多图标"/>
+                  <p className="longsize">{ pdd_bind }</p>
+                </div>
+                <div>
+                  <span className="toto">{ pdd_status }</span>
+                  <img src={require("../../../img/jinru.png")} alt="进入"/></div>
               </div>
               {
                 pdd__status === 3 ?
@@ -237,8 +243,13 @@ class BuyAdmins extends Component {
             {/* 绑定京东账号 */}
             <li>
               <div className="bind-list" onClick={ this.jingdongInto }>
-                <div><img src={require("../../../img/jingdong1.png")} alt="京东图标"/><span>{ jd_bind }</span></div>
-                <div><span>{ jd_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
+                <div className="names">
+                  <img src={require("../../../img/jingdong1.png")} alt="京东图标"/>
+                  <p className="longsize">{ jd_bind }</p>
+                </div>
+                <div>
+                  <span className="toto">{ jd_status }</span>
+                  <img src={require("../../../img/jinru.png")} alt="进入"/></div>
               </div>
               {
                 jd__status === 3 ?
@@ -250,8 +261,14 @@ class BuyAdmins extends Component {
             {/* 唯品会账号 */}
             <li>
               <div className="bind-list" onClick={ this.weipinhuiInto }>
-                <div><img src={require("../../../img/weipinhui.png")} alt="唯品会图标"/><span>{ wph_bind }</span></div>
-                <div><span>{ wph_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
+                <div className="names">
+                  <img src={require("../../../img/weipinhui.png")} alt="唯品会图标"/>
+                  <p className="longsize">{ wph_bind }</p>
+                </div>
+                <div>
+                  <span className="toto">{ wph_status }</span>
+                  <img src={require("../../../img/jinru.png")} alt="进入"/>
+                </div>
               </div>
               {
                 wph__status === 3 ?
@@ -263,8 +280,14 @@ class BuyAdmins extends Component {
             {/* 网易考拉账号 */}
             <li>
               <div className="bind-list" onClick={ this.wyklInto }>
-                <div><img src={require("../../../img/wykl.png")} alt="网易考拉图标"/><span>{ wykl_bind }</span></div>
-                <div><span>{ wykl_status }</span><img src={require("../../../img/jinru.png")} alt="进入"/></div>
+                <div className="names">
+                  <img src={require("../../../img/wykl.png")} alt="网易考拉图标"/>
+                  <p className="longsize">{ wykl_bind }</p>
+                </div>
+                <div>
+                  <span className="toto">{ wykl_status }</span>
+                  <img src={require("../../../img/jinru.png")} alt="进入"/>
+                </div>
               </div>
               {
                 wykl__status === 3 ?

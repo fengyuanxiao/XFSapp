@@ -9,7 +9,9 @@
     <title>幸福树</title>
   </head>
   <style media="screen">
-
+    ul {
+      list-style: none;
+    }
     .ant-btn-primary {
       background-color: #32920c !important;
       border-color: #32920c !important;
@@ -56,9 +58,6 @@
   </body>
   <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
   <script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.js"></script>
-  <!-- <script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>
-  <script src="https://cdn.bootcss.com/es6-shim/0.35.5/es6-sham.min.js"></script>
-  <script src="https://cdn.bootcss.com/es6-shim/0.35.5/es6-shim.min.js"></script> -->
   <script type="text/javascript">
 
 window.onload = function() {
@@ -206,6 +205,7 @@ console.log();
 
     // 扩展API加载完毕后调用onPlusReady回调函数      *****定位
     document.addEventListener('plusready', function() {
+      localStorage.setItem("imsi", plus.device.imsi)      //imsi
       plus.geolocation.getCurrentPosition(function(p) {
         localStorage.setItem("latitude", p.coords.latitude);      //经度
         localStorage.setItem("longitude", p.coords.longitude);    //维度

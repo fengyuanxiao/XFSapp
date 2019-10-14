@@ -24,7 +24,9 @@ class Logins extends Component {
   }
 
   componentDidMount() {
-    if ( localStorage.getItem("mobile") !== '' && localStorage.getItem("password") !== '' && localStorage.getItem("token") !== null ) {
+    // console.log(localStorage.getItem("latitude") ? 1:2);
+    // localStorage.removeItem("longitude");
+    if ( localStorage.getItem("mobile") !== '' && localStorage.getItem("password") !== '' && localStorage.getItem("token") !== null && localStorage.getItem("latitude") !== null && localStorage.getItem("longitude") !== null ) {
       this.props.history.push({pathname: '/taskHallPage', state: {token: localStorage.getItem("token")}});
     }
 
@@ -59,8 +61,8 @@ class Logins extends Component {
               axios.post(global.constants.website+'/api/index/device',
                 {
                   imei: localStorage.getItem("uuid"),                                 //手机标识
-                  latitude: localStorage.getItem("latitude"),                         //经度
-                  altitude: localStorage.getItem("longitude"),                      //纬度
+                  latitude: localStorage.getItem("latitude")?localStorage.getItem("latitude"):'',                         //经度
+                  altitude: localStorage.getItem("longitude")?localStorage.getItem("longitude"):'',                      //纬度
                   is_wifi: localStorage.getItem("isWifi") === "true" ? 1 : 0,        //是否是4G还是wifi
                   smcard_name: localStorage.getItem("imsi"),                       //SM卡的名字
                   platform: localStorage.getItem("platform"),                       //1安卓，2IOS
