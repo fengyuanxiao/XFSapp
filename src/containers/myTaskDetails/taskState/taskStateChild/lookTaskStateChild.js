@@ -34,8 +34,8 @@ class LookTaskStateChild extends Component {
     })
     .then(response => {
       let responses = response.data.data.taskDetail;
-      if ( responses.data.status === "_0001" ) {
-          message.success(responses.data.msg, successSkip => {
+      if ( response.data.status === "_0001" ) {
+          message.success(response.data.msg, successSkip => {
           localStorage.removeItem("token");
           this_.props.history.push("/");
           window.location.reload();
@@ -88,7 +88,7 @@ class LookTaskStateChild extends Component {
     })
     .catch(error => {
       // console.log(error.response.status);
-      if ( error.response.status ) {
+      if ( error.response ) {
         message.warning('服务器开小差啦！！！', 2)
         .then(this.props.history.push('/myTaskDetails'), 2)
       }
@@ -220,7 +220,10 @@ class LookTaskStateChild extends Component {
         <div className="plan-box task-plan" style={{ marginBottom:0 }}>
           <p className="task-plan-list"><span>任务类型</span><span style={{ color:'red' }}>{tasktype_name}(手机淘宝)</span></p>
           {/* <p className="task-plan-list"><span>评价要求</span><span>{keyword_type_name}</span></p> */}
-          <p className="task-plan-list" style={{ border:'none' }}><span>搜索关键字</span><span style={{ overflow:'auto',wordBreak:'keep-all' }}>{keyword}</span></p>
+          <p className="task-plan-list" style={{ border:'none' }}>
+            <span>搜索关键字</span>
+            <span style={{ overflow:'auto',wordBreak:'keep-all' }}>{keyword}</span>
+          </p>
           {
             is_muti_keyword ?
               <div>

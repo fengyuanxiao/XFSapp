@@ -53,11 +53,14 @@ a {
   width: 75%;
 }
 .longsize {
-  width: 45%;
+  width: 37%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .toto {
   width: 25%;
+}
+.toto > img {
+  padding-right: 0 !important;
 }
