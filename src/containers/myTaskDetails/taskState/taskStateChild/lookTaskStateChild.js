@@ -93,6 +93,25 @@ class LookTaskStateChild extends Component {
         .then(this.props.history.push('/myTaskDetails'), 2)
       }
     })
+
+    //发起打标接口
+    axios.post(global.constants.website+'/api/task/markingOrder',
+    {
+      order_id: localStorage.getItem("order_id"),   //获取存储到本地的order_id
+    },
+    {
+      headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token
+    })
+    .then( res => {
+      // console.log(res.msg);
+    } )
+    .catch(error => {
+      // console.log(error.response.status);
+      if ( error.response.status ) {
+        message.warning('服务器开小差啦！！！', 2)
+        .then(this.props.history.push('/myTaskDetails'), 2)
+      }
+    })
   }
 
 

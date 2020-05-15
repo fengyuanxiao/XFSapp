@@ -11,7 +11,7 @@ import WingBlank from 'antd-mobile/lib/wing-blank';
 
 const FormItem = Form.Item;
 const data = [];
-let taobaoOride =  /^T200P\d{18}$/;   //淘宝订单号
+let taobaoOride =  /^T200P\d{18,20}$/;   //淘宝订单号
 let jingdongOride = /^\d{11,12}$/;       //京东订单号
 let pinduoduoOride = /^\d{6}[-]\d+$/; //拼多多订单号
 let weipinhuiOride = /^\d{14}$/;      //唯品会订单号
