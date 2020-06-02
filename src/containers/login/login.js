@@ -65,7 +65,13 @@ class Logins extends Component {
                   altitude: localStorage.getItem("longitude")?localStorage.getItem("longitude"):'',                      //纬度
                   is_wifi: localStorage.getItem("isWifi") === "true" ? 1 : 0,        //是否是4G还是wifi
                   smcard_name: localStorage.getItem("imsi"),                       //SM卡的名字
-                  platform: localStorage.getItem("platform"),                       //1安卓，2IOS
+                  platform: localStorage.getItem("platform"),                       //1安卓，2IOSimei: localStorage.getItem("uuid"),                                 //手机标识
+                  /*测试专用{imei: 132546565666,
+                  latitude: 15545,                         //经度
+                  altitude: 535353544,                      //纬度
+                  is_wifi: 1,        //是否是4G还是wifi
+                  smcard_name: "imsi",                       //SM卡的名字
+                  platform: 2                       //1安卓，2IOS}*/
                 },
                 {
                   headers: {AppAuthorization: localStorage.getItem("token")}    //post 方法传 token

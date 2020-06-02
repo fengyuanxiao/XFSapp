@@ -103,13 +103,13 @@ class BindTaobaos extends Component {
     let states = this.state;
     let _this = this.state.files    //用户上传图片集合
     this.props.form.validateFields((err, values) => {
-      if ( !err === true && states.maxlengths.length === 18 && _this.length === 3 ) {
+    // console.log(values);
+      if ( !err === true && states.maxlengths.length >= 18 && _this.length === 3 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
         } else {
           this_.setState({ animating: true })            //数据提交中显示的login.....
-          // console.log(values);
           // 图片集合存入imgs 传给后端
           let imgs = [values.images[0].url, values.images[1].url, values.images[2].url]
           // console.log(imgs);
@@ -198,7 +198,7 @@ class BindTaobaos extends Component {
                 {getFieldDecorator('tb_order_sign', {
                   rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
                 })(
-                  <Input onChange={ this.maxlength } className="buy-input" maxLength={18} placeholder="淘宝订单号" />
+                  <Input onChange={ this.maxlength } className="buy-input" maxLength={20} placeholder="淘宝订单号" />
                 )}
               </FormItem>
               <FormItem

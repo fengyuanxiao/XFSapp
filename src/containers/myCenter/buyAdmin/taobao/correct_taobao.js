@@ -168,7 +168,7 @@ class Correct_taobaos extends Component {
       }
       console.log(imgs);
       console.log(values.images);
-      if ( !err === true && states.tb_order_sign.length === 18 && _this.length === 3 ) {
+      if ( !err === true && states.tb_order_sign.length >= 18 && _this.length === 3 ) {
         // 所有数据填写完毕后 进入下一阶段判断
         if ( !phoneNum.test(values.GoodsPhone) ) {
           message.error("请输入正确的手机号码！")
@@ -253,7 +253,7 @@ class Correct_taobaos extends Component {
                 {getFieldDecorator('tb_order_sign', {
                   rules: [{ required: true, message: '请输入正确的淘宝订单号!' }],
                 })(
-                  <Input onChange={ this.maxlength } className="buy-input" maxLength={18} placeholder="淘宝订单号" />
+                  <Input onChange={ this.maxlength } className="buy-input" maxLength={20} placeholder="淘宝订单号" />
                 )}
               </FormItem>
               <FormItem
